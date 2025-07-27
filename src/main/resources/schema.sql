@@ -1,8 +1,3 @@
--- borra y crea la base de datos
--- DROP DATABASE IF EXISTS cibernextdb;
--- CREATE DATABASE cibernextdb;
--- USE cibernextdb;
-
 -- Deshabilitar la verificación de claves foráneas temporalmente para evitar errores de orden
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -136,12 +131,11 @@ CREATE TABLE `Documento` (
 
 DROP TABLE IF EXISTS `CursoProfesor`;
 CREATE TABLE `CursoProfesor` (
-                                 `id` BIGINT PRIMARY KEY AUTO_INCREMENT,
                                  `curso_id` BIGINT NOT NULL,
                                  `profesor_usuario_id` BIGINT NOT NULL,
+                                 PRIMARY KEY (curso_id, profesor_usuario_id),
                                  CONSTRAINT `fk_cursoprofesor_curso` FOREIGN KEY (`curso_id`) REFERENCES `Curso` (`id`) ON DELETE CASCADE,
-                                 CONSTRAINT `fk_cursoprofesor_profesor` FOREIGN KEY (`profesor_usuario_id`) REFERENCES `Profesor` (`usuario_id`) ON DELETE CASCADE,
-                                 UNIQUE (`curso_id`, `profesor_usuario_id`)
+                                 CONSTRAINT `fk_cursoprofesor_profesor` FOREIGN KEY (`profesor_usuario_id`) REFERENCES `Profesor` (`usuario_id`) ON DELETE CASCADE
 ) COMMENT='Asigna profesores a los cursos.';
 
 DROP TABLE IF EXISTS `RegistroAlumno`;
@@ -149,11 +143,13 @@ CREATE TABLE `RegistroAlumno` (
                                   `id` BIGINT PRIMARY KEY AUTO_INCREMENT,
                                   `curso_id` BIGINT NOT NULL,
                                   `alumno_usuario_id` BIGINT NOT NULL,
+                                  `profesor_usuario_id` BIGINT NOT NULL,
                                   `fechaInscripcion` DATETIME DEFAULT CURRENT_TIMESTAMP,
                                   CONSTRAINT `fk_registro_curso` FOREIGN KEY (`curso_id`) REFERENCES `Curso` (`id`) ON DELETE CASCADE,
                                   CONSTRAINT `fk_registro_alumno` FOREIGN KEY (`alumno_usuario_id`) REFERENCES `Alumno` (`usuario_id`) ON DELETE CASCADE,
+                                  CONSTRAINT `fk_registro_profesor` FOREIGN KEY (`profesor_usuario_id`) REFERENCES `Profesor` (`usuario_id`) ON DELETE CASCADE,
                                   UNIQUE (`curso_id`, `alumno_usuario_id`)
-) COMMENT='Registra la inscripción de un alumno en un curso/sección.';
+) COMMENT='Registra la inscripción de un alumno en un curso/sección y lo asocia al profesor responsable.';
 
 
 -- ---------------------------------
@@ -230,11 +226,15 @@ CREATE TABLE `Consultas` (
                              `titulo` VARCHAR(255),
                              `mensaje` TEXT NOT NULL,
                              `fecha` DATETIME DEFAULT CURRENT_TIMESTAMP,
-                             `curso_id` BIGINT NOT NULL,
-                             `usuario_id` BIGINT NOT NULL,
-                             `consulta_padre_id` BIGINT NULL,
-                             CONSTRAINT `fk_consulta_curso` FOREIGN KEY (`curso_id`) REFERENCES `Curso` (`id`) ON DELETE CASCADE,
+    -- `curso_id` BIGINT NOT NULL,
+                             `usuario_id` BIGINT NOT NULL COMMENT 'ID del autor del mensaje (alumno o profesor). SIEMPRE presente.',
+                             `registro_alumno_id` BIGINT NULL COMMENT 'ID de la matrícula del alumno que INICIA el hilo. NULL para las respuestas.',
+                             `unidad_aprendizaje_id` BIGINT NOT NULL COMMENT 'ID de la unidad sobre la que se pregunta.',
+                             `consulta_padre_id` BIGINT NULL COMMENT 'ID del mensaje al que se está respondiendo. NULL para el mensaje inicial.',
+--                             CONSTRAINT `fk_consulta_curso` FOREIGN KEY (`curso_id`) REFERENCES `Curso` (`id`) ON DELETE CASCADE,
                              CONSTRAINT `fk_consulta_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `Usuario` (`id`) ON DELETE CASCADE,
+                             CONSTRAINT `fk_consulta_registro` FOREIGN KEY (`registro_alumno_id`) REFERENCES `RegistroAlumno` (`id`) ON DELETE CASCADE,
+                             CONSTRAINT `fk_consulta_unidad` FOREIGN KEY (`unidad_aprendizaje_id`) REFERENCES `UnidadAprendizaje` (`id`) ON DELETE CASCADE,
                              CONSTRAINT `fk_consulta_padre` FOREIGN KEY (`consulta_padre_id`) REFERENCES `Consultas` (`id`) ON DELETE CASCADE
 ) COMMENT='Sistema de foro/consultas para los cursos. Auto-referenciado para hilos de respuestas.';
 

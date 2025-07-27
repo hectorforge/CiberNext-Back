@@ -86,19 +86,52 @@ INSERT INTO `CursoProfesor` (`curso_id`, `profesor_usuario_id`) VALUES (16, 8), 
 -- -----------------------------------------------------------
 -- 5. INSCRIBIR ALUMNOS EN CURSOS (`RegistroAlumno`)
 -- -----------------------------------------------------------
--- == Alumnos enfocados en FRONTEND ==
-INSERT INTO `RegistroAlumno` (`curso_id`, `alumno_usuario_id`) VALUES
-                                                                   (1, 9), (2, 9), (1, 11), (3, 11), (1, 13), (2, 13), (3, 13), (1, 15), (2, 15), (1, 17), (3, 17), (1, 20), (2, 22), (3, 22);
--- == Alumnos enfocados en BACKEND ==
-INSERT INTO `RegistroAlumno` (`curso_id`, `alumno_usuario_id`) VALUES
-                                                                   (10, 10), (12, 10), (10, 14), (11, 14), (12, 14), (10, 16), (12, 16), (12, 18), (11, 21), (12, 21), (10, 23), (11, 23), (12, 25), (15, 25);
--- == Alumnos enfocados en DESARROLLO MÓVIL ==
-INSERT INTO `RegistroAlumno` (`curso_id`, `alumno_usuario_id`) VALUES
-                                                                   (16, 12), (17, 12), (17, 24), (18, 24), (16, 26), (17, 26), (18, 26), (17, 27), (16, 28), (18, 29);
--- == Alumnos en cursos de otras áreas (menor cantidad) ==
-INSERT INTO `RegistroAlumno` (`curso_id`, `alumno_usuario_id`) VALUES
-                                                                   (7, 9), (8, 10), (6, 14);
 
+-- == Alumnos enfocados en FRONTEND ==
+-- Curso 1 (Dev Web I) -> Profesor 19 (Natasha R.)
+-- Curso 2 (React) -> Profesor 3 (Carlos S.)
+-- Curso 3 (Angular) -> Profesor 3 (Carlos S.)
+INSERT INTO `RegistroAlumno` (`curso_id`, `alumno_usuario_id`, `profesor_usuario_id`) VALUES
+                                                                                          (1, 9, 19), (2, 9, 3),    -- Ana Lopez
+                                                                                          (1, 11, 19), (3, 11, 3),   -- Carla Kent
+                                                                                          (1, 13, 19), (2, 13, 3), (3, 13, 3), -- Elena Garcia
+                                                                                          (1, 15, 19), (2, 15, 3),   -- Gabriela Solis
+                                                                                          (1, 17, 19), (3, 17, 3),   -- Irene Adler
+                                                                                          (1, 20, 19),              -- Laura Jimenez
+                                                                                          (2, 22, 3), (3, 22, 3);    -- Nora Castillo
+
+-- Curso 10 (Algoritmia) -> Profesor 6 (Anthony S.)
+-- Curso 11 (POO C#) -> Profesor 6 (Anthony S.)
+-- Curso 12 (Spring Boot) -> Profesor 6 (Anthony S.)
+-- Curso 15 (Python) -> Profesor 6 (Anthony S.)
+INSERT INTO `RegistroAlumno` (`curso_id`, `alumno_usuario_id`, `profesor_usuario_id`) VALUES
+                                                                                          (10, 10, 6), (12, 10, 6),  -- Bruno Diaz
+                                                                                          (10, 14, 6), (11, 14, 6), (12, 14, 6), -- Fernando Torres
+                                                                                          (10, 16, 6), (12, 16, 6),  -- Hugo Sanchez
+                                                                                          (12, 18, 6),              -- Javier Mascherano
+                                                                                          (11, 21, 6), (12, 21, 6),  -- Marcos Rojo
+                                                                                          (10, 23, 6), (11, 23, 6),  -- Oscar Velez
+                                                                                          (12, 25, 6), (15, 25, 6);  -- Raul Gonzalez
+
+-- Curso 16 (Android) -> Profesor 8 (Steve R.)
+-- Curso 17 (Flutter) -> Profesor 8 (Steve R.)
+-- Curso 18 (iOS) -> Profesor 6 (Anthony S.)
+INSERT INTO `RegistroAlumno` (`curso_id`, `alumno_usuario_id`, `profesor_usuario_id`) VALUES
+                                                                                          (16, 12, 8), (17, 12, 8),   -- David Perez
+                                                                                          (17, 24, 8), (18, 24, 6),   -- Patricia Luna
+                                                                                          (16, 26, 8), (17, 26, 8), (18, 26, 6), -- Sofia Vergara
+                                                                                          (17, 27, 8),              -- Tomas Rincon
+                                                                                          (16, 28, 8),              -- Ursula Corbero
+                                                                                          (18, 29, 6);              -- Victor Valdes
+
+-- == Alumnos en cursos de otras áreas (menor cantidad) ==
+-- Curso 7 (Modelado BD) -> Profesor 5 (Ricardo T.)
+-- Curso 8 (BD I SQL) -> Profesor 5 (Ricardo T.)
+-- Curso 6 (SCRUM) -> Profesor 19 (Natasha R.)
+INSERT INTO `RegistroAlumno` (`curso_id`, `alumno_usuario_id`, `profesor_usuario_id`) VALUES
+                                                                                          (7, 9, 5),   -- Ana Lopez
+                                                                                          (8, 10, 5),  -- Bruno Diaz
+                                                                                          (6, 14, 19); -- Fernando Torres
 
 
 
@@ -169,30 +202,81 @@ INSERT INTO `IntentoRespuesta` (`intento_id`, `pregunta_id`, `respuesta_id`) VAL
 -- ----------------------------------------------------
 -- 2. POBLAR `Consultas` (FOROS)
 -- ----------------------------------------------------
+-- == Hilo 1: En el curso "React" (ID: 2) sobre la Unidad de Aprendizaje "useEffect" (ID: 12) ==
+-- Gabriela Solis (Usuario ID: 15) en su matrícula de React (Registro ID: 12) tiene una duda.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (1, 'Duda sobre el array de dependencias en useEffect', 'Hola profesor, no entiendo bien cuándo debo poner variables en el array de dependencias de useEffect. ¿Si lo dejo vacío se ejecuta solo una vez?', 15, 12, 12, NULL);
 
--- == Hilo 1: En el curso "React" (ID: 2) ==
--- Gabriela Solis (ID: 15) tiene una duda sobre useEffect.
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `curso_id`, `usuario_id`, `consulta_padre_id`) VALUES
-    (1, 'Duda sobre el array de dependencias en useEffect', 'Hola profesor, no entiendo bien cuándo debo poner variables en el array de dependencias de useEffect. ¿Si lo dejo vacío se ejecuta solo una vez?', 2, 15, NULL);
--- El profesor del curso, Carlos Santana (ID: 3), responde.
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `curso_id`, `usuario_id`, `consulta_padre_id`) VALUES
-    (2, NULL, '¡Hola Gabriela! Exactamente. Si dejas el array de dependencias vacío `[]`, el efecto se ejecutará solo una vez, después del primer renderizado, similar a `componentDidMount`. Si incluyes una variable, el efecto se volverá a ejecutar cada vez que el valor de esa variable cambie.', 2, 3, 1);
--- Otro alumno, Ana Lopez (ID: 9), que también está en el curso, añade un comentario.
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `curso_id`, `usuario_id`, `consulta_padre_id`) VALUES
-    (3, NULL, '¡Gracias por la pregunta Gabriela! A mí me sirvió mucho pensar que el array le dice a React: "vigila estas variables y si alguna cambia, ejecuta el efecto de nuevo".', 2, 9, 1);
+-- El profesor del curso, Carlos Santana (Usuario ID: 3), responde.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (2, NULL, '¡Hola Gabriela! Exactamente. Si dejas el array de dependencias vacío `[]`, el efecto se ejecutará solo una vez, después del primer renderizado, similar a `componentDidMount`. Si incluyes una variable, el efecto se volverá a ejecutar cada vez que el valor de esa variable cambie.', 3, NULL, 12, 1);
 
--- == Hilo 2: En el curso "Desarrollo de Servicios Rest (Spring Boot)" (ID: 12) ==
--- Fernando Torres (ID: 14) pregunta sobre la diferencia entre @Component, @Service y @Repository.
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `curso_id`, `usuario_id`, `consulta_padre_id`) VALUES
-    (4, 'Diferencias entre @Component, @Service y @Repository', 'Profesor, he visto que las tres anotaciones parecen hacer lo mismo (crear un bean). ¿Cuál es la diferencia real y cuándo debo usar cada una?', 12, 14, NULL);
--- El profesor del curso, Anthony Stark (ID: 6), responde.
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `curso_id`, `usuario_id`, `consulta_padre_id`) VALUES
-    (5, NULL, 'Excelente pregunta, Fernando. Si bien técnicamente las tres crean un bean, su uso es semántico. `@Repository` se usa en la capa de persistencia y traduce excepciones de la BD. `@Service` se usa en la capa de negocio para la lógica principal. `@Component` es genérica. Usar la correcta ayuda a que el código sea más legible y permite que los frameworks apliquen lógicas específicas (AOP).', 12, 6, 4);
+-- Otro alumno, Ana Lopez (Usuario ID: 9), añade un comentario.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (3, NULL, '¡Gracias por la pregunta Gabriela! A mí me sirvió mucho pensar que el array le dice a React: "vigila estas variables y si alguna cambia, ejecuta el efecto de nuevo".', 9, NULL, 12, 1);
 
--- == Hilo 3: En el curso "Desarrollo Web I" (ID: 1) ==
--- Laura Jimenez (ID: 20) tiene problemas con Flexbox.
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `curso_id`, `usuario_id`, `consulta_padre_id`) VALUES
-    (6, '¿Cómo centrar un div vertical y horizontalmente con Flexbox?', 'He intentado con `align-items: center` pero no funciona como espero. ¿Qué me falta?', 1, 20, NULL);
--- La profesora del curso, Natasha Romanoff (ID: 19), responde.
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `curso_id`, `usuario_id`, `consulta_padre_id`) VALUES
-    (7, NULL, 'Hola Laura, es una duda muy común. Para centrar en ambos ejes, necesitas dos propiedades en el contenedor padre: `align-items: center;` (para el eje vertical) y `justify-content: center;` (para el eje horizontal). Además, asegúrate de que el contenedor tenga una altura definida (ej. `height: 100vh;`) para que el centrado vertical tenga efecto.', 1, 19, 6);
+-- == Hilo 2: En "Spring Boot" (ID: 12) sobre la Unidad "Fundamentos de Spring Boot 3" (ID: 112) ==
+-- Fernando Torres (Usuario ID: 14) en su matrícula de Spring Boot (Registro ID: 18) pregunta.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (4, 'Diferencias entre @Component, @Service y @Repository', 'Profesor, he visto que las tres anotaciones parecen hacer lo mismo (crear un bean). ¿Cuál es la diferencia real y cuándo debo usar cada una?', 14, 18, 112, NULL);
+
+-- El profesor del curso, Anthony Stark (Usuario ID: 6), responde.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (5, NULL, 'Excelente pregunta, Fernando. Si bien técnicamente las tres crean un bean, su uso es semántico. `@Repository` se usa en la capa de persistencia y traduce excepciones de la BD. `@Service` se usa en la capa de negocio para la lógica principal. `@Component` es genérica. Usar la correcta ayuda a que el código sea más legible y permite que los frameworks apliquen lógicas específicas (AOP).', 6, NULL, 112, 4);
+
+-- == Hilo 3: En "Desarrollo Web I" (ID: 1) sobre la Unidad "Flexbox" (ID: 4) ==
+-- Laura Jimenez (Usuario ID: 20) en su matrícula de Dev Web I (Registro ID: 15) tiene problemas.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (6, '¿Cómo centrar un div vertical y horizontalmente con Flexbox?', 'He intentado con `align-items: center` pero no funciona como espero. ¿Qué me falta?', 20, 15, 4, NULL);
+
+-- La profesora del curso, Natasha Romanoff (Usuario ID: 19), responde.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (7, NULL, 'Hola Laura, es una duda muy común. Para centrar en ambos ejes, necesitas dos propiedades en el contenedor padre: `align-items: center;` (para el eje vertical) y `justify-content: center;` (para el eje horizontal). Además, asegúrate de que el contenedor tenga una altura definida (ej. `height: 100vh;`) para que el centrado vertical tenga efecto.', 19, NULL, 4, 6);
+
+
+-- == Hilo 4: En el curso "Angular" (ID: 3) sobre la Unidad "Componentes y Plantillas" (ID: 19) ==
+-- Elena Garcia (Usuario ID: 13), en su matrícula de Angular (Registro ID: 11), tiene una duda fundamental.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (8, '¿Cuándo usar ngOnInit vs el constructor?', 'Profesor, he visto ejemplos que inicializan propiedades en el constructor y otros en ngOnInit. ¿Cuál es la buena práctica y por qué?', 13, 11, 19, NULL);
+
+-- El profesor del curso, Carlos Santana (Usuario ID: 3), responde con la mejor práctica.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (9, NULL, '¡Gran pregunta, Elena! La regla general es: usa el `constructor` para la inyección de dependencias (DI) y para inicializaciones muy simples que no dependan de inputs. Usa `ngOnInit` para toda la lógica de inicialización compleja, especialmente si necesitas acceder a las propiedades `@Input()` del componente, ya que en `ngOnInit` tienes la garantía de que ya están disponibles.', 3, NULL, 19, 8);
+
+-- Carla Kent (Usuario ID: 11), otra alumna, comparte su experiencia.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (10, NULL, 'A mí me ayudó pensar que el constructor es para "preparar las herramientas" y ngOnInit es para "empezar a usarlas".', 11, NULL, 19, 8);
+
+
+-- == Hilo 5: En "Spring Boot" (ID: 12) sobre la Unidad "Capa de Persistencia" (ID: 114) ==
+-- Bruno Diaz (Usuario ID: 10), en su matrícula de Spring Boot (Registro ID: 5), pregunta sobre DTOs.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (11, '¿Por qué usar DTOs si ya tengo la Entidad JPA?', 'Hola, me parece que crear una clase DTO para cada entidad es duplicar código. ¿No sería más fácil exponer la entidad `@Entity` directamente en el controlador? ¿Cuáles son los riesgos?', 10, 5, 114, NULL);
+
+-- El profesor, Anthony Stark (Usuario ID: 6), da una respuesta de arquitecto.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (12, NULL, 'Bruno, es una de las preguntas más importantes en la arquitectura de APIs. Exponer la entidad directamente tiene varios riesgos graves: 1) Expones la estructura de tu BD al exterior. 2) Cualquier cambio en tu tabla (añadir una columna) se refleja inmediatamente en tu API, rompiendo contratos. 3) Puedes caer en bucles de serialización infinitos con relaciones bidireccionales. Los DTOs (Data Transfer Objects) actúan como una capa de protección y un contrato explícito con tus clientes. Te dan control total sobre qué datos mostrar y recibir.', 6, NULL, 114, 11);
+
+
+-- == Hilo 6: En "Introducción a la Algoritmia" (ID: 10) sobre la Unidad de Ordenamiento (ID: 97) ==
+-- Hugo Sanchez (Usuario ID: 16), en su matrícula de Algoritmia (Registro ID: 19), tiene una duda teórica.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (13, '¿Por qué QuickSort es O(n^2) en el peor caso?', 'Entiendo que en promedio es O(n log n), pero no veo cómo puede llegar a ser tan lento como un Bubble Sort. ¿Podría dar un ejemplo del peor caso?', 16, 19, 97, NULL);
+
+-- El profesor Anthony Stark (Usuario ID: 6) responde.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (14, NULL, 'Hugo, el peor caso para QuickSort ocurre cuando el pivote elegido es consistentemente el elemento más pequeño o más grande del sub-arreglo. Imagina un arreglo que ya está ordenado ([1, 2, 3, 4, 5]) y siempre eliges el primer elemento como pivote. En la primera partición, moverás n-1 elementos. En la siguiente, n-2, y así sucesivamente. Esto resulta en una suma de `n + (n-1) + (n-2) ... + 1`, que es O(n^2). Por eso, la elección de un buen pivote (como uno aleatorio o la mediana de tres) es crucial.', 6, NULL, 97, 13);
+
+
+-- == Hilo 7: En "POO con C#" (ID: 11) sobre la Unidad de SOLID (ID: 108) ==
+-- Marcos Rojo (Usuario ID: 21), en su matrícula (Registro ID: 22), pide un ejemplo práctico.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (15, 'Ejemplo práctico del Principio de Inversión de Dependencias (DIP)', 'Entiendo la teoría de "depender de abstracciones, no de concreciones", pero me cuesta verlo en código real. ¿Cómo se vería un "antes" y un "después" de aplicar DIP?', 21, 22, 108, NULL);
+
+-- El profesor Anthony Stark (Usuario ID: 6) responde con código.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (16, NULL, 'Claro, Marcos. **ANTES (Mal):** `class Notificador { private MySqlDatabase _db = new MySqlDatabase(); public void Notificar() { _db.GuardarNotificacion(); } }`. Aquí `Notificador` depende directamente de `MySqlDatabase`. **DESPUÉS (Bien):** `interface IDatabase { void Guardar(); } class Notificador { private IDatabase _db; public Notificador(IDatabase db) { _db = db; } public void Notificar() { _db.Guardar(); } }`. Ahora `Notificador` depende de una abstracción (`IDatabase`) y podemos pasarle cualquier base de datos (MySql, SqlServer) que la implemente. Eso es DIP.', 6, NULL, 108, 15);
+
+-- Fernando Torres (Usuario ID: 14), que también lleva el curso, añade un punto.
+INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
+    (17, NULL, '¡Buenísimo! Y eso también facilita mucho las pruebas unitarias. En el "después", podemos pasarle un `MockDatabase` al `Notificador` para probarlo sin necesidad de una base de datos real.', 14, NULL, 108, 15);

@@ -1,9 +1,14 @@
 package pe.edu.cibernext.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
+import java.util.Set;
+
+@Getter
+@Setter
+@ToString(exclude = "documentos")
+@EqualsAndHashCode(exclude = "documentos")
 @Entity
 @Table(name = "TipoDocumento")
 public class TipoDocumentoEntity {
@@ -15,4 +20,9 @@ public class TipoDocumentoEntity {
     private String nombre;
 
     private String extension;
+
+    // Relaciones .............................................................
+
+    @OneToMany(mappedBy = "tipoDocumento", fetch = FetchType.LAZY)
+    private Set<DocumentoEntity> documentos;
 }

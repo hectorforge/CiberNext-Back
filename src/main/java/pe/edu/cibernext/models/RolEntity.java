@@ -1,8 +1,7 @@
 package pe.edu.cibernext.models;
 
-import pe.edu.cibernext.models.UsuarioEntity;
-
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,6 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString(exclude = "usuarios")
+@EqualsAndHashCode(exclude = "usuarios")
 @Entity
 @Table(name = "Rol")
 public class RolEntity {
@@ -22,7 +22,8 @@ public class RolEntity {
     @Column(unique = true, nullable = false, length = 50)
     private String nombre;
 
-    // Un rol puede estar asociado a muchos usuarios
+    // Relaciones .............................................................
+
     @OneToMany(mappedBy = "rol")
     private Set<UsuarioEntity> usuarios;
 }

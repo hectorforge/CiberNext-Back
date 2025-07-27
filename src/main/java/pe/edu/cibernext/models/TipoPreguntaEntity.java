@@ -1,9 +1,14 @@
 package pe.edu.cibernext.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
+import java.util.Set;
+
+@Getter
+@Setter
+@ToString(exclude = "preguntas")
+@EqualsAndHashCode(exclude = "preguntas")
 @Entity
 @Table(name = "TipoPregunta")
 public class TipoPreguntaEntity {
@@ -16,4 +21,10 @@ public class TipoPreguntaEntity {
 
     @Column(columnDefinition = "TEXT")
     private String descripcion;
+
+    // Relaciones .............................................................
+
+    @OneToMany(mappedBy = "tipoPregunta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PreguntaEntity> preguntas;
+
 }

@@ -1,10 +1,15 @@
 package pe.edu.cibernext.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import java.util.Set;
+import lombok.*;
 
-@Data
+import java.util.Set;
+import java.util.List;
+
+@Getter
+@Setter
+@ToString(exclude = {"unidadAprendizaje", "preguntas", "intentos"})
+@EqualsAndHashCode(exclude = {"unidadAprendizaje", "preguntas", "intentos"})
 @Entity
 @Table(name = "Evaluacion")
 public class EvaluacionEntity {
@@ -17,10 +22,15 @@ public class EvaluacionEntity {
 
     private Integer tiempo;
 
+    // Relaciones .............................................................
+
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "unidad_aprendizaje_id", unique = true)
+    @JoinColumn(name = "unidad_aprendizaje_id", referencedColumnName = "id")
     private UnidadAprendizajeEntity unidadAprendizaje;
 
     @OneToMany(mappedBy = "evaluacion", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PreguntaEntity> preguntas;
+
+    @OneToMany(mappedBy = "evaluacion", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<IntentoEntity> intentos;
 }

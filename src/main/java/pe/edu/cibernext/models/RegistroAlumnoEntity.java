@@ -1,9 +1,14 @@
 package pe.edu.cibernext.models;
 import jakarta.persistence.*;
-import lombok.Data;
-import java.time.LocalDateTime;
+import lombok.*;
 
-@Data
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Getter
+@Setter
+@ToString(exclude = {"curso", "alumno", "profesor", "intentos", "consultas"})
+@EqualsAndHashCode(exclude = {"curso", "alumno", "profesor", "intentos", "consultas"})
 @Entity
 @Table(name = "RegistroAlumno")
 public class RegistroAlumnoEntity {
@@ -11,13 +16,26 @@ public class RegistroAlumnoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    private LocalDateTime fechaInscripcion;
+
+    // Relaciones .............................................................
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "curso_id", nullable = false)
     private CursoEntity curso;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "alumno_usuario_id", nullable = false)
     private AlumnoEntity alumno;
 
-    private LocalDateTime fechaInscripcion;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "profesor_usuario_id", nullable = false)
+    private ProfesorEntity profesor;
+
+    @OneToMany(mappedBy = "registroAlumno", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<IntentoEntity> intentos;
+
+    @OneToMany(mappedBy = "registroAlumno", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ConsultaEntity> consultas;
+
 }

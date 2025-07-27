@@ -1,5 +1,3 @@
--- USE cibernextdb;
-
 -- ================================================================================= --
 --         SCRIPT DE INSERCIÓN DE DATOS DE PRUEBA - PARTE 1: ESTRUCTURA DE CURSOS      --
 -- ================================================================================= --
@@ -524,7 +522,7 @@ INSERT INTO `Documento` (`nombre`, `archivo`, `tipo_documento_id`, `unidad_apren
 
 
 -- ----------------------------------------------------
--- 3. POBLAR EVALUACIONES, PREGUNTAS Y RESPUESTAS
+-- 2. POBLAR EVALUACIONES, PREGUNTAS Y RESPUESTAS
 -- ----------------------------------------------------
 
 -- == Evaluación 1: "Examen Final de Desarrollo Web I" para Unidad 9 ==

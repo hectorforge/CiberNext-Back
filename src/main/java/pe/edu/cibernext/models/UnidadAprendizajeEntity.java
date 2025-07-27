@@ -1,10 +1,15 @@
 package pe.edu.cibernext.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+
+import java.util.List;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@ToString(exclude = {"curso", "documentos", "consultas", "evaluacion", "padre", "subUnidades", "anterior", "siguiente"})
+@EqualsAndHashCode(exclude = {"curso", "documentos", "consultas", "evaluacion", "padre", "subUnidades", "anterior", "siguiente"})
 @Entity
 @Table(name = "UnidadAprendizaje")
 public class UnidadAprendizajeEntity {
@@ -22,9 +27,21 @@ public class UnidadAprendizajeEntity {
 
     private String estado;
 
+    // Relaciones .............................................................
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "curso_id", nullable = false)
     private CursoEntity curso;
+
+    @OneToMany(mappedBy = "unidadAprendizaje", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<DocumentoEntity> documentos;
+
+    @OneToMany(mappedBy = "unidadAprendizaje", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ConsultaEntity> consultas;
+
+    @OneToOne(mappedBy = "unidadAprendizaje", cascade = CascadeType.ALL)
+    private EvaluacionEntity evaluacion;
+
 
     // Relación jerárquica (padre-hijo)
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,7 +49,7 @@ public class UnidadAprendizajeEntity {
     private UnidadAprendizajeEntity padre;
 
     @OneToMany(mappedBy = "padre")
-    private Set<UnidadAprendizajeEntity> subUnidades;
+    private List<UnidadAprendizajeEntity> subUnidades;
 
     // Relación secuencial (lista enlazada)
     @OneToOne(fetch = FetchType.LAZY)
@@ -42,4 +59,5 @@ public class UnidadAprendizajeEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idSiguiente", unique = true)
     private UnidadAprendizajeEntity siguiente;
+
 }

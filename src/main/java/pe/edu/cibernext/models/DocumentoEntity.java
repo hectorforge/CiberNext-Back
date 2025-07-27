@@ -1,9 +1,12 @@
 package pe.edu.cibernext.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@ToString(exclude = {"tipoDocumento", "unidadAprendizaje"})
+@EqualsAndHashCode(exclude = {"tipoDocumento", "unidadAprendizaje" })
 @Entity
 @Table(name = "Documento")
 public class DocumentoEntity {
@@ -20,7 +23,9 @@ public class DocumentoEntity {
     @Column(columnDefinition = "TEXT")
     private String descripcion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    // Relaciones .............................................................
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tipo_documento_id")
     private TipoDocumentoEntity tipoDocumento;
 

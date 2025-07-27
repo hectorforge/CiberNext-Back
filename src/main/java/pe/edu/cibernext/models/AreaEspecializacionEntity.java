@@ -1,9 +1,14 @@
 package pe.edu.cibernext.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
+import java.util.List;
+
+@Getter
+@Setter
+@ToString(exclude = "curriculas")
+@EqualsAndHashCode(exclude = "curriculas")
 @Entity
 @Table(name = "AreaEspecializacion")
 public class AreaEspecializacionEntity {
@@ -16,4 +21,10 @@ public class AreaEspecializacionEntity {
 
     @Column(columnDefinition = "TEXT")
     private String descripcion;
+
+    // Relaciones .............................................................
+
+    @OneToMany(mappedBy = "areaEspecializacion", fetch = FetchType.LAZY)
+    private List<CurriculaEntity> curriculas;
+
 }

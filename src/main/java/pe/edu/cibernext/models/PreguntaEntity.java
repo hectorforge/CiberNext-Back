@@ -1,9 +1,13 @@
 package pe.edu.cibernext.models;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@ToString(exclude = {"evaluacion", "tipoPregunta", "respuestas", "intentosRespuestas"})
+@EqualsAndHashCode(exclude = {"evaluacion", "tipoPregunta", "respuestas", "intentosRespuestas"})
 @Entity
 @Table(name = "Pregunta")
 public class PreguntaEntity {
@@ -13,6 +17,8 @@ public class PreguntaEntity {
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String descripcion;
+
+    // Relaciones .............................................................
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "evaluacion_id", nullable = false)
@@ -24,4 +30,7 @@ public class PreguntaEntity {
 
     @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RespuestaEntity> respuestas;
+
+    @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<IntentoRespuestaEntity> intentosRespuestas;
 }

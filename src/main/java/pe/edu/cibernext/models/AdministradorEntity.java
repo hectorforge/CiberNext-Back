@@ -9,5 +9,4 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "Administrador")
 @PrimaryKeyJoinColumn(name = "usuario_id")
-public class AdministradorEntity extends UsuarioEntity {
-}
+public class AdministradorEntity extends UsuarioEntity { }

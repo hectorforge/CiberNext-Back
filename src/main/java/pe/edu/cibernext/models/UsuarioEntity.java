@@ -1,9 +1,12 @@
 package pe.edu.cibernext.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@ToString(exclude = "rol")
+@EqualsAndHashCode(exclude = "rol")
 @Entity
 @Table(name = "Usuario")
 @Inheritance(strategy = InheritanceType.JOINED) // Estrategia de herencia clave
@@ -23,6 +26,8 @@ public class UsuarioEntity {
 
     @Column(nullable = false)
     private String password;
+
+    // Relaciones .............................................................
 
     @ManyToOne(fetch = FetchType.EAGER) // Eager para que el rol se cargue siempre con el usuario
     @JoinColumn(name = "rol_id", nullable = false)

@@ -1,15 +1,20 @@
 package pe.edu.cibernext.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@ToString(exclude = {"intento", "pregunta", "respuesta"})
+@EqualsAndHashCode(exclude = {"intento", "pregunta", "respuesta"})
 @Entity
 @Table(name = "IntentoRespuesta")
 public class IntentoRespuestaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    // Relaciones .............................................................
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "intento_id", nullable = false)
