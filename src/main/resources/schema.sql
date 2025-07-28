@@ -240,3 +240,28 @@ CREATE TABLE `Consultas` (
 
 -- Habilitar la verificación de claves foráneas nuevamente
 SET FOREIGN_KEY_CHECKS=1;
+
+
+
+
+-- ---------------------------------
+-- NUEVA TABLA: Registro de visualización por unidad
+-- ---------------------------------
+
+DROP TABLE IF EXISTS `UnidadVista`;
+CREATE TABLE `UnidadVista` (
+    `id` BIGINT PRIMARY KEY AUTO_INCREMENT,
+    `unidadAprendizajeId` BIGINT NOT NULL,
+    `registroAlumnoId` BIGINT NOT NULL,
+    `fechaVisualizacion` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT `fk_vista_unidad` FOREIGN KEY (`unidadAprendizajeId`) REFERENCES `UnidadAprendizaje` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_vista_registro` FOREIGN KEY (`registroAlumnoId`) REFERENCES `RegistroAlumno` (`id`) ON DELETE CASCADE,
+    UNIQUE (`unidadAprendizajeId`, `registroAlumnoId`)
+) COMMENT='Registra que el alumno ha visualizado una unidad específica.';
+
+
+
+
+
+
+

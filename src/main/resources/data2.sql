@@ -280,3 +280,11 @@ INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alum
 -- Fernando Torres (Usuario ID: 14), que también lleva el curso, añade un punto.
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
     (17, NULL, '¡Buenísimo! Y eso también facilita mucho las pruebas unitarias. En el "después", podemos pasarle un `MockDatabase` al `Notificador` para probarlo sin necesidad de una base de datos real.', 14, NULL, 108, 15);
+
+
+INSERT INTO `UnidadVista` (`unidadAprendizajeId`, `registroAlumnoId`) VALUES
+(1, 1),  -- HTML Semántico
+(2, 1),  -- Formularios y Accesibilidad
+(3, 1),  -- CSS Moderno
+(4, 1),  -- Flexbox
+(6, 1);  -- Responsive Design

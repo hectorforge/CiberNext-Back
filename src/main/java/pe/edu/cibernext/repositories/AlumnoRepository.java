@@ -5,4 +5,5 @@ import pe.edu.cibernext.models.AlumnoEntity;
 
 public interface AlumnoRepository extends JpaRepository<AlumnoEntity,Long> {
 
+
 }
