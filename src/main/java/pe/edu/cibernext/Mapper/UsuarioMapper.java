@@ -1,9 +1,9 @@
 package pe.edu.cibernext.Mapper;
 
-import pe.edu.cibernext.models.RolEntity;
-import pe.edu.cibernext.models.UsuarioEntity;
+import pe.edu.cibernext.models.*;
 import pe.edu.cibernext.models.dto.RolDto;
 import pe.edu.cibernext.models.dto.UsuarioDto;
+import pe.edu.cibernext.models.dto.UsuarioRegistroDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +25,7 @@ public class UsuarioMapper {
         return dto;
     }
 
+
     public static UsuarioEntity toEntity(UsuarioDto dto) {
         UsuarioEntity entity = new UsuarioEntity();
         entity.setId(dto.getId());
@@ -40,6 +41,28 @@ public class UsuarioMapper {
 
         return entity;
     }
+
+
+    // ✅ NUEVO: convierte RegistroDto + Rol -> instancia hija adecuada
+    public static UsuarioEntity toEntity(UsuarioRegistroDto dto, RolEntity rol) {
+        UsuarioEntity entity;
+
+        switch (rol.getNombre().toUpperCase()) {
+            case "ROL_ALUMNO" -> entity = new AlumnoEntity();
+            case "ROL_PROFESOR" -> entity = new ProfesorEntity();
+            case "ROL_ADMINISTRADOR" -> entity = new AdministradorEntity();
+            default -> throw new RuntimeException("Rol desconocido: " + rol.getNombre());
+        }
+
+        entity.setNombre(dto.getNombre());
+        entity.setCorreo(dto.getCorreo());
+        entity.setDni(dto.getDni());
+        entity.setPassword(dto.getPassword()); // ⚠️ en producción, encripta esto
+        entity.setRol(rol);
+
+        return entity;
+    }
+
 
 
     public static List<UsuarioDto> toDtoList(List<UsuarioEntity> entities) {

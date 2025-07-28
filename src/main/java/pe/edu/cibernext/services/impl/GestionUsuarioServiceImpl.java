@@ -3,11 +3,10 @@ package pe.edu.cibernext.services.impl;
 import pe.edu.cibernext.Mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pe.edu.cibernext.models.RolEntity;
-import pe.edu.cibernext.models.UsuarioEntity;
+import pe.edu.cibernext.models.*;
 import pe.edu.cibernext.models.dto.UsuarioDto;
-import pe.edu.cibernext.repositories.RolRepository;
-import pe.edu.cibernext.repositories.UsuarioRepository;
+import pe.edu.cibernext.models.dto.UsuarioRegistroDto;
+import pe.edu.cibernext.repositories.*;
 import pe.edu.cibernext.services.UsuarioService;
 
 import java.util.List;
@@ -19,6 +18,9 @@ public class GestionUsuarioServiceImpl  implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
 
     private final RolRepository rolRepository;
+    private final AlumnoRepository alumnoRepository;
+    private final ProfesorRepository profesorRepository;
+    private final AdministradorRepository administradorRepository;
 
     @Override
     public UsuarioDto buscarPorId(Long id) {
@@ -40,23 +42,19 @@ public class GestionUsuarioServiceImpl  implements UsuarioService {
     }
 
     @Override
-    public UsuarioDto registrar(UsuarioDto dto) {
-        if (dto.getRol() == null || dto.getRol().getId() == null) {
-            throw new IllegalArgumentException("El rol es obligatorio");
-        }
-
-        RolEntity rol = rolRepository.findById(dto.getRol().getId())
+    public UsuarioDto registrar(UsuarioRegistroDto dto) {
+        RolEntity rol = rolRepository.findById(dto.getRolId())
                 .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
 
-        UsuarioEntity entity = new UsuarioEntity();
-        entity.setNombre(dto.getNombre());
-        entity.setDni(dto.getDni());
-        entity.setCorreo(dto.getCorreo());
-        entity.setPassword("123"); // temporal
-        entity.setRol(rol); // seteo directo
+        UsuarioEntity usuario = UsuarioMapper.toEntity(dto, rol);
+        UsuarioEntity guardado = usuarioRepository.save(usuario);
 
-        return UsuarioMapper.toDto(usuarioRepository.save(entity));
+        return UsuarioMapper.toDto(guardado);
     }
+
+
+
+
 
     @Override
     public UsuarioDto actualizar(UsuarioDto dto) {
