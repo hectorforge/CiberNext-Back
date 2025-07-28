@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pe.edu.cibernext.models.RolEntity;
 import pe.edu.cibernext.models.UsuarioEntity;
-import pe.edu.cibernext.models.dto.RolDto;
 import pe.edu.cibernext.models.dto.UsuarioDto;
 import pe.edu.cibernext.repositories.RolRepository;
 import pe.edu.cibernext.repositories.UsuarioRepository;

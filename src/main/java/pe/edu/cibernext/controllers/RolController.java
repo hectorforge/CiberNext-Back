@@ -19,17 +19,17 @@ public class RolController {
     RolService rolService;
 
 
-    @GetMapping("/ListarRoles")
+    @GetMapping("/listar")
     public ResponseEntity<List<RolDto>> listarTodos() {
         return ResponseEntity.ok(rolService.listarTodos());
     }
 
-    @GetMapping("/ListarRolesConUsuarios")
+    @GetMapping("/ListarConUsuarios")
     public ResponseEntity<List<RolConUsuariosDto>> listarConUsuarios() {
         return ResponseEntity.ok(rolService.listarRolesConUsuarios());
     }
 
-    @GetMapping("/BuscarRol/{id}")
+    @GetMapping("/Buscar/{id}")
     public ResponseEntity<RolConUsuariosDto> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(rolService.buscarPorId(id));
     }
