@@ -1,6 +1,6 @@
 package pe.edu.cibernext.services.impl;
 
-import pe.edu.cibernext.Mapper.UsuarioMapper;
+import pe.edu.cibernext.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pe.edu.cibernext.models.*;
@@ -51,9 +51,6 @@ public class GestionUsuarioServiceImpl  implements UsuarioService {
 
         return UsuarioMapper.toDto(guardado);
     }
-
-
-
 
 
     @Override

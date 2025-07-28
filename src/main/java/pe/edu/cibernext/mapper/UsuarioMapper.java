@@ -1,9 +1,10 @@
-package pe.edu.cibernext.Mapper;
+package pe.edu.cibernext.mapper;
 
 import pe.edu.cibernext.models.*;
 import pe.edu.cibernext.models.dto.RolDto;
 import pe.edu.cibernext.models.dto.UsuarioDto;
 import pe.edu.cibernext.models.dto.UsuarioRegistroDto;
+import pe.edu.cibernext.models.enums.Roles;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,11 +48,14 @@ public class UsuarioMapper {
     public static UsuarioEntity toEntity(UsuarioRegistroDto dto, RolEntity rol) {
         UsuarioEntity entity;
 
-        switch (rol.getNombre().toUpperCase()) {
-            case "ROL_ALUMNO" -> entity = new AlumnoEntity();
-            case "ROL_PROFESOR" -> entity = new ProfesorEntity();
-            case "ROL_ADMINISTRADOR" -> entity = new AdministradorEntity();
-            default -> throw new RuntimeException("Rol desconocido: " + rol.getNombre());
+        if (rol.getId().equals(Roles.ALUMNO.getCodigo())) {
+            entity = new AlumnoEntity();
+        } else if (rol.getId().equals(Roles.PROFESOR.getCodigo()) ) {
+            entity = new ProfesorEntity();
+        } else if (rol.getId().equals(Roles.ADMIN.getCodigo()) ) {
+            entity = new AdministradorEntity();
+        } else {
+            throw new RuntimeException("Rol desconocido: " + rol.getNombre());
         }
 
         entity.setNombre(dto.getNombre());

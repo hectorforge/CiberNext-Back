@@ -1,4 +1,4 @@
-package pe.edu.cibernext.Mapper;
+package pe.edu.cibernext.mapper;
 
 import pe.edu.cibernext.models.AlumnoEntity;
 import pe.edu.cibernext.models.dto.AlumnoDto;

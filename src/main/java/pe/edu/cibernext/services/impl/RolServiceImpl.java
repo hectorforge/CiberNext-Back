@@ -1,6 +1,6 @@
 package pe.edu.cibernext.services.impl;
 
-import pe.edu.cibernext.Mapper.RolMapper;
+import pe.edu.cibernext.mapper.RolMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pe.edu.cibernext.models.RolEntity;

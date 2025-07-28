@@ -2,12 +2,10 @@ package pe.edu.cibernext.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pe.edu.cibernext.Mapper.AlumnoMapper;
+import pe.edu.cibernext.mapper.AlumnoMapper;
 import pe.edu.cibernext.exceptions.RecursoNoEncontradoException;
 import pe.edu.cibernext.models.AlumnoEntity;
-import pe.edu.cibernext.models.RolEntity;
 import pe.edu.cibernext.models.dto.AlumnoDto;
-import pe.edu.cibernext.models.dto.AlumnoRegistroDto;
 import pe.edu.cibernext.repositories.AlumnoRepository;
 import pe.edu.cibernext.repositories.RolRepository;
 import pe.edu.cibernext.services.AlumnoService;
