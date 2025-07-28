@@ -1,12 +1,20 @@
 package pe.edu.cibernext.mapper;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import pe.edu.cibernext.models.CursoEntity;
+import pe.edu.cibernext.models.UnidadAprendizajeEntity;
 import pe.edu.cibernext.models.dto.CursoDto;
+import pe.edu.cibernext.models.dto.UnidadAprendizajeRespuestaDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
+
 public class CursoMapper {
+
+
     public static CursoDto toDto(CursoEntity entity) {
         CursoDto dto = new CursoDto();
         dto.setId(entity.getId());
@@ -28,4 +36,6 @@ public class CursoMapper {
     public static List<CursoDto> toDtoList(List<CursoEntity> entities) {
         return entities.stream().map(CursoMapper::toDto).collect(Collectors.toList());
     }
+
+
 }
