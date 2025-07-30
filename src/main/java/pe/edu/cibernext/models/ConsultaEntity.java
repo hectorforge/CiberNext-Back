@@ -25,6 +25,8 @@ public class ConsultaEntity {
 
     private LocalDateTime fecha;
 
+    private boolean estado;
+
     // Relaciones .............................................................
 
     @ManyToOne(fetch = FetchType.LAZY)
