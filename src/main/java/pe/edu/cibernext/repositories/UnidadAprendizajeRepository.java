@@ -11,4 +11,6 @@ public interface UnidadAprendizajeRepository extends JpaRepository<UnidadAprendi
 
     List<UnidadAprendizajeEntity> findByCursoId(Long cursoId);
 
+    List<UnidadAprendizajeEntity> findAllByPadreIsNullOrderById();
+
 }

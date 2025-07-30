@@ -1,6 +1,7 @@
 package pe.edu.cibernext.services;
 
 import pe.edu.cibernext.models.dto.UnidadAprendizajeDto;
+import pe.edu.cibernext.models.dto.UnidadAprendizajeJerarquicoDto;
 import pe.edu.cibernext.models.dto.UnidadAprendizajeRespuestaDto;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface UnidadAprendizajeService {
     UnidadAprendizajeDto registrar(UnidadAprendizajeDto dto);
     UnidadAprendizajeDto actualizar(UnidadAprendizajeDto dto);
     void eliminarPorId(Long id);
+
+    List<UnidadAprendizajeJerarquicoDto> listarJerarquico();
 }

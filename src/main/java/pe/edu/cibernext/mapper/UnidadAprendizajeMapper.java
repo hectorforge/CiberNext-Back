@@ -13,7 +13,7 @@ public class UnidadAprendizajeMapper {
 
     private final CursoMapper cursoMapper;
 
-    public UnidadAprendizajeDto toDto(UnidadAprendizajeEntity entity) {
+    public static UnidadAprendizajeDto toDto(UnidadAprendizajeEntity entity) {
         UnidadAprendizajeDto dto = new UnidadAprendizajeDto();
         dto.setId(entity.getId());
         dto.setNombre(entity.getNombre());

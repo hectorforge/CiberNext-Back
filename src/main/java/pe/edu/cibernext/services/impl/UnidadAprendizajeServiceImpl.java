@@ -2,10 +2,12 @@ package pe.edu.cibernext.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pe.edu.cibernext.mapper.UnidadAprendizajeJerarquicoMapper;
 import pe.edu.cibernext.mapper.UnidadAprendizajeMapper;
 import pe.edu.cibernext.models.CursoEntity;
 import pe.edu.cibernext.models.UnidadAprendizajeEntity;
 import pe.edu.cibernext.models.dto.UnidadAprendizajeDto;
+import pe.edu.cibernext.models.dto.UnidadAprendizajeJerarquicoDto;
 import pe.edu.cibernext.models.dto.UnidadAprendizajeRespuestaDto;
 import pe.edu.cibernext.repositories.CursoRepository;
 import pe.edu.cibernext.repositories.UnidadAprendizajeRepository;
@@ -69,5 +71,12 @@ public class UnidadAprendizajeServiceImpl implements UnidadAprendizajeService {
     @Override
     public void eliminarPorId(Long id) {
         unidadRepo.deleteById(id);
+    }
+
+
+    @Override
+    public List<UnidadAprendizajeJerarquicoDto> listarJerarquico() {
+        var unidadesPadre = unidadRepo.findAllByPadreIsNullOrderById();
+        return UnidadAprendizajeJerarquicoMapper.toDtoList(unidadesPadre);
     }
 }

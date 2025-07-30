@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.cibernext.models.dto.UnidadAprendizajeDto;
+import pe.edu.cibernext.models.dto.UnidadAprendizajeJerarquicoDto;
 import pe.edu.cibernext.models.dto.UnidadAprendizajeRespuestaDto;
 import pe.edu.cibernext.services.UnidadAprendizajeService;
 
@@ -46,6 +47,11 @@ public class UnidadAprendizajeController {
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         unidadService.eliminarPorId(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/jerarquico")
+    public List<UnidadAprendizajeJerarquicoDto> listarJerarquico() {
+        return unidadService.listarJerarquico();
     }
 
 }

@@ -26,7 +26,6 @@ public class AlumnoController {
         return ResponseEntity.ok(alumnoService.verificarExistenciaPorId(id));
     }
 
-
     @GetMapping("/listar")
     public ResponseEntity<List<AlumnoDto>> listarAlumnos() {
         return ResponseEntity.ok(alumnoService.listarTodos());

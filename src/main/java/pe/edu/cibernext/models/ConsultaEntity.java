@@ -1,11 +1,12 @@
 package pe.edu.cibernext.models;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.*;
-import org.jetbrains.annotations.Nullable;
+
 
 @Getter
 @Setter
