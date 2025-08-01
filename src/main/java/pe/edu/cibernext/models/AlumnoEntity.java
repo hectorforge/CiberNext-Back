@@ -15,6 +15,18 @@ import java.util.Set;
 @PrimaryKeyJoinColumn(name = "usuario_id")
 public class AlumnoEntity extends UsuarioEntity {
 
+    @Column(name = "codigo_alumno", unique = true, length = 20)
+    private String codigoAlumno;
+
+    @Column(name = "correo_personal", length = 100)
+    private String correoPersonal;
+
+    @Column(name = "pais", length = 100)
+    private String pais;
+
+    @Column(name = "foto_perfil", length = 500)
+    private String fotoPerfil;
+
     // Relaciones .............................................................
 
     @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)

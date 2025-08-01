@@ -62,8 +62,36 @@ INSERT INTO `Usuario` (`id`, `nombre`, `dni`, `correo`, `password`, `rol_id`) VA
 -- 3. ESPECIALIZAR USUARIOS (POBLAR TABLAS HIJAS)
 -- -----------------------------------------------------------
 INSERT INTO `Administrador` (`usuario_id`) VALUES (1), (2);
-INSERT INTO `Profesor` (`usuario_id`) VALUES (3), (4), (5), (6), (7), (8), (19);
-INSERT INTO `Alumno` (`usuario_id`) VALUES (9), (10), (11), (12), (13), (14), (15), (16), (17), (18), (20), (21), (22), (23), (24), (25), (26), (27), (28), (29);
+INSERT INTO `Profesor` (`usuario_id`, `codigo_profesor`, `correo_profesional`, `biografia`, `foto_perfil`) VALUES
+(3, 'PROF-0001', 'csantana@academia.com', 'Especialista en Java y frameworks modernos.', 'https://img.com/csantana.jpg'),
+(4, 'PROF-0002', 'dprince@academia.com', 'Ingeniera de software con experiencia en gestión ágil.', 'https://img.com/dprince.jpg'),
+(5, 'PROF-0003', 'rtapia@academia.com', 'Amante de las bases de datos relacionales y NoSQL.', 'https://img.com/rtapia.jpg'),
+(6, 'PROF-0004', 'astark@academia.com', 'Arquitecto de software y evangelista de Spring Boot.', 'https://img.com/astark.jpg'),
+(7, 'PROF-0005', 'bgordon@academia.com', 'Profesora enfocada en desarrollo web full stack.', 'https://img.com/bgordon.jpg'),
+(8, 'PROF-0006', 'srogers@academia.com', 'Desarrollador mobile y docente motivacional.', 'https://img.com/srogers.jpg'),
+(19, 'PROF-0007', 'nromanoff@academia.com', 'Docente de tecnologías frontend y accesibilidad.', 'https://img.com/nromanoff.jpg');
+
+INSERT INTO `Alumno` (`usuario_id`, `codigo_alumno`, `correo_personal`, `pais`, `foto_perfil`) VALUES
+(9, 'ALU-0001', 'ana.lopez@gmail.com', 'Perú', 'https://img.com/ana.jpg'),
+(10, 'ALU-0002', 'bruno.diaz@gmail.com', 'Argentina', 'https://img.com/bruno.jpg'),
+(11, 'ALU-0003', 'carla.kent@gmail.com', 'México', 'https://img.com/carla.jpg'),
+(12, 'ALU-0004', 'david.perez@gmail.com', 'Colombia', 'https://img.com/david.jpg'),
+(13, 'ALU-0005', 'elena.garcia@gmail.com', 'Perú', 'https://img.com/elena.jpg'),
+(14, 'ALU-0006', 'fernando.torres@gmail.com', 'Chile', 'https://img.com/fernando.jpg'),
+(15, 'ALU-0007', 'gabriela.solis@gmail.com', 'Perú', 'https://img.com/gabriela.jpg'),
+(16, 'ALU-0008', 'hugo.sanchez@gmail.com', 'México', 'https://img.com/hugo.jpg'),
+(17, 'ALU-0009', 'irene.adler@gmail.com', 'Ecuador', 'https://img.com/irene.jpg'),
+(18, 'ALU-0010', 'javier.mascherano@gmail.com', 'Argentina', 'https://img.com/javier.jpg'),
+(20, 'ALU-0011', 'laura.jimenez@gmail.com', 'Perú', 'https://img.com/laura.jpg'),
+(21, 'ALU-0012', 'marcos.rojo@gmail.com', 'Argentina', 'https://img.com/marcos.jpg'),
+(22, 'ALU-0013', 'nora.castillo@gmail.com', 'Colombia', 'https://img.com/nora.jpg'),
+(23, 'ALU-0014', 'oscar.velez@gmail.com', 'Perú', 'https://img.com/oscar.jpg'),
+(24, 'ALU-0015', 'patricia.luna@gmail.com', 'Chile', 'https://img.com/patricia.jpg'),
+(25, 'ALU-0016', 'raul.gonzalez@gmail.com', 'México', 'https://img.com/raul.jpg'),
+(26, 'ALU-0017', 'sofia.vergara@gmail.com', 'Colombia', 'https://img.com/sofia.jpg'),
+(27, 'ALU-0018', 'tomas.rincon@gmail.com', 'Venezuela', 'https://img.com/tomas.jpg'),
+(28, 'ALU-0019', 'ursula.corbero@gmail.com', 'España', 'https://img.com/ursula.jpg'),
+(29, 'ALU-0020', 'victor.valdes@gmail.com', 'España', 'https://img.com/victor.jpg');
 
 
 -- -----------------------------------------------------------

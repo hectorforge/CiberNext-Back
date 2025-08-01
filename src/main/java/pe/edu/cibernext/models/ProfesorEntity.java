@@ -15,6 +15,19 @@ import java.util.Set;
 @PrimaryKeyJoinColumn(name = "usuario_id")
 public class ProfesorEntity extends UsuarioEntity {
 
+
+    @Column(name = "codigo_profesor", unique = true, length = 20)
+    private String codigoProfesor;
+
+    @Column(name = "correo_profesional", length = 100)
+    private String correoProfesional;
+
+    @Column(name = "biografia", columnDefinition = "TEXT")
+    private String biografia;
+
+    @Column(name = "foto_perfil", length = 500)
+    private String fotoPerfil;
+
     // Relaciones .............................................................
 
     @ManyToMany(mappedBy = "profesores")

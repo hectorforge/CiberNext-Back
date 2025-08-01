@@ -34,15 +34,27 @@ CREATE TABLE `Administrador` (
 -- Tabla para la especialización "Profesor"
 DROP TABLE IF EXISTS `Profesor`;
 CREATE TABLE `Profesor` (
-                            `usuario_id` BIGINT PRIMARY KEY,
-                            CONSTRAINT `fk_profesor_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `Usuario` (`id`) ON DELETE CASCADE
+    `usuario_id` BIGINT PRIMARY KEY,
+
+    `codigo_profesor` VARCHAR(20) UNIQUE NOT NULL,
+    `correo_profesional` VARCHAR(100),
+    `biografia` TEXT,
+    `foto_perfil` VARCHAR(500),
+
+    CONSTRAINT `fk_profesor_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `Usuario` (`id`) ON DELETE CASCADE
 ) COMMENT='Especialización de Usuario para Profesores.';
 
 -- Tabla para la especialización "Alumno"
 DROP TABLE IF EXISTS `Alumno`;
 CREATE TABLE `Alumno` (
-                          `usuario_id` BIGINT PRIMARY KEY,
-                          CONSTRAINT `fk_alumno_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `Usuario` (`id`) ON DELETE CASCADE
+    `usuario_id` BIGINT PRIMARY KEY,
+
+    `codigo_alumno` VARCHAR(20) UNIQUE NOT NULL,
+    `correo_personal` VARCHAR(100),
+    `pais` VARCHAR(100),
+    `foto_perfil` VARCHAR(500),
+
+    CONSTRAINT `fk_alumno_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `Usuario` (`id`) ON DELETE CASCADE
 ) COMMENT='Especialización de Usuario para Alumnos.';
 
 
