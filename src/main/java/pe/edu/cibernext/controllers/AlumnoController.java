@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.cibernext.models.dto.AlumnoDto;
-import pe.edu.cibernext.models.dto.UsuarioDto;
 import pe.edu.cibernext.services.AlumnoService;
 
 import java.util.List;
