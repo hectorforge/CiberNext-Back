@@ -18,7 +18,6 @@ public class RolController {
     @Autowired
     RolService rolService;
 
-
     @GetMapping("/listar")
     public ResponseEntity<List<RolDto>> listarTodos() {
         return ResponseEntity.ok(rolService.listarTodos());

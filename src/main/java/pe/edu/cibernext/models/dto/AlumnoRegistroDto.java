@@ -1,5 +1,4 @@
 package pe.edu.cibernext.models.dto;
-
 import lombok.Data;
 
 @Data
