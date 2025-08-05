@@ -1,7 +1,6 @@
 package pe.edu.cibernext.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pe.edu.cibernext.exceptions.RecursoNoEncontradoException;
 import pe.edu.cibernext.mapper.ProfesorMapper;
@@ -21,7 +20,6 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     private final ProfesorRepository profesorRepository;
     private final RolRepository rolRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     public ProfesorDto buscarPorId(Long id) {
@@ -47,14 +45,16 @@ public class ProfesorServiceImpl implements ProfesorService {
     public ProfesorDto registrar(ProfesorRegistroDto profesorRegistroDto) {
 
         var rol = rolRepository.findById(profesorRegistroDto.getRolId())
-               .orElseThrow(() -> new RecursoNoEncontradoException("Rol no encontrado con ID: " + profesorRegistroDto.getRolId()));
-
+                .orElseThrow(() -> new RecursoNoEncontradoException("Rol no encontrado con ID: " + profesorRegistroDto.getRolId()));
 
         ProfesorEntity profesor = new ProfesorEntity();
         profesor.setNombre(profesorRegistroDto.getNombre());
         profesor.setDni(profesorRegistroDto.getDni());
         profesor.setCorreo(profesorRegistroDto.getCorreo());
-        profesor.setPassword(passwordEncoder.encode(profesorRegistroDto.getPassword()));
+
+        // Por ahora, guardar contraseña tal cual (sin encriptar)
+        profesor.setPassword(profesorRegistroDto.getPassword());
+
         profesor.setRol(rol);
         profesor.setCodigoProfesor(profesorRegistroDto.getCodigoProfesor());
         profesor.setCorreoProfesional(profesorRegistroDto.getCorreoProfesional());
