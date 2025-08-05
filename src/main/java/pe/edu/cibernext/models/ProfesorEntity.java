@@ -25,8 +25,6 @@ public class ProfesorEntity extends UsuarioEntity {
     @Column(name = "biografia", columnDefinition = "TEXT")
     private String biografia;
 
-    @Column(name = "foto_perfil", length = 500)
-    private String fotoPerfil;
 
     // Relaciones .............................................................
 

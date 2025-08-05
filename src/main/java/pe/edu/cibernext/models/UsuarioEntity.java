@@ -24,6 +24,9 @@ public class UsuarioEntity {
     @Column(unique = true, nullable = false)
     private String correo;
 
+    @Column(name = "foto_perfil", length = 500)
+    private String fotoPerfil;
+
     @Column(nullable = false)
     private String password;
 

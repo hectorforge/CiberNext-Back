@@ -21,14 +21,12 @@ public class RegistroAlumnoMapper {
         dto.setNombreAlumno(entity.getAlumno().getNombre());
         dto.setCorreoAlumno(entity.getAlumno().getCorreoPersonal());
         dto.setCodigoAlumno(entity.getAlumno().getCodigoAlumno());
-        dto.setFotoAlumno(entity.getAlumno().getFotoPerfil());
 
         // Profesor
         dto.setProfesorId(entity.getProfesor().getId());
         dto.setNombreProfesor(entity.getProfesor().getNombre());
         dto.setCorreoProfesor(entity.getProfesor().getCorreoProfesional());
         dto.setCodigoProfesor(entity.getProfesor().getCodigoProfesor());
-        dto.setFotoProfesor(entity.getProfesor().getFotoPerfil());
 
         return dto;
     }

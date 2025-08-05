@@ -16,11 +16,9 @@ public class RegistroAlumnoResponseDto {
     private String nombreAlumno;
     private String correoAlumno;
     private String codigoAlumno;
-    private String fotoAlumno;
 
     private Long profesorId;
     private String nombreProfesor;
     private String correoProfesor;
     private String codigoProfesor;
-    private String fotoProfesor;
 }

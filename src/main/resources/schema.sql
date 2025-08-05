@@ -15,32 +15,30 @@ CREATE TABLE `Rol` (
 -- Tabla base para todos los usuarios del sistema
 DROP TABLE IF EXISTS `Usuario`;
 CREATE TABLE `Usuario` (
-                           `id` BIGINT PRIMARY KEY AUTO_INCREMENT,
-                           `nombre` VARCHAR(255) NOT NULL,
-                           `dni` VARCHAR(20) UNIQUE NOT NULL,
-                           `correo` VARCHAR(255) UNIQUE NOT NULL,
-                           `password` VARCHAR(255) NOT NULL COMMENT 'Contraseña encriptada',
-                           `rol_id` BIGINT NOT NULL,
-                           CONSTRAINT `fk_usuario_rol` FOREIGN KEY (`rol_id`) REFERENCES `Rol` (`id`)
+    `id` BIGINT PRIMARY KEY AUTO_INCREMENT,
+    `nombre` VARCHAR(255) NOT NULL,
+    `dni` VARCHAR(20) UNIQUE NOT NULL,
+    `correo` VARCHAR(255) UNIQUE NOT NULL,
+    `password` VARCHAR(255) NOT NULL COMMENT 'Contraseña encriptada',
+    `foto_perfil` VARCHAR(500),
+    `rol_id` BIGINT NOT NULL,
+    CONSTRAINT `fk_usuario_rol` FOREIGN KEY (`rol_id`) REFERENCES `Rol` (`id`)
 ) COMMENT='Tabla base para todos los tipos de usuarios. Utiliza estrategia de herencia JOINED.';
 
 -- Tabla para la especialización "Administrador"
 DROP TABLE IF EXISTS `Administrador`;
 CREATE TABLE `Administrador` (
-                                 `usuario_id` BIGINT PRIMARY KEY,
-                                 CONSTRAINT `fk_admin_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `Usuario` (`id`) ON DELETE CASCADE
+    `usuario_id` BIGINT PRIMARY KEY,
+    CONSTRAINT `fk_admin_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `Usuario` (`id`) ON DELETE CASCADE
 ) COMMENT='Especialización de Usuario para Administradores.';
 
 -- Tabla para la especialización "Profesor"
 DROP TABLE IF EXISTS `Profesor`;
 CREATE TABLE `Profesor` (
     `usuario_id` BIGINT PRIMARY KEY,
-
     `codigo_profesor` VARCHAR(20) UNIQUE NOT NULL,
     `correo_profesional` VARCHAR(100),
     `biografia` TEXT,
-    `foto_perfil` VARCHAR(500),
-
     CONSTRAINT `fk_profesor_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `Usuario` (`id`) ON DELETE CASCADE
 ) COMMENT='Especialización de Usuario para Profesores.';
 
@@ -48,14 +46,12 @@ CREATE TABLE `Profesor` (
 DROP TABLE IF EXISTS `Alumno`;
 CREATE TABLE `Alumno` (
     `usuario_id` BIGINT PRIMARY KEY,
-
     `codigo_alumno` VARCHAR(20) UNIQUE NOT NULL,
     `correo_personal` VARCHAR(100),
     `pais` VARCHAR(100),
-    `foto_perfil` VARCHAR(500),
-
     CONSTRAINT `fk_alumno_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `Usuario` (`id`) ON DELETE CASCADE
 ) COMMENT='Especialización de Usuario para Alumnos.';
+
 
 
 -- ---------------------------------

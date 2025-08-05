@@ -7,8 +7,9 @@ import java.util.List;
 
 @Data
 public class UnidadAprendizajeJerarquicoDto {
-    /*private Long id;*/
+    private Long id;
     private String nombre;
+    private String descripcion;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<UnidadAprendizajeJerarquicoDto> subUnidades;
 }

@@ -24,9 +24,6 @@ public class AlumnoEntity extends UsuarioEntity {
     @Column(name = "pais", length = 100)
     private String pais;
 
-    @Column(name = "foto_perfil", length = 500)
-    private String fotoPerfil;
-
     // Relaciones .............................................................
 
     @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)

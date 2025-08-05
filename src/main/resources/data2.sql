@@ -21,77 +21,78 @@ INSERT INTO `Rol` (`id`, `nombre`) VALUES
 SET @hashed_password = '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqR2e5dOKJdaLACL9CFgVGXRcix.';
 
 -- == Administradores (rol_id = 1) ==
-INSERT INTO `Usuario` (`id`, `nombre`, `dni`, `correo`, `password`, `rol_id`) VALUES
-                                                                                  (1, 'Admin General', '00000001', 'admin@sistema.com', @hashed_password, 1),
-                                                                                  (2, 'Coordinador Academico', '00000002', 'coordinador@sistema.com', @hashed_password, 1);
+INSERT INTO `Usuario` (`id`, `nombre`, `dni`, `correo`, `password`, `foto_perfil`, `rol_id`) VALUES
+(1, 'Admin General', '00000001', 'admin@sistema.com', @hashed_password, NULL, 1),
+(2, 'Coordinador Academico', '00000002', 'coordinador@sistema.com', @hashed_password, NULL, 1);
 
 -- == Profesores (rol_id = 2) ==
-INSERT INTO `Usuario` (`id`, `nombre`, `dni`, `correo`, `password`, `rol_id`) VALUES
-                                                                                  (3, 'Carlos Santana', '10000001', 'c.santana@profesor.com', @hashed_password, 2),
-                                                                                  (4, 'Diana Prince', '10000002', 'd.prince@profesor.com', @hashed_password, 2),
-                                                                                  (5, 'Ricardo Tapia', '10000003', 'r.tapia@profesor.com', @hashed_password, 2),
-                                                                                  (6, 'Anthony Stark', '10000004', 'a.stark@profesor.com', @hashed_password, 2),
-                                                                                  (7, 'Barbara Gordon', '10000005', 'b.gordon@profesor.com', @hashed_password, 2),
-                                                                                  (8, 'Steve Rogers', '10000006', 's.rogers@profesor.com', @hashed_password, 2),
-                                                                                  (19, 'Natasha Romanoff', '10000007', 'n.romanoff@profesor.com', @hashed_password, 2);
+INSERT INTO `Usuario` (`id`, `nombre`, `dni`, `correo`, `password`, `foto_perfil`, `rol_id`) VALUES
+(3, 'Carlos Santana', '10000001', 'c.santana@profesor.com', @hashed_password, 'https://img.com/csantana.jpg', 2),
+(4, 'Diana Prince', '10000002', 'd.prince@profesor.com', @hashed_password, 'https://img.com/dprince.jpg', 2),
+(5, 'Ricardo Tapia', '10000003', 'r.tapia@profesor.com', @hashed_password, 'https://img.com/rtapia.jpg', 2),
+(6, 'Anthony Stark', '10000004', 'a.stark@profesor.com', @hashed_password, 'https://img.com/astark.jpg', 2),
+(7, 'Barbara Gordon', '10000005', 'b.gordon@profesor.com', @hashed_password, 'https://img.com/bgordon.jpg', 2),
+(8, 'Steve Rogers', '10000006', 's.rogers@profesor.com', @hashed_password, 'https://img.com/srogers.jpg', 2),
+(19, 'Natasha Romanoff', '10000007', 'n.romanoff@profesor.com', @hashed_password, 'https://img.com/nromanoff.jpg', 2);
 
 -- == Alumnos (rol_id = 3) ==
-INSERT INTO `Usuario` (`id`, `nombre`, `dni`, `correo`, `password`, `rol_id`) VALUES
-                                                                                  (9, 'Ana Lopez', '20000001', 'ana.lopez@alumno.com', @hashed_password, 3),
-                                                                                  (10, 'Bruno Diaz', '20000002', 'bruno.diaz@alumno.com', @hashed_password, 3),
-                                                                                  (11, 'Carla Kent', '20000003', 'carla.kent@alumno.com', @hashed_password, 3),
-                                                                                  (12, 'David Perez', '20000004', 'david.perez@alumno.com', @hashed_password, 3),
-                                                                                  (13, 'Elena Garcia', '20000005', 'elena.garcia@alumno.com', @hashed_password, 3),
-                                                                                  (14, 'Fernando Torres', '20000006', 'fernando.t@alumno.com', @hashed_password, 3),
-                                                                                  (15, 'Gabriela Solis', '20000007', 'gabi.solis@alumno.com', @hashed_password, 3),
-                                                                                  (16, 'Hugo Sanchez', '20000008', 'hugo.sanchez@alumno.com', @hashed_password, 3),
-                                                                                  (17, 'Irene Adler', '20000009', 'irene.adler@alumno.com', @hashed_password, 3),
-                                                                                  (18, 'Javier Mascherano', '20000010', 'j.mascherano@alumno.com', @hashed_password, 3),
-                                                                                  (20, 'Laura Jimenez', '20000011', 'laura.j@alumno.com', @hashed_password, 3),
-                                                                                  (21, 'Marcos Rojo', '20000012', 'marcos.r@alumno.com', @hashed_password, 3),
-                                                                                  (22, 'Nora Castillo', '20000013', 'nora.c@alumno.com', @hashed_password, 3),
-                                                                                  (23, 'Oscar Velez', '20000014', 'oscar.v@alumno.com', @hashed_password, 3),
-                                                                                  (24, 'Patricia Luna', '20000015', 'patricia.l@alumno.com', @hashed_password, 3),
-                                                                                  (25, 'Raul Gonzalez', '20000016', 'raul.g@alumno.com', @hashed_password, 3),
-                                                                                  (26, 'Sofia Vergara', '20000017', 'sofia.v@alumno.com', @hashed_password, 3),
-                                                                                  (27, 'Tomas Rincon', '20000018', 'tomas.r@alumno.com', @hashed_password, 3),
-                                                                                  (28, 'Ursula Corbero', '20000019', 'ursula.c@alumno.com', @hashed_password, 3),
-                                                                                  (29, 'Victor Valdes', '20000020', 'victor.v@alumno.com', @hashed_password, 3);
+INSERT INTO `Usuario` (`id`, `nombre`, `dni`, `correo`, `password`, `foto_perfil`, `rol_id`) VALUES
+(9, 'Ana Lopez', '20000001', 'ana.lopez@alumno.com', @hashed_password, 'https://img.com/ana.jpg', 3),
+(10, 'Bruno Diaz', '20000002', 'bruno.diaz@alumno.com', @hashed_password, 'https://img.com/bruno.jpg', 3),
+(11, 'Carla Kent', '20000003', 'carla.kent@alumno.com', @hashed_password, 'https://img.com/carla.jpg', 3),
+(12, 'David Perez', '20000004', 'david.perez@alumno.com', @hashed_password, 'https://img.com/david.jpg', 3),
+(13, 'Elena Garcia', '20000005', 'elena.garcia@alumno.com', @hashed_password, 'https://img.com/elena.jpg', 3),
+(14, 'Fernando Torres', '20000006', 'fernando.t@alumno.com', @hashed_password, 'https://img.com/fernando.jpg', 3),
+(15, 'Gabriela Solis', '20000007', 'gabi.solis@alumno.com', @hashed_password, 'https://img.com/gabriela.jpg', 3),
+(16, 'Hugo Sanchez', '20000008', 'hugo.sanchez@alumno.com', @hashed_password, 'https://img.com/hugo.jpg', 3),
+(17, 'Irene Adler', '20000009', 'irene.adler@alumno.com', @hashed_password, 'https://img.com/irene.jpg', 3),
+(18, 'Javier Mascherano', '20000010', 'j.mascherano@alumno.com', @hashed_password, 'https://img.com/javier.jpg', 3),
+(20, 'Laura Jimenez', '20000011', 'laura.j@alumno.com', @hashed_password, 'https://img.com/laura.jpg', 3),
+(21, 'Marcos Rojo', '20000012', 'marcos.r@alumno.com', @hashed_password, 'https://img.com/marcos.jpg', 3),
+(22, 'Nora Castillo', '20000013', 'nora.c@alumno.com', @hashed_password, 'https://img.com/nora.jpg', 3),
+(23, 'Oscar Velez', '20000014', 'oscar.v@alumno.com', @hashed_password, 'https://img.com/oscar.jpg', 3),
+(24, 'Patricia Luna', '20000015', 'patricia.l@alumno.com', @hashed_password, 'https://img.com/patricia.jpg', 3),
+(25, 'Raul Gonzalez', '20000016', 'raul.g@alumno.com', @hashed_password, 'https://img.com/raul.jpg', 3),
+(26, 'Sofia Vergara', '20000017', 'sofia.v@alumno.com', @hashed_password, 'https://img.com/sofia.jpg', 3),
+(27, 'Tomas Rincon', '20000018', 'tomas.r@alumno.com', @hashed_password, 'https://img.com/tomas.jpg', 3),
+(28, 'Ursula Corbero', '20000019', 'ursula.c@alumno.com', @hashed_password, 'https://img.com/ursula.jpg', 3),
+(29, 'Victor Valdes', '20000020', 'victor.v@alumno.com', @hashed_password, 'https://img.com/victor.jpg', 3);
 
 -- -----------------------------------------------------------
 -- 3. ESPECIALIZAR USUARIOS (POBLAR TABLAS HIJAS)
 -- -----------------------------------------------------------
 INSERT INTO `Administrador` (`usuario_id`) VALUES (1), (2);
-INSERT INTO `Profesor` (`usuario_id`, `codigo_profesor`, `correo_profesional`, `biografia`, `foto_perfil`) VALUES
-(3, 'PROF-0001', 'csantana@academia.com', 'Especialista en Java y frameworks modernos.', 'https://img.com/csantana.jpg'),
-(4, 'PROF-0002', 'dprince@academia.com', 'Ingeniera de software con experiencia en gestión ágil.', 'https://img.com/dprince.jpg'),
-(5, 'PROF-0003', 'rtapia@academia.com', 'Amante de las bases de datos relacionales y NoSQL.', 'https://img.com/rtapia.jpg'),
-(6, 'PROF-0004', 'astark@academia.com', 'Arquitecto de software y evangelista de Spring Boot.', 'https://img.com/astark.jpg'),
-(7, 'PROF-0005', 'bgordon@academia.com', 'Profesora enfocada en desarrollo web full stack.', 'https://img.com/bgordon.jpg'),
-(8, 'PROF-0006', 'srogers@academia.com', 'Desarrollador mobile y docente motivacional.', 'https://img.com/srogers.jpg'),
-(19, 'PROF-0007', 'nromanoff@academia.com', 'Docente de tecnologías frontend y accesibilidad.', 'https://img.com/nromanoff.jpg');
 
-INSERT INTO `Alumno` (`usuario_id`, `codigo_alumno`, `correo_personal`, `pais`, `foto_perfil`) VALUES
-(9, 'ALU-0001', 'ana.lopez@gmail.com', 'Perú', 'https://img.com/ana.jpg'),
-(10, 'ALU-0002', 'bruno.diaz@gmail.com', 'Argentina', 'https://img.com/bruno.jpg'),
-(11, 'ALU-0003', 'carla.kent@gmail.com', 'México', 'https://img.com/carla.jpg'),
-(12, 'ALU-0004', 'david.perez@gmail.com', 'Colombia', 'https://img.com/david.jpg'),
-(13, 'ALU-0005', 'elena.garcia@gmail.com', 'Perú', 'https://img.com/elena.jpg'),
-(14, 'ALU-0006', 'fernando.torres@gmail.com', 'Chile', 'https://img.com/fernando.jpg'),
-(15, 'ALU-0007', 'gabriela.solis@gmail.com', 'Perú', 'https://img.com/gabriela.jpg'),
-(16, 'ALU-0008', 'hugo.sanchez@gmail.com', 'México', 'https://img.com/hugo.jpg'),
-(17, 'ALU-0009', 'irene.adler@gmail.com', 'Ecuador', 'https://img.com/irene.jpg'),
-(18, 'ALU-0010', 'javier.mascherano@gmail.com', 'Argentina', 'https://img.com/javier.jpg'),
-(20, 'ALU-0011', 'laura.jimenez@gmail.com', 'Perú', 'https://img.com/laura.jpg'),
-(21, 'ALU-0012', 'marcos.rojo@gmail.com', 'Argentina', 'https://img.com/marcos.jpg'),
-(22, 'ALU-0013', 'nora.castillo@gmail.com', 'Colombia', 'https://img.com/nora.jpg'),
-(23, 'ALU-0014', 'oscar.velez@gmail.com', 'Perú', 'https://img.com/oscar.jpg'),
-(24, 'ALU-0015', 'patricia.luna@gmail.com', 'Chile', 'https://img.com/patricia.jpg'),
-(25, 'ALU-0016', 'raul.gonzalez@gmail.com', 'México', 'https://img.com/raul.jpg'),
-(26, 'ALU-0017', 'sofia.vergara@gmail.com', 'Colombia', 'https://img.com/sofia.jpg'),
-(27, 'ALU-0018', 'tomas.rincon@gmail.com', 'Venezuela', 'https://img.com/tomas.jpg'),
-(28, 'ALU-0019', 'ursula.corbero@gmail.com', 'España', 'https://img.com/ursula.jpg'),
-(29, 'ALU-0020', 'victor.valdes@gmail.com', 'España', 'https://img.com/victor.jpg');
+INSERT INTO `Profesor` (`usuario_id`, `codigo_profesor`, `correo_profesional`, `biografia`) VALUES
+(3, 'PROF-0001', 'csantana@academia.com', 'Especialista en Java y frameworks modernos.'),
+(4, 'PROF-0002', 'dprince@academia.com', 'Ingeniera de software con experiencia en gestión ágil.'),
+(5, 'PROF-0003', 'rtapia@academia.com', 'Amante de las bases de datos relacionales y NoSQL.'),
+(6, 'PROF-0004', 'astark@academia.com', 'Arquitecto de software y evangelista de Spring Boot.'),
+(7, 'PROF-0005', 'bgordon@academia.com', 'Profesora enfocada en desarrollo web full stack.'),
+(8, 'PROF-0006', 'srogers@academia.com', 'Desarrollador mobile y docente motivacional.'),
+(19, 'PROF-0007', 'nromanoff@academia.com', 'Docente de tecnologías frontend y accesibilidad.');
+
+INSERT INTO `Alumno` (`usuario_id`, `codigo_alumno`, `correo_personal`, `pais`) VALUES
+(9, 'ALU-0001', 'ana.lopez@gmail.com', 'Perú'),
+(10, 'ALU-0002', 'bruno.diaz@gmail.com', 'Argentina'),
+(11, 'ALU-0003', 'carla.kent@gmail.com', 'México'),
+(12, 'ALU-0004', 'david.perez@gmail.com', 'Colombia'),
+(13, 'ALU-0005', 'elena.garcia@gmail.com', 'Perú'),
+(14, 'ALU-0006', 'fernando.torres@gmail.com', 'Chile'),
+(15, 'ALU-0007', 'gabriela.solis@gmail.com', 'Perú'),
+(16, 'ALU-0008', 'hugo.sanchez@gmail.com', 'México'),
+(17, 'ALU-0009', 'irene.adler@gmail.com', 'Ecuador'),
+(18, 'ALU-0010', 'javier.mascherano@gmail.com', 'Argentina'),
+(20, 'ALU-0011', 'laura.jimenez@gmail.com', 'Perú'),
+(21, 'ALU-0012', 'marcos.rojo@gmail.com', 'Argentina'),
+(22, 'ALU-0013', 'nora.castillo@gmail.com', 'Colombia'),
+(23, 'ALU-0014', 'oscar.velez@gmail.com', 'Perú'),
+(24, 'ALU-0015', 'patricia.luna@gmail.com', 'Chile'),
+(25, 'ALU-0016', 'raul.gonzalez@gmail.com', 'México'),
+(26, 'ALU-0017', 'sofia.vergara@gmail.com', 'Colombia'),
+(27, 'ALU-0018', 'tomas.rincon@gmail.com', 'Venezuela'),
+(28, 'ALU-0019', 'ursula.corbero@gmail.com', 'España'),
+(29, 'ALU-0020', 'victor.valdes@gmail.com', 'España');
 
 
 -- -----------------------------------------------------------

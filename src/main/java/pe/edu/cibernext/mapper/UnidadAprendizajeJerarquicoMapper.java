@@ -10,8 +10,9 @@ public class UnidadAprendizajeJerarquicoMapper {
 
     public static UnidadAprendizajeJerarquicoDto toDto(UnidadAprendizajeEntity entity) {
         UnidadAprendizajeJerarquicoDto dto = new UnidadAprendizajeJerarquicoDto();
-        /*dto.setId(entity.getId());*/
+        dto.setId(entity.getId());
         dto.setNombre(entity.getNombre());
+        dto.setDescripcion(entity.getDescripcion());
         if (entity.getSubUnidades() != null) {
             dto.setSubUnidades(
                     entity.getSubUnidades().stream()

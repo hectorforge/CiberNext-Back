@@ -8,5 +8,6 @@ public class UsuarioDto {
     private String nombre;
     private String dni;
     private String correo;
+    private String fotoPerfil;
     private RolDto  rol;
 }
