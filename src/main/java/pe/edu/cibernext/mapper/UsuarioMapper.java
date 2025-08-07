@@ -15,12 +15,12 @@ public class UsuarioMapper {
         dto.setId(entity.getId());
         dto.setNombre(entity.getNombre());
         dto.setDni(entity.getDni());
-        dto.setCorreo(entity.getCorreo());
+        dto.setCorreo(entity.getEmail());
         dto.setFotoPerfil(entity.getFotoPerfil());
         // Mapeo de Rol completo
         RolDto rolDto = new RolDto();
-        rolDto.setId(entity.getRol().getId());
-        rolDto.setNombre(entity.getRol().getNombre());
+        rolDto.setId(entity.getRoles().getId());
+        rolDto.setNombre(entity.getRoles().getNombre());
         dto.setRol(rolDto);
 
         return dto;
@@ -31,14 +31,14 @@ public class UsuarioMapper {
         UsuarioEntity entity = new UsuarioEntity();
         entity.setId(dto.getId());
         entity.setNombre(dto.getNombre());
-        entity.setCorreo(dto.getCorreo());
+        entity.setEmail(dto.getCorreo());
         entity.setDni(dto.getDni());
         entity.setFotoPerfil(dto.getFotoPerfil());
 
         if (dto.getRol() != null) {
             RolEntity rol = new RolEntity();
             rol.setId(dto.getRol().getId());
-            entity.setRol(rol);
+            entity.setRoles(rol);
         }
 
         return entity;
@@ -60,11 +60,11 @@ public class UsuarioMapper {
         }
 
         entity.setNombre(dto.getNombre());
-        entity.setCorreo(dto.getCorreo());
+        entity.setEmail(dto.getCorreo());
         entity.setDni(dto.getDni());
         entity.setPassword(dto.getPassword());
         entity.setFotoPerfil(dto.getFotoPerfil());
-        entity.setRol(rol);
+        entity.setRoles(rol);
 
         return entity;
     }

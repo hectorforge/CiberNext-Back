@@ -13,8 +13,8 @@ public class ProfesorMapper {
         dto.setId(profesorEntity.getId());
         dto.setNombre(profesorEntity.getNombre());
         dto.setDni(profesorEntity.getDni());
-        dto.setCorreo(profesorEntity.getCorreo());
-        dto.setRol(profesorEntity.getRol());
+        dto.setCorreo(profesorEntity.getEmail());
+        dto.setRol(profesorEntity.getRoles());
         dto.setCodigoProfesor(profesorEntity.getCodigoProfesor());
         dto.setCorreoProfesional(profesorEntity.getCorreoProfesional());
         dto.setBiografia(profesorEntity.getBiografia());
@@ -30,8 +30,8 @@ public class ProfesorMapper {
         entity.setId(profesorDto.getId());
         entity.setNombre(profesorDto.getNombre());
         entity.setDni(profesorDto.getDni());
-        entity.setCorreo(profesorDto.getCorreo());
-        entity.setRol(profesorDto.getRol());
+        entity.setEmail(profesorDto.getCorreo());
+        entity.setRoles(profesorDto.getRol());
         entity.setCodigoProfesor(profesorDto.getCodigoProfesor());
         entity.setCorreoProfesional(profesorDto.getCorreoProfesional());
         entity.setBiografia(profesorDto.getBiografia());

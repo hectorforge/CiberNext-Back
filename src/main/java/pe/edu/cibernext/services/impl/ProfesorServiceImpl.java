@@ -50,12 +50,12 @@ public class ProfesorServiceImpl implements ProfesorService {
         ProfesorEntity profesor = new ProfesorEntity();
         profesor.setNombre(profesorRegistroDto.getNombre());
         profesor.setDni(profesorRegistroDto.getDni());
-        profesor.setCorreo(profesorRegistroDto.getCorreo());
+        profesor.setEmail(profesorRegistroDto.getCorreo());
 
         // Por ahora, guardar contraseña tal cual (sin encriptar)
         profesor.setPassword(profesorRegistroDto.getPassword());
 
-        profesor.setRol(rol);
+        profesor.setRoles(rol);
         profesor.setCodigoProfesor(profesorRegistroDto.getCodigoProfesor());
         profesor.setCorreoProfesional(profesorRegistroDto.getCorreoProfesional());
         profesor.setBiografia(profesorRegistroDto.getBiografia());

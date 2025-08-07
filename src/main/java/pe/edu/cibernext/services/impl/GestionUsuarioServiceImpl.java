@@ -59,13 +59,13 @@ public class GestionUsuarioServiceImpl  implements UsuarioService {
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         entity.setNombre(dto.getNombre());
-        entity.setCorreo(dto.getCorreo());
+        entity.setEmail(dto.getCorreo());
         entity.setDni(dto.getDni());
 
         if (dto.getRol() != null && dto.getRol().getId() != null) {
             RolEntity rol = rolRepository.findById(dto.getRol().getId())
                     .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
-            entity.setRol(rol);
+            entity.setRoles(rol);
         }
 
         return UsuarioMapper.toDto(usuarioRepository.save(entity));

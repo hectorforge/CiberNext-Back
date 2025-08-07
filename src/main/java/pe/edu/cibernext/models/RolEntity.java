@@ -21,9 +21,4 @@ public class RolEntity {
 
     @Column(unique = true, nullable = false, length = 50)
     private String nombre;
-
-    // Relaciones .............................................................
-
-    @OneToMany(mappedBy = "rol")
-    private Set<UsuarioEntity> usuarios;
 }

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${subject}">SecurityApp</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f6fa;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            color: #2d3436;
+        }
+        .email-container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .header {
+            background-color: #0d6efd;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+        .header img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+        }
+        .header h1 {
+            margin: 10px 0 0;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .content {
+            padding: 25px;
+            text-align: center;
+        }
+        .content p {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .email-box {
+            background-color: #f1f3f5;
+            border-radius: 6px;
+            padding: 8px 12px;
+            display: inline-block;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 20px;
+        }
+        .code-box {
+            background-color: #e8f0fe;
+            border-radius: 6px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #0d6efd;
+            padding: 12px 18px;
+            margin: 20px auto;
+            width: fit-content;
+            letter-spacing: 3px;
+        }
+        .btn-login {
+            display: inline-block;
+            padding: 12px 24px;
+            margin-top: 15px;
+            background: #0d6efd;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+        .btn-login:hover {
+            background: #084298;
+        }
+        .note {
+            font-size: 13px;
+            color: #636e72;
+            margin-top: 20px;
+            line-height: 1.4;
+        }
+        .footer {
+            background-color: #f1f3f5;
+            color: #6c757d;
+            text-align: center;
+            padding: 15px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="email-container">
+    <div class="header">
+        <img src="https://images.icon-icons.com/17/PNG/256/Powerlock_padlock_key_1839.png" alt="Logo">
+        <h1>¡Hola <span th:text="${username}">Usuario</span>!</h1>
+    </div>
+
+    <div class="content">
+        <p th:text="${message}">Te damos la bienvenida a CiberNext. Tu cuenta ha sido creada con éxito.</p>
+
+        <p>Ingresa con tu correo electrónico:</p>
+        <div class="email-box" th:text="${email}">correo@gmail.com</div>
+
+        <p>Tu contraseña inicial es:</p>
+        <div class="code-box" th:text="${pass}">123456</div>
+
+        <a th:href="@{http://localhost:4200/login}" class="btn-login">
+            Iniciar Sesión
+        </a>
+
+        <p class="note">
+            Recuerda cambiar tu contraseña una vez que inicies sesión.<br>
+            Si no solicitaste esta cuenta, puedes ignorar este mensaje.
+        </p>
+    </div>
+
+    <div class="footer">
+        <p>© 2025 - CiberNext | Correo automático, no responder. | Gracias</p>
+    </div>
+</div>
+
+</body>
+</html>

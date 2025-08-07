@@ -3,11 +3,16 @@ package pe.edu.cibernext.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @ToString(exclude = "rol")
 @EqualsAndHashCode(exclude = "rol")
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "Usuario")
 @Inheritance(strategy = InheritanceType.JOINED) // Estrategia de herencia clave
 public class UsuarioEntity {
@@ -18,11 +23,14 @@ public class UsuarioEntity {
     @Column(nullable = false)
     private String nombre;
 
+    @Column(nullable = false)
+    private String apellido;
+
     @Column(unique = true, nullable = false, length = 20)
     private String dni;
 
     @Column(unique = true, nullable = false)
-    private String correo;
+    private String email;
 
     @Column(name = "foto_perfil", length = 500)
     private String fotoPerfil;
@@ -32,7 +40,11 @@ public class UsuarioEntity {
 
     // Relaciones .............................................................
 
-    @ManyToOne(fetch = FetchType.EAGER) // Eager para que el rol se cargue siempre con el usuario
-    @JoinColumn(name = "rol_id", nullable = false)
-    private RolEntity rol;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "usuario_rol",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id")
+    )
+    private Set<RolEntity> roles;
 }
