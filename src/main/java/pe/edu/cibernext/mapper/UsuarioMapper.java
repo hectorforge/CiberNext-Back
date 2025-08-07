@@ -1,7 +1,6 @@
 package pe.edu.cibernext.mapper;
 
 import pe.edu.cibernext.models.*;
-import pe.edu.cibernext.models.dto.RolDto;
 import pe.edu.cibernext.models.dto.UsuarioDto;
 import pe.edu.cibernext.models.dto.UsuarioRegistroDto;
 import pe.edu.cibernext.models.enums.Roles;
@@ -11,6 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UsuarioMapper {
+
     public static UsuarioDto toDto(UsuarioEntity entity) {
         UsuarioDto dto = new UsuarioDto();
         dto.setId(entity.getId());
@@ -20,16 +20,15 @@ public class UsuarioMapper {
         dto.setFotoPerfil(entity.getFotoPerfil());
 
         if (entity.getRoles() != null && !entity.getRoles().isEmpty()) {
-            RolEntity primerRol = entity.getRoles().iterator().next();
-            RolDto rolDto = new RolDto();
-            rolDto.setId(primerRol.getId());
-            rolDto.setNombre(primerRol.getNombre());
-            dto.setRol(rolDto);
+            dto.setNombresRol(
+                    entity.getRoles().stream()
+                            .map(RolEntity::getNombre)
+                            .collect(Collectors.toList())
+            );
         }
 
         return dto;
     }
-
 
     public static UsuarioEntity toEntity(UsuarioDto dto) {
         UsuarioEntity entity = new UsuarioEntity();
@@ -39,9 +38,14 @@ public class UsuarioMapper {
         entity.setDni(dto.getDni());
         entity.setFotoPerfil(dto.getFotoPerfil());
 
-        if (dto.getRol() != null) {
+        if (dto.getNombresRol() != null && !dto.getNombresRol().isEmpty()) {
+            String primerRolNombre = dto.getNombresRol().get(0);
+            Roles rolEnum = Roles.valueOf(primerRolNombre.toUpperCase());
+
             RolEntity rol = new RolEntity();
-            rol.setId(dto.getRol().getId());
+            rol.setId(rolEnum.getCodigo());
+            rol.setNombre(rolEnum.name());
+
             entity.setRoles(Set.of(rol));
         }
 
@@ -71,10 +75,10 @@ public class UsuarioMapper {
         return entity;
     }
 
-
     public static List<UsuarioDto> toDtoList(List<UsuarioEntity> entities) {
-        return entities.stream().map(UsuarioMapper::toDto).collect(Collectors.toList());
+        return entities.stream()
+                .map(UsuarioMapper::toDto)
+                .collect(Collectors.toList());
     }
-
 
 }

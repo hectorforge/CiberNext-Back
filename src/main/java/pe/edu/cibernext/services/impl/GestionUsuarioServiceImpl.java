@@ -14,10 +14,9 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class GestionUsuarioServiceImpl  implements UsuarioService {
+public class GestionUsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
-
     private final RolRepository rolRepository;
     private final AlumnoRepository alumnoRepository;
     private final ProfesorRepository profesorRepository;
@@ -53,7 +52,6 @@ public class GestionUsuarioServiceImpl  implements UsuarioService {
         return UsuarioMapper.toDto(guardado);
     }
 
-
     @Override
     public UsuarioDto actualizar(UsuarioDto dto) {
         UsuarioEntity entity = usuarioRepository.findById(dto.getId())
@@ -63,15 +61,15 @@ public class GestionUsuarioServiceImpl  implements UsuarioService {
         entity.setEmail(dto.getCorreo());
         entity.setDni(dto.getDni());
 
-        if (dto.getRol() != null && dto.getRol().getId() != null) {
-            RolEntity rol = rolRepository.findById(dto.getRol().getId())
+        if (dto.getNombresRol() != null && !dto.getNombresRol().isEmpty()) {
+            String primerRol = dto.getNombresRol().get(0);
+            RolEntity rol = rolRepository.findByNombre(primerRol)
                     .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
             entity.setRoles(Set.of(rol));
         }
 
         return UsuarioMapper.toDto(usuarioRepository.save(entity));
     }
-
 
     @Override
     public void eliminarPorId(Long id) {
@@ -82,5 +80,4 @@ public class GestionUsuarioServiceImpl  implements UsuarioService {
     public List<UsuarioDto> buscarPorFiltro(String filtro) {
         return UsuarioMapper.toDtoList(usuarioRepository.buscarPorFiltro(filtro));
     }
-
 }

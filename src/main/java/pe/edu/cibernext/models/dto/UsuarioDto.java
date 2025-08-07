@@ -2,6 +2,8 @@ package pe.edu.cibernext.models.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class UsuarioDto {
     private Long id;
@@ -9,5 +11,6 @@ public class UsuarioDto {
     private String dni;
     private String correo;
     private String fotoPerfil;
-    private RolDto  rol;
+    private List<String> nombresRol;
+
 }

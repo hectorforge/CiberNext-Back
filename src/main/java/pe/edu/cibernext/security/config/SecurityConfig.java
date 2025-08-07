@@ -41,12 +41,18 @@ public class SecurityConfig {
                                 "/api/auth/**",
                                 "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/swagger-resources/**"
                         ).permitAll()
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/**").hasAnyRole("ADMIN", "USER")
-                        .anyRequest().authenticated()
+
+                        //.requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        //.requestMatchers("/api/**").hasAnyRole("ADMIN", "USER")
+                        //.anyRequest().authenticated()
+
+                        // USAR ESTA PARA PERMITIR TODO TEMPORALMENTE
+                        .anyRequest().permitAll()
                 )
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+        //.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+        ;
 
         return http.build();
     }

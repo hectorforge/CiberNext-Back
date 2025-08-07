@@ -6,24 +6,37 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ---------------------------------
 
 -- Tabla para almacenar los roles (Administrador, Profesor, Alumno)
+-- Eliminar tabla Rol si existe
 DROP TABLE IF EXISTS `Rol`;
 CREATE TABLE `Rol` (
-                       `id` BIGINT PRIMARY KEY AUTO_INCREMENT,
-                       `nombre` VARCHAR(50) UNIQUE NOT NULL COMMENT 'Nombre único del rol (e.g., ROL_ADMIN, ROL_PROFESOR)'
+    `id` BIGINT PRIMARY KEY AUTO_INCREMENT,
+    `nombre` VARCHAR(50) UNIQUE NOT NULL COMMENT 'Nombre único del rol (e.g., ROL_ADMIN, ROL_PROFESOR)'
 ) COMMENT='Tabla de roles para Spring Security.';
 
--- Tabla base para todos los usuarios del sistema
+DROP TABLE IF EXISTS `usuario_rol`;
+CREATE TABLE `usuario_rol` (
+    `usuario_id` BIGINT NOT NULL,
+    `rol_id` BIGINT NOT NULL,
+    PRIMARY KEY (`usuario_id`, `rol_id`),
+    FOREIGN KEY (`usuario_id`) REFERENCES `Usuario`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`rol_id`) REFERENCES `Rol`(`id`) ON DELETE CASCADE
+) COMMENT='Tabla intermedia para relación muchos a muchos entre Usuario y Rol.';
+
+
+-- Eliminar tabla Usuario si existe
 DROP TABLE IF EXISTS `Usuario`;
 CREATE TABLE `Usuario` (
     `id` BIGINT PRIMARY KEY AUTO_INCREMENT,
     `nombre` VARCHAR(255) NOT NULL,
+    `apellido` VARCHAR(255) NOT NULL,
     `dni` VARCHAR(20) UNIQUE NOT NULL,
-    `correo` VARCHAR(255) UNIQUE NOT NULL,
+    `email` VARCHAR(255) UNIQUE NOT NULL,
     `password` VARCHAR(255) NOT NULL COMMENT 'Contraseña encriptada',
     `foto_perfil` VARCHAR(500),
     `rol_id` BIGINT NOT NULL,
     CONSTRAINT `fk_usuario_rol` FOREIGN KEY (`rol_id`) REFERENCES `Rol` (`id`)
 ) COMMENT='Tabla base para todos los tipos de usuarios. Utiliza estrategia de herencia JOINED.';
+
 
 -- Tabla para la especialización "Administrador"
 DROP TABLE IF EXISTS `Administrador`;

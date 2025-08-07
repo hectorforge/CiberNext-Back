@@ -9,54 +9,94 @@
 -- ---------------------------------
 -- 1. POBLAR LA TABLA `Rol`
 -- ---------------------------------
+-- 1. Insertar roles
 INSERT INTO `Rol` (`id`, `nombre`) VALUES
-                                       (1, 'ROL_ADMIN'),
-                                       (2, 'ROL_PROFESOR'),
-                                       (3, 'ROL_ALUMNO');
+(1, 'ROL_ADMIN'),
+(2, 'ROL_PROFESOR'),
+(3, 'ROL_ALUMNO');
 
--- -----------------------------------------------------------
--- 2. POBLAR LA TABLA `Usuario` (TODOS LOS TIPOS)
--- -----------------------------------------------------------
--- NOTA: La contraseña es un ejemplo. En producción, usar un hash BCrypt.
+-- 2. Variable de contraseña hasheada
+-- NOTA: En producción, esta debe generarse dinámicamente con BCrypt
 SET @hashed_password = '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqR2e5dOKJdaLACL9CFgVGXRcix.';
 
--- == Administradores (rol_id = 1) ==
-INSERT INTO `Usuario` (`id`, `nombre`, `dni`, `correo`, `password`, `foto_perfil`, `rol_id`) VALUES
-(1, 'Admin General', '00000001', 'admin@sistema.com', @hashed_password, NULL, 1),
-(2, 'Coordinador Academico', '00000002', 'coordinador@sistema.com', @hashed_password, NULL, 1);
 
--- == Profesores (rol_id = 2) ==
-INSERT INTO `Usuario` (`id`, `nombre`, `dni`, `correo`, `password`, `foto_perfil`, `rol_id`) VALUES
-(3, 'Carlos Santana', '10000001', 'c.santana@profesor.com', @hashed_password, 'https://img.com/csantana.jpg', 2),
-(4, 'Diana Prince', '10000002', 'd.prince@profesor.com', @hashed_password, 'https://img.com/dprince.jpg', 2),
-(5, 'Ricardo Tapia', '10000003', 'r.tapia@profesor.com', @hashed_password, 'https://img.com/rtapia.jpg', 2),
-(6, 'Anthony Stark', '10000004', 'a.stark@profesor.com', @hashed_password, 'https://img.com/astark.jpg', 2),
-(7, 'Barbara Gordon', '10000005', 'b.gordon@profesor.com', @hashed_password, 'https://img.com/bgordon.jpg', 2),
-(8, 'Steve Rogers', '10000006', 's.rogers@profesor.com', @hashed_password, 'https://img.com/srogers.jpg', 2),
-(19, 'Natasha Romanoff', '10000007', 'n.romanoff@profesor.com', @hashed_password, 'https://img.com/nromanoff.jpg', 2);
+-- == Administradores ==
+INSERT INTO `Usuario` (`id`, `nombre`, `apellido`, `dni`, `email`, `password`, `foto_perfil`, `rol_id`) VALUES
+(1, 'Admin', 'General', '00000001', 'admin@sistema.com', @hashed_password, NULL, 1),
+(2, 'Coordinador', 'Academico', '00000002', 'coordinador@sistema.com', @hashed_password, NULL, 1);
 
--- == Alumnos (rol_id = 3) ==
-INSERT INTO `Usuario` (`id`, `nombre`, `dni`, `correo`, `password`, `foto_perfil`, `rol_id`) VALUES
-(9, 'Ana Lopez', '20000001', 'ana.lopez@alumno.com', @hashed_password, 'https://img.com/ana.jpg', 3),
-(10, 'Bruno Diaz', '20000002', 'bruno.diaz@alumno.com', @hashed_password, 'https://img.com/bruno.jpg', 3),
-(11, 'Carla Kent', '20000003', 'carla.kent@alumno.com', @hashed_password, 'https://img.com/carla.jpg', 3),
-(12, 'David Perez', '20000004', 'david.perez@alumno.com', @hashed_password, 'https://img.com/david.jpg', 3),
-(13, 'Elena Garcia', '20000005', 'elena.garcia@alumno.com', @hashed_password, 'https://img.com/elena.jpg', 3),
-(14, 'Fernando Torres', '20000006', 'fernando.t@alumno.com', @hashed_password, 'https://img.com/fernando.jpg', 3),
-(15, 'Gabriela Solis', '20000007', 'gabi.solis@alumno.com', @hashed_password, 'https://img.com/gabriela.jpg', 3),
-(16, 'Hugo Sanchez', '20000008', 'hugo.sanchez@alumno.com', @hashed_password, 'https://img.com/hugo.jpg', 3),
-(17, 'Irene Adler', '20000009', 'irene.adler@alumno.com', @hashed_password, 'https://img.com/irene.jpg', 3),
-(18, 'Javier Mascherano', '20000010', 'j.mascherano@alumno.com', @hashed_password, 'https://img.com/javier.jpg', 3),
-(20, 'Laura Jimenez', '20000011', 'laura.j@alumno.com', @hashed_password, 'https://img.com/laura.jpg', 3),
-(21, 'Marcos Rojo', '20000012', 'marcos.r@alumno.com', @hashed_password, 'https://img.com/marcos.jpg', 3),
-(22, 'Nora Castillo', '20000013', 'nora.c@alumno.com', @hashed_password, 'https://img.com/nora.jpg', 3),
-(23, 'Oscar Velez', '20000014', 'oscar.v@alumno.com', @hashed_password, 'https://img.com/oscar.jpg', 3),
-(24, 'Patricia Luna', '20000015', 'patricia.l@alumno.com', @hashed_password, 'https://img.com/patricia.jpg', 3),
-(25, 'Raul Gonzalez', '20000016', 'raul.g@alumno.com', @hashed_password, 'https://img.com/raul.jpg', 3),
-(26, 'Sofia Vergara', '20000017', 'sofia.v@alumno.com', @hashed_password, 'https://img.com/sofia.jpg', 3),
-(27, 'Tomas Rincon', '20000018', 'tomas.r@alumno.com', @hashed_password, 'https://img.com/tomas.jpg', 3),
-(28, 'Ursula Corbero', '20000019', 'ursula.c@alumno.com', @hashed_password, 'https://img.com/ursula.jpg', 3),
-(29, 'Victor Valdes', '20000020', 'victor.v@alumno.com', @hashed_password, 'https://img.com/victor.jpg', 3);
+-- == Profesores ==
+INSERT INTO `Usuario` (`id`, `nombre`, `apellido`, `dni`, `email`, `password`, `foto_perfil`, `rol_id`) VALUES
+(3, 'Carlos', 'Santana', '10000001', 'c.santana@profesor.com', @hashed_password, 'https://img.com/csantana.jpg', 2),
+(4, 'Diana', 'Prince', '10000002', 'd.prince@profesor.com', @hashed_password, 'https://img.com/dprince.jpg', 2),
+(5, 'Ricardo', 'Tapia', '10000003', 'r.tapia@profesor.com', @hashed_password, 'https://img.com/rtapia.jpg', 2),
+(6, 'Anthony', 'Stark', '10000004', 'a.stark@profesor.com', @hashed_password, 'https://img.com/astark.jpg', 2),
+(7, 'Barbara', 'Gordon', '10000005', 'b.gordon@profesor.com', @hashed_password, 'https://img.com/bgordon.jpg', 2),
+(8, 'Steve', 'Rogers', '10000006', 's.rogers@profesor.com', @hashed_password, 'https://img.com/srogers.jpg', 2),
+(19, 'Natasha', 'Romanoff', '10000007', 'n.romanoff@profesor.com', @hashed_password, 'https://img.com/nromanoff.jpg', 2);
+
+-- == Alumnos ==
+INSERT INTO `Usuario` (`id`, `nombre`, `apellido`, `dni`, `email`, `password`, `foto_perfil`, `rol_id`) VALUES
+(9, 'Ana', 'Lopez', '20000001', 'ana.lopez@alumno.com', @hashed_password, 'https://img.com/ana.jpg', 3),
+(10, 'Bruno', 'Diaz', '20000002', 'bruno.diaz@alumno.com', @hashed_password, 'https://img.com/bruno.jpg', 3),
+(11, 'Carla', 'Kent', '20000003', 'carla.kent@alumno.com', @hashed_password, 'https://img.com/carla.jpg', 3),
+(12, 'David', 'Perez', '20000004', 'david.perez@alumno.com', @hashed_password, 'https://img.com/david.jpg', 3),
+(13, 'Elena', 'Garcia', '20000005', 'elena.garcia@alumno.com', @hashed_password, 'https://img.com/elena.jpg', 3),
+(14, 'Fernando', 'Torres', '20000006', 'fernando.t@alumno.com', @hashed_password, 'https://img.com/fernando.jpg', 3),
+(15, 'Gabriela', 'Solis', '20000007', 'gabi.solis@alumno.com', @hashed_password, 'https://img.com/gabriela.jpg', 3),
+(16, 'Hugo', 'Sanchez', '20000008', 'hugo.sanchez@alumno.com', @hashed_password, 'https://img.com/hugo.jpg', 3),
+(17, 'Irene', 'Adler', '20000009', 'irene.adler@alumno.com', @hashed_password, 'https://img.com/irene.jpg', 3),
+(18, 'Javier', 'Mascherano', '20000010', 'j.mascherano@alumno.com', @hashed_password, 'https://img.com/javier.jpg', 3),
+(20, 'Laura', 'Jimenez', '20000011', 'laura.j@alumno.com', @hashed_password, 'https://img.com/laura.jpg', 3),
+(21, 'Marcos', 'Rojo', '20000012', 'marcos.r@alumno.com', @hashed_password, 'https://img.com/marcos.jpg', 3),
+(22, 'Nora', 'Castillo', '20000013', 'nora.c@alumno.com', @hashed_password, 'https://img.com/nora.jpg', 3),
+(23, 'Oscar', 'Velez', '20000014', 'oscar.v@alumno.com', @hashed_password, 'https://img.com/oscar.jpg', 3),
+(24, 'Patricia', 'Luna', '20000015', 'patricia.l@alumno.com', @hashed_password, 'https://img.com/patricia.jpg', 3),
+(25, 'Raul', 'Gonzalez', '20000016', 'raul.g@alumno.com', @hashed_password, 'https://img.com/raul.jpg', 3),
+(26, 'Sofia', 'Vergara', '20000017', 'sofia.v@alumno.com', @hashed_password, 'https://img.com/sofia.jpg', 3),
+(27, 'Tomas', 'Rincon', '20000018', 'tomas.r@alumno.com', @hashed_password, 'https://img.com/tomas.jpg', 3),
+(28, 'Ursula', 'Corbero', '20000019', 'ursula.c@alumno.com', @hashed_password, 'https://img.com/ursula.jpg', 3),
+(29, 'Victor', 'Valdes', '20000020', 'victor.v@alumno.com', @hashed_password, 'https://img.com/victor.jpg', 3);
+
+
+-- Asignar ROL_ADMIN a los usuarios administradores
+INSERT INTO usuario_rol (usuario_id, rol_id) VALUES
+(1, 1),
+(2, 1);
+
+-- Asignar ROL_PROFESOR a los usuarios profesores
+INSERT INTO usuario_rol (usuario_id, rol_id) VALUES
+(3, 2),
+(4, 2),
+(5, 2),
+(6, 2),
+(7, 2),
+(8, 2),
+(19, 2);
+
+-- Asignar ROL_ALUMNO a los usuarios alumnos
+INSERT INTO usuario_rol (usuario_id, rol_id) VALUES
+(9, 3),
+(10, 3),
+(11, 3),
+(12, 3),
+(13, 3),
+(14, 3),
+(15, 3),
+(16, 3),
+(17, 3),
+(18, 3),
+(20, 3),
+(21, 3),
+(22, 3),
+(23, 3),
+(24, 3),
+(25, 3),
+(26, 3),
+(27, 3),
+(28, 3),
+(29, 3);
+
 
 -- -----------------------------------------------------------
 -- 3. ESPECIALIZAR USUARIOS (POBLAR TABLAS HIJAS)
