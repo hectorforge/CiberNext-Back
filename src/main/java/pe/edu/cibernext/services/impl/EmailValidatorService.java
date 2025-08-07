@@ -1,22 +1,25 @@
 package pe.edu.cibernext.services.impl;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Value;
+// import com.fasterxml.jackson.databind.JsonNode;
+// import com.fasterxml.jackson.databind.ObjectMapper;
+// import org.springframework.beans.factory.annotation.Value;
+// import org.springframework.web.client.RestTemplate;
+// import org.springframework.web.util.UriComponentsBuilder;
+
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 public class EmailValidatorService {
 
-    @Value("${abstract.api.key}")
-    private String API_KEY;
+    // @Value("${abstract.api.key}")
+    // private String API_KEY;
 
-    @Value("${abstract.api.url}")
-    private String API_URL;
+    // @Value("${abstract.api.url}")
+    // private String API_URL;
 
     public boolean isValidEmail(String email) {
+        // Versión comentada que usaba la API externa:
+        /*
         try {
             RestTemplate restTemplate = new RestTemplate();
 
@@ -39,5 +42,9 @@ public class EmailValidatorService {
             System.out.println("Error verificando email: " + e.getMessage());
             return false;
         }
+        */
+
+        // Versión simplificada temporal: siempre retorna true
+        return true;
     }
 }

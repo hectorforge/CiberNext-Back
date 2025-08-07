@@ -1,6 +1,5 @@
 package pe.edu.cibernext.services.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pe.edu.cibernext.models.RolEntity;
@@ -12,18 +11,33 @@ import pe.edu.cibernext.models.dto.auth.UsuarioUpdateDto;
 import pe.edu.cibernext.repositories.RolRepository;
 import pe.edu.cibernext.repositories.UsuarioRepository;
 import pe.edu.cibernext.services.AuthService;
+// import pe.edu.cibernext.services.EmailValidatorService;
 
 import java.util.Set;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
+// @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
+
     private final UsuarioRepository usuarioRepository;
     private final RolRepository rolRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailSenderService emailSenderService;
-    private final EmailValidatorService  emailValidatorService;
+    // private final EmailValidatorService emailValidatorService;
+
+    // Constructor manual sin EmailValidatorService
+    public AuthServiceImpl(
+            UsuarioRepository usuarioRepository,
+            RolRepository rolRepository,
+            PasswordEncoder passwordEncoder,
+            EmailSenderService emailSenderService
+    ) {
+        this.usuarioRepository = usuarioRepository;
+        this.rolRepository = rolRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.emailSenderService = emailSenderService;
+    }
 
     @Override
     public UsuarioEntity register(UsuarioRegisterDto dto) {
@@ -31,9 +45,10 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("El correo ya está registrado");
         }
 
-        if (!emailValidatorService.isValidEmail(dto.getEmail())) {
-            throw new RuntimeException("El correo no parece válido o activo");
-        }
+        // Validación de correo desactivada temporalmente
+        // if (!emailValidatorService.isValidEmail(dto.getEmail())) {
+        //     throw new RuntimeException("El correo no parece válido o activo");
+        // }
 
         String passwordGenerateInitial = generatePasswordInitial();
 
@@ -91,9 +106,11 @@ public class AuthServiceImpl implements AuthService {
                     throw new RuntimeException("El correo ya está registrado por otro usuario");
                 }
             });
-            if (!emailValidatorService.isValidEmail(dto.getEmail())) {
-                throw new RuntimeException("El correo no parece válido o activo");
-            }
+
+            // Validación de correo desactivada temporalmente
+            // if (!emailValidatorService.isValidEmail(dto.getEmail())) {
+            //     throw new RuntimeException("El correo no parece válido o activo");
+            // }
 
             usuario.setEmail(dto.getEmail());
         }
