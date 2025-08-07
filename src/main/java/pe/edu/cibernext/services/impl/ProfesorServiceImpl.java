@@ -12,6 +12,7 @@ import pe.edu.cibernext.repositories.RolRepository;
 import pe.edu.cibernext.services.ProfesorService;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,7 +56,7 @@ public class ProfesorServiceImpl implements ProfesorService {
         // Por ahora, guardar contraseña tal cual (sin encriptar)
         profesor.setPassword(profesorRegistroDto.getPassword());
 
-        profesor.setRoles(rol);
+        profesor.setRoles(Set.of(rol));
         profesor.setCodigoProfesor(profesorRegistroDto.getCodigoProfesor());
         profesor.setCorreoProfesional(profesorRegistroDto.getCorreoProfesional());
         profesor.setBiografia(profesorRegistroDto.getBiografia());

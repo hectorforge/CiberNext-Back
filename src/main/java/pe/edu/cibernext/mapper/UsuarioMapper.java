@@ -17,7 +17,6 @@ public class UsuarioMapper {
         dto.setDni(entity.getDni());
         dto.setCorreo(entity.getEmail());
         dto.setFotoPerfil(entity.getFotoPerfil());
-        // Mapeo de Rol completo
         RolDto rolDto = new RolDto();
         rolDto.setId(entity.getRoles().getId());
         rolDto.setNombre(entity.getRoles().getNombre());

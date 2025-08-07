@@ -10,6 +10,7 @@ import pe.edu.cibernext.repositories.*;
 import pe.edu.cibernext.services.UsuarioService;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -65,7 +66,7 @@ public class GestionUsuarioServiceImpl  implements UsuarioService {
         if (dto.getRol() != null && dto.getRol().getId() != null) {
             RolEntity rol = rolRepository.findById(dto.getRol().getId())
                     .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
-            entity.setRoles(rol);
+            entity.setRoles(Set.of(rol));
         }
 
         return UsuarioMapper.toDto(usuarioRepository.save(entity));

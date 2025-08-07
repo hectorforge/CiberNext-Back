@@ -1,10 +1,7 @@
 package pe.edu.cibernext.models;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Set;
 
@@ -12,6 +9,9 @@ import java.util.Set;
 @Setter
 @ToString(exclude = "usuarios")
 @EqualsAndHashCode(exclude = "usuarios")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "Rol")
 public class RolEntity {

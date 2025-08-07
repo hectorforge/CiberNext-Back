@@ -1,7 +1,12 @@
 package pe.edu.cibernext.mapper;
 
 import pe.edu.cibernext.models.ProfesorEntity;
+import pe.edu.cibernext.models.RolEntity;
 import pe.edu.cibernext.models.dto.ProfesorDto;
+
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ProfesorMapper {
     public static ProfesorDto toDto(ProfesorEntity profesorEntity) {
@@ -14,7 +19,7 @@ public class ProfesorMapper {
         dto.setNombre(profesorEntity.getNombre());
         dto.setDni(profesorEntity.getDni());
         dto.setCorreo(profesorEntity.getEmail());
-        dto.setRol(profesorEntity.getRoles());
+        dto.setRoles(profesorEntity.getRoles().stream().map(rol -> rol.getNombre()).collect(Collectors.toSet()));
         dto.setCodigoProfesor(profesorEntity.getCodigoProfesor());
         dto.setCorreoProfesional(profesorEntity.getCorreoProfesional());
         dto.setBiografia(profesorEntity.getBiografia());
@@ -31,7 +36,12 @@ public class ProfesorMapper {
         entity.setNombre(profesorDto.getNombre());
         entity.setDni(profesorDto.getDni());
         entity.setEmail(profesorDto.getCorreo());
-        entity.setRoles(profesorDto.getRol());
+        entity.setRoles(
+                profesorDto.getRoles().stream()
+                        .map(r -> RolEntity.builder().nombre(r).build())
+                        .collect(Collectors.toSet())
+        );
+
         entity.setCodigoProfesor(profesorDto.getCodigoProfesor());
         entity.setCorreoProfesional(profesorDto.getCorreoProfesional());
         entity.setBiografia(profesorDto.getBiografia());
