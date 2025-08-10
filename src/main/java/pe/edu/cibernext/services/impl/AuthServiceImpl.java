@@ -1,5 +1,7 @@
 package pe.edu.cibernext.services.impl;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pe.edu.cibernext.models.RolEntity;
@@ -17,27 +19,16 @@ import java.util.Set;
 import java.util.UUID;
 
 @Service
-// @RequiredArgsConstructor
+@RequiredArgsConstructor
+@Slf4j
 public class AuthServiceImpl implements AuthService {
 
     private final UsuarioRepository usuarioRepository;
     private final RolRepository rolRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailSenderService emailSenderService;
-    // private final EmailValidatorService emailValidatorService;
+    private final EmailValidatorService emailValidatorService;
 
-    // Constructor manual sin EmailValidatorService
-    public AuthServiceImpl(
-            UsuarioRepository usuarioRepository,
-            RolRepository rolRepository,
-            PasswordEncoder passwordEncoder,
-            EmailSenderService emailSenderService
-    ) {
-        this.usuarioRepository = usuarioRepository;
-        this.rolRepository = rolRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.emailSenderService = emailSenderService;
-    }
 
     @Override
     public UsuarioEntity register(UsuarioRegisterDto dto) {
@@ -45,28 +36,30 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("El correo ya está registrado");
         }
 
-        // Validación de correo desactivada temporalmente
-        // if (!emailValidatorService.isValidEmail(dto.getEmail())) {
-        //     throw new RuntimeException("El correo no parece válido o activo");
-        // }
+        if (!emailValidatorService.isValidEmail(dto.getEmail())) {
+             throw new RuntimeException("El correo no parece válido o activo");
+         }
 
         String passwordGenerateInitial = generatePasswordInitial();
 
-        var rolUser = rolRepository.findByNombre("USER")
+        var rolUser = rolRepository.findByNombre("ALUMNO")
                 .orElseGet(() -> {
                     var nuevoRol = new RolEntity();
-                    nuevoRol.setNombre("USER");
+                    nuevoRol.setNombre("ALUMNO");
                     return rolRepository.save(nuevoRol);
                 });
 
         UsuarioEntity nuevoUsuario = UsuarioEntity.builder()
                 .nombre(dto.getNombre())
+                .apellido(dto.getApellido())
                 .email(dto.getEmail())
                 .dni(dto.getDni())
                 .fotoPerfil(dto.getFotoPerfil())
                 .password(passwordEncoder.encode(passwordGenerateInitial))
                 .roles(Set.of(rolUser))
                 .build();
+
+        System.out.println(nuevoUsuario);
 
         usuarioRepository.save(nuevoUsuario);
 
@@ -107,10 +100,9 @@ public class AuthServiceImpl implements AuthService {
                 }
             });
 
-            // Validación de correo desactivada temporalmente
-            // if (!emailValidatorService.isValidEmail(dto.getEmail())) {
-            //     throw new RuntimeException("El correo no parece válido o activo");
-            // }
+             if (!emailValidatorService.isValidEmail(dto.getEmail())) {
+                 throw new RuntimeException("El correo no parece válido o activo");
+             }
 
             usuario.setEmail(dto.getEmail());
         }
