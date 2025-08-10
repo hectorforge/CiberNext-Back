@@ -1,12 +1,13 @@
 package pe.edu.cibernext.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "Administrador")
 @PrimaryKeyJoinColumn(name = "usuario_id")
-public class AdministradorEntity extends UsuarioEntity { }
+public class AdministradorEntity extends UsuarioEntity {
+
+}

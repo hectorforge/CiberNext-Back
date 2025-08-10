@@ -11,13 +11,13 @@
 -- ---------------------------------
 -- 1. Insertar roles
 INSERT INTO `Rol` (`id`, `nombre`) VALUES
-(1, 'ROL_ADMIN'),
-(2, 'ROL_PROFESOR'),
-(3, 'ROL_ALUMNO');
+(1, 'ADMIN'),
+(2, 'PROFESOR'),
+(3, 'ALUMNO');
 
 -- 2. Variable de contraseña hasheada
--- NOTA: En producción, esta debe generarse dinámicamente con BCrypt
-SET @hashed_password = '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqR2e5dOKJdaLACL9CFgVGXRcix.';
+-- NOTA: En producción, esta debe generarse dinámicamente con BCrypt (contra1234)
+SET @hashed_password = '$2b$12$AyI5rl14aAMfmRsqL/GhrexfLuHPsz51OHMn4NAJd4rZFTIDpfFO.';
 
 
 -- == Administradores ==
