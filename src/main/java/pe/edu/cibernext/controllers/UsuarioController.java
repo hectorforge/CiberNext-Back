@@ -31,11 +31,10 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.registrar(dto));
     }
 
-    // TODO: Corregir la funcionalidad de este endpoint
-    // Debe recibir un id de curricula en la url
+    // TODO: Corregir la firma de este endpoint
+    // Debe recibir id de curricula en la url
     // para mantener la nomenclatura de los endpoints
-    // @PutMapping("/{id}")
-    @PutMapping("/actualizar")
+    @PutMapping("/{id}")
     public ResponseEntity<UsuarioDto> actualizarUsuario(@RequestBody UsuarioDto dto) {
         return ResponseEntity.ok(usuarioService.actualizar(dto));
     }
@@ -46,11 +45,7 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
-    // TODO: Corregir la funcionalidad de este endpoint
-    // Debe recibir el string de búsqueda por POST
-    // para mantener la nomenclatura de los endpoints
-    //  @PostMapping("/buscar")
-    @GetMapping("/buscarPorFiltro")
+    @GetMapping("/buscar")
     public ResponseEntity<List<UsuarioDto>> buscarUsuariosPorFiltro(@RequestParam String filtro) {
         return ResponseEntity.ok(usuarioService.buscarPorFiltro(filtro));
     }
