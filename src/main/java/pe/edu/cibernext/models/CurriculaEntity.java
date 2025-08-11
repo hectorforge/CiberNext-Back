@@ -28,6 +28,4 @@ public class CurriculaEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area_especializacion_id", nullable = false)
     private AreaEspecializacionEntity areaEspecializacion;
-
-
 }
