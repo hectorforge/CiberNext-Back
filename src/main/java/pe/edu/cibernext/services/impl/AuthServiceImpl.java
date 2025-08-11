@@ -36,6 +36,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UsuarioEntity register(UsuarioRegisterDto dto) {
+
+        if(usuarioRepository.findByDni(dto.getDni()).isPresent()){
+            throw new RuntimeException("El DNI ya existe");
+        }
+
         if (usuarioRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new RuntimeException("El correo ya está registrado");
         }
@@ -113,6 +118,16 @@ public class AuthServiceImpl implements AuthService {
              }
 
             usuario.setEmail(dto.getEmail());
+        }
+
+        if (!dto.getDni().equalsIgnoreCase(usuario.getDni())) {
+            usuarioRepository.findByDni(dto.getDni()).ifPresent(existente -> {
+                if (!existente.getId().equals(usuario.getId())) {
+                    throw new RuntimeException("El DNI ya está registrado por otro usuario");
+                }
+            });
+
+            usuario.setDni(dto.getDni());
         }
 
         usuario.setNombre(dto.getNombre());

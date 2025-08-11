@@ -20,4 +20,5 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity,Long> {
     List<UsuarioEntity> buscarPorFiltro(@Param("filtro") String filtro);
 
     Optional<UsuarioEntity> findByEmail(String email);
+    Optional<UsuarioEntity> findByDni(String dni);
 }
