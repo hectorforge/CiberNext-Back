@@ -16,30 +16,38 @@ public class ProfesorController {
 
     private final ProfesorService profesorService;
 
-    @PostMapping("/registrar")
+    @PostMapping
     public ResponseEntity<ProfesorDto> registrarProfesor(@RequestBody ProfesorRegistroDto profesorRegistroDto) {
         ProfesorDto profesorDto = profesorService.registrar(profesorRegistroDto);
         return ResponseEntity.ok(profesorDto);
     }
 
-    @GetMapping("/obtenerPorId/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ProfesorDto> obtenerProfesorPorId(@PathVariable("id") Long id) {
         return ResponseEntity.ok(profesorService.buscarPorId(id));
     }
 
-    @GetMapping("/verificarExistenciaPorId/{id}")
+    @GetMapping("/{id}/existe")
     public ResponseEntity<Boolean> verificarExistenciaPorId(@PathVariable("id") Long id) {
         return ResponseEntity.ok(profesorService.verificarExistenciaPorId(id));
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public ResponseEntity<List<ProfesorDto>> listarProfesores() {
         return ResponseEntity.ok(profesorService.listarTodos());
     }
 
-    @DeleteMapping("/eliminarPorId/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarProfesor(@PathVariable("id") Long id) {
         profesorService.eliminarPorId(id);
         return ResponseEntity.noContent().build();
     }
+
+
+    // TODO: Falta implementar
+    // - Actualizar profesor
+    // - Lista de cursos por profesor
+    // - Listas de mensajes respondidos y no respondidos (traerlos desde ConsultaController)
+
+
 }

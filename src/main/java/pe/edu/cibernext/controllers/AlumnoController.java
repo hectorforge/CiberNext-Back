@@ -13,21 +13,32 @@ import java.util.List;
 public class AlumnoController {
 
     private final AlumnoService alumnoService;
-    @GetMapping("/obtenerPorId/{id}")
+
+    @GetMapping("/{id}")
     public ResponseEntity<AlumnoDto> obtenerAlumnoPorId(@PathVariable("id") Long id) {
         return ResponseEntity.ok(alumnoService.buscarPorId(id));
     }
-    @GetMapping("/verificarExistenciaPorId/{id}")
+
+    @GetMapping("/{id}/existe")
     public ResponseEntity<Boolean> verificarExistenciaPorId(@PathVariable("id") Long id) {
         return ResponseEntity.ok(alumnoService.verificarExistenciaPorId(id));
     }
-    @GetMapping("/listar")
+
+    @GetMapping
     public ResponseEntity<List<AlumnoDto>> listarAlumnos() {
         return ResponseEntity.ok(alumnoService.listarTodos());
     }
-    @DeleteMapping("/eliminarPorId/{id}")
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarAlumno(@PathVariable("id") Long id) {
         alumnoService.eliminarPorId(id);
         return ResponseEntity.noContent().build();
     }
+
 }
+
+// TODO: Falta implementar
+// - Actualizar alumno
+// - Crear alumno un curso
+// - Lista de cursos por alumno
+// - Avance de alumno en un curso

@@ -17,13 +17,22 @@ public class ConsultaController {
 
     private final ConsultaService consultaService;
 
-    @GetMapping("/respondidas/{idProfesor}")
+    @GetMapping("/profesor/{idProfesor}/respondidas")
     public List<ConsultaConRespuestaDto> obtenerRespondidas(@PathVariable Long idProfesor) {
         return consultaService.listarRespondidas(idProfesor);
     }
 
-    @GetMapping("/no-respondidas/{idProfesor}")
+    @GetMapping("/profesor/{idProfesor}/no-respondidas")
     public List<ConsultaConRespuestaDto> obtenerNoRespondidas(@PathVariable Long idProfesor) {
         return consultaService.listarNoRespondidas(idProfesor);
     }
+
+
+    // TODO: Falta implementar
+    /*
+     - Consultas del alumno que están respondidas y no respondidas
+     - ConsultasPorCurso
+
+     Todas las consultas deben estar ordenadas jerárquicamente: curso -> unidad de aprendizaje -> pregunta.
+     */
 }
