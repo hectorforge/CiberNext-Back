@@ -39,6 +39,4 @@ public class AlumnoController {
 
 // TODO: Falta implementar
 // - Actualizar alumno
-// - Crear alumno un curso
 // - Lista de cursos por alumno
-// - Avance de alumno en un curso

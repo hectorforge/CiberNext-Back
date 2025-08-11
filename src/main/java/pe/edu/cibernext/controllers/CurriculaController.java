@@ -26,8 +26,8 @@ public class CurriculaController {
         return ResponseEntity.ok(curriculaService.listarTodos());
     }
 
-    // TODO: En que se va a usar este endpoint?
-    @GetMapping("/{cursoId}/curso")
+    // TODO: Cambiar funcionalidad a listar cursos por AreaEspecialidad
+    //    @GetMapping("/area/{areaId}/curso")
     public ResponseEntity<List<CurriculaRespuestaDto>> listarPorCurso(@PathVariable Long cursoId) {
         return ResponseEntity.ok(curriculaService.listarPorCurso(cursoId));
     }

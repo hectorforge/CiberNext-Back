@@ -18,6 +18,7 @@ public class UnidadAprendizajeController {
 
     private final UnidadAprendizajeService unidadService;
 
+    // TODO: Mostrar como en listarJerarquico para que muestre el detalle de la unidad de aprendizaje con sus sub unidades
     @GetMapping("/{id}")
     public ResponseEntity<UnidadAprendizajeRespuestaDto> obtenerPorId(@PathVariable Long id) {
         return ResponseEntity.ok(unidadService.buscarPorId(id));
@@ -29,6 +30,7 @@ public class UnidadAprendizajeController {
     }
 
     // TODO:  Debe mostrar la estructura jerárquica de las unidades de aprendizaje contenidas dentro de esta unidad
+    // Parecida a la lógica de listarJerarquico
     @GetMapping("/curso/{cursoId}")
     public ResponseEntity<List<UnidadAprendizajeRespuestaDto>> listarPorCurso(@PathVariable Long cursoId) {
         return ResponseEntity.ok(unidadService.listarPorCurso(cursoId));
@@ -50,7 +52,7 @@ public class UnidadAprendizajeController {
         return ResponseEntity.noContent().build();
     }
 
-    // TODO: Para que se utiliza este endopoint?
+    // TODO: Eliminar endpoint
     @GetMapping("/jerarquico")
     public List<UnidadAprendizajeJerarquicoDto> listarJerarquico() {
         return unidadService.listarJerarquico();
@@ -61,11 +63,6 @@ public class UnidadAprendizajeController {
 
 // TODO: Falta implementar
 /*
- - [Copiar a CursoController]
-   Listar unidades de aprendizaje por curso.
- - Listar consultas por unidad de aprendizaje
-   (mostrar la unidad de aprendizaje a la que pertenece la consulta. también mostrar las consultas jerarquicamente: curso -> unidad -> consulta)
- - Listar documentos por unidad de aprendizaje
-   (mostrar la unidad de aprendizaje a la que pertenece el documento. también mostrar los documentos jerarquicamente: curso -> unidad -> documento)
-
+- Listar consultas por unidad de aprendizaje: consulta -> respuestas (consultas anidadas).
+- Listar documentos por unidad de aprendizaje:
 */

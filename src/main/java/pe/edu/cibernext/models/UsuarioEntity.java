@@ -7,12 +7,10 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString(exclude = "rol")
-@EqualsAndHashCode(exclude = "rol")
-@Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @Table(name = "Usuario")
 @Inheritance(strategy = InheritanceType.JOINED) // Estrategia de herencia clave
 public class UsuarioEntity {

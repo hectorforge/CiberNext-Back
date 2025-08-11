@@ -54,6 +54,7 @@ public class DocumentoController {
 }
 
 // TODO: Falta implementar
-// - Subir documento (endpoint para subir un archivo y asociarlo a un curso, unidad de aprendizaje,
-// - Lista de documentos por curso
-// - Descargar documento (endpoint para descargar el archivo del documento)
+// - Lista de documentos por curso, indicando a que unidad pertenece
+
+
+

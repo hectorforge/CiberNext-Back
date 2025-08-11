@@ -1,10 +1,10 @@
 package pe.edu.cibernext.services.impl;
 
-
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,9 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 @RequiredArgsConstructor
 public class EmailSenderService {
 
+    @Value("${spring.mail.username}")
+    private String emailRemitente;
+
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
 
@@ -24,6 +27,7 @@ public class EmailSenderService {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 
+            helper.setFrom(emailRemitente); // Cambio para que funcione en mi pc
             helper.setTo(emailDestino);
             helper.setSubject(asunto);
 

@@ -22,7 +22,6 @@ public class CursoAvanceController {
         return ResponseEntity.ok(cursoAvanceService.calcularAvance(cursoId, alumnoId));
     }
 
-    // TODO: Cómo se va a usar este endpoint?
     @PostMapping("/registrar-vista")
     public ResponseEntity<String> registrarUnidadVista(@RequestBody UnidadVistaDto request) {
         cursoAvanceService.registrarUnidadVista(request);
