@@ -1,13 +1,12 @@
-package pe.edu.cibernext.models;
+package pe.edu.cibernext.models.dto;
 
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AvanceResponse {
+public class CursoAlumnoAvanceDto {
     private long porcentajeAvance;
     private long totalUnidades;
     private long unidadesVistas;
