@@ -25,12 +25,10 @@ public class UsuarioAuthController {
     @GetMapping("/me")
     public ResponseEntity<?> getProfile(
             @AuthenticationPrincipal CustomUserDetails user) {
-
-        System.out.println(user);
-
         return ResponseEntity.ok(Map.of(
                 "nombre",user.getUsuario().getNombre(),
                 "apellido",user.getUsuario().getApellido(),
+                "fotoPerfil",user.getUsuario().getFotoPerfil(),
                 "nombreCompleto", user.getUsuarioCompleto(),
                 "email", user.getUsuario().getEmail(),
                 "dni", user.getUsuario().getDni(),
