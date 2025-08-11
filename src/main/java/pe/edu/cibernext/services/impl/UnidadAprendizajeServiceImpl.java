@@ -2,13 +2,12 @@ package pe.edu.cibernext.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pe.edu.cibernext.mapper.UnidadAprendizajeJerarquicoMapper;
 import pe.edu.cibernext.mapper.UnidadAprendizajeMapper;
 import pe.edu.cibernext.models.CursoEntity;
 import pe.edu.cibernext.models.UnidadAprendizajeEntity;
-import pe.edu.cibernext.models.dto.UnidadAprendizajeDto;
-import pe.edu.cibernext.models.dto.UnidadAprendizajeJerarquicoDto;
-import pe.edu.cibernext.models.dto.UnidadAprendizajeRespuestaDto;
+import pe.edu.cibernext.models.dto.*;
 import pe.edu.cibernext.repositories.CursoRepository;
 import pe.edu.cibernext.repositories.UnidadAprendizajeRepository;
 import pe.edu.cibernext.services.UnidadAprendizajeService;
@@ -24,12 +23,6 @@ public class UnidadAprendizajeServiceImpl implements UnidadAprendizajeService {
     private final CursoRepository cursoRepo;
     private final UnidadAprendizajeMapper mapper;
 
-    @Override
-    public UnidadAprendizajeRespuestaDto buscarPorId(Long id) {
-        UnidadAprendizajeEntity entity = unidadRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Unidad no encontrada"));
-        return mapper.toRespuestaDto(entity);
-    }
 
     @Override
     public List<UnidadAprendizajeRespuestaDto> listarTodos() {
@@ -38,12 +31,6 @@ public class UnidadAprendizajeServiceImpl implements UnidadAprendizajeService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<UnidadAprendizajeRespuestaDto> listarPorCurso(Long cursoId) {
-        return unidadRepo.findByCursoId(cursoId).stream()
-                .map(mapper::toRespuestaDto)
-                .collect(Collectors.toList());
-    }
 
     @Override
     public UnidadAprendizajeDto registrar(UnidadAprendizajeDto dto) {
@@ -75,8 +62,28 @@ public class UnidadAprendizajeServiceImpl implements UnidadAprendizajeService {
 
 
     @Override
-    public List<UnidadAprendizajeJerarquicoDto> listarJerarquico() {
-        var unidadesPadre = unidadRepo.findAllByPadreIsNullOrderById();
-        return UnidadAprendizajeJerarquicoMapper.toDtoList(unidadesPadre);
+    @Transactional(readOnly = true)
+    public UnidadAprendizajeJerarquicoDto buscarJerarquicoPorId(Long id) {
+        UnidadAprendizajeEntity entity = unidadRepo.findWithTreeById(id)
+                .orElseThrow(() -> new RuntimeException("Unidad no encontrada"));
+        return UnidadAprendizajeJerarquicoMapper.toDto(entity);
+    }
+
+    @Override
+    public List<ConsultaPorUnidadAprendizajeDto> listarConsultasArbolPorUnidad(Long idUnidad) {
+        if (!unidadRepo.existsById(idUnidad)) {
+            throw new RuntimeException("Unidad de aprendizaje no encontrada con ID: " + idUnidad);
+        }
+        var consultas = unidadRepo.listarConsultasPorUnidad(idUnidad);
+        return UnidadAprendizajeMapper.toConsultaArbol(consultas);
+    }
+
+    @Override
+    public List<DocumentoPorUnidadAprendizajeDto> listarDocumentosPorUnidad(Long idUnidad) {
+        if (!unidadRepo.existsById(idUnidad)) {
+            throw new RuntimeException("Unidad de aprendizaje no encontrada con ID: " + idUnidad);
+        }
+        var documentos = unidadRepo.listarDocumentosPorUnidad(idUnidad);
+        return UnidadAprendizajeMapper.toDocumentoList(documentos);
     }
 }

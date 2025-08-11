@@ -1,11 +1,15 @@
 package pe.edu.cibernext.mapper;
 
+import org.springframework.stereotype.Component;
+import pe.edu.cibernext.models.ConsultaEntity;
 import pe.edu.cibernext.models.UnidadAprendizajeEntity;
+import pe.edu.cibernext.models.dto.ConsultaPorUnidadAprendizajeDto;
 import pe.edu.cibernext.models.dto.UnidadAprendizajeJerarquicoDto;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
+@Component
 public class UnidadAprendizajeJerarquicoMapper {
 
     public static UnidadAprendizajeJerarquicoDto toDto(UnidadAprendizajeEntity entity) {
@@ -24,9 +28,7 @@ public class UnidadAprendizajeJerarquicoMapper {
         return dto;
     }
 
-    public static List<UnidadAprendizajeJerarquicoDto> toDtoList(List<UnidadAprendizajeEntity> entities) {
-        return entities.stream()
-                .map(UnidadAprendizajeJerarquicoMapper::toDto)
-                .collect(Collectors.toList());
-    }
+
+
+
 }
