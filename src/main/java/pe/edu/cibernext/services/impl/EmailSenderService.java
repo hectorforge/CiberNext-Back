@@ -18,12 +18,15 @@ public class EmailSenderService {
     @Value("${spring.mail.username}")
     private String emailRemitente;
 
+    @Value("${spring.application.name}")
+    private String nombreApp;
+
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
 
     public void enviarEmail(String emailDestino, String mensaje,String nombreUsuario,String pass) {
         try {
-            final String asunto = "Bienvenido a SecurityApp";
+            final String asunto = "Bienvenido a " + nombreApp;
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 
@@ -32,6 +35,7 @@ public class EmailSenderService {
             helper.setSubject(asunto);
 
             Context context = new Context();
+            context.setVariable("nombreApp", nombreApp);
             context.setVariable("subject", asunto);
             context.setVariable("message", mensaje);
             context.setVariable("email",emailDestino);

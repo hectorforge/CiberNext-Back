@@ -2,6 +2,7 @@ package pe.edu.cibernext.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pe.edu.cibernext.models.RolEntity;
@@ -22,6 +23,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 public class AuthServiceImpl implements AuthService {
+
+    @Value("${spring.application.name}")
+    private String nombreApp;
 
     private final UsuarioRepository usuarioRepository;
     private final RolRepository rolRepository;
@@ -69,7 +73,7 @@ public class AuthServiceImpl implements AuthService {
 
         emailSenderService.enviarEmail(
                 nuevoUsuario.getEmail(),
-                "Tu cuenta en SecurityApp ha sido creada correctamente. Aquí tienes tu contraseña inicial para acceder a la plataforma.",
+                "Tu cuenta en " + nombreApp + " ha sido creada correctamente. Aquí tienes tu contraseña inicial para acceder a la plataforma.",
                 nuevoUsuario.getNombre(),
                 passwordGenerateInitial
         );

@@ -32,9 +32,9 @@ CREATE TABLE `Usuario` (
     `dni` VARCHAR(20) UNIQUE NOT NULL,
     `email` VARCHAR(255) UNIQUE NOT NULL,
     `password` VARCHAR(255) NOT NULL COMMENT 'Contraseña encriptada',
-    `foto_perfil` VARCHAR(500),
-    `rol_id` BIGINT NOT NULL,
-    CONSTRAINT `fk_usuario_rol` FOREIGN KEY (`rol_id`) REFERENCES `Rol` (`id`)
+    `foto_perfil` VARCHAR(500)
+--     `rol_id` BIGINT NOT NULL,
+--    CONSTRAINT `fk_usuario_rol` FOREIGN KEY (`rol_id`) REFERENCES `Rol` (`id`)
 ) COMMENT='Tabla base para todos los tipos de usuarios. Utiliza estrategia de herencia JOINED.';
 
 
