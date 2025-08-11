@@ -16,23 +16,23 @@ public class RegistroAlumnoController {
 
     private final RegistroAlumnoService registroService;
 
-    @PostMapping("/registrar")
+    @PostMapping
     public ResponseEntity<RegistroAlumnoResponseDto> registrar(@RequestBody RegistroAlumnoRequestDto request) {
         RegistroAlumnoResponseDto response = registroService.registrar(request);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public ResponseEntity<List<RegistroAlumnoResponseDto>> listar() {
         return ResponseEntity.ok(registroService.listar());
     }
 
-    @GetMapping("/obtenerPorId/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<RegistroAlumnoResponseDto> obtenerPorId(@PathVariable Long id) {
         return ResponseEntity.ok(registroService.obtenerPorId(id));
     }
 
-    @DeleteMapping("/eliminar/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         registroService.eliminar(id);
         return ResponseEntity.noContent().build();
