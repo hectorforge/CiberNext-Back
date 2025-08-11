@@ -31,10 +31,11 @@ public class CursoController {
         return ResponseEntity.ok(cursoService.registrar(dto));
     }
 
-    // TODO: Corregir la funcionalidad de este endpoint
+    // TODO: Corregir la firma de este endpoint
     // Debe recibir un id de curricula en la url
     // para mantener la nomenclatura de los endpoints
     // @PutMapping("/{id}")
+    // public ResponseEntity<CursoDto> actualizar(@PathVariable("id") Long id, @RequestBody CursoDto dto) {...}
     @PutMapping("/actualizar")
     public ResponseEntity<CursoDto> actualizar(@RequestBody CursoDto dto) {
         return ResponseEntity.ok(cursoService.actualizar(dto));
@@ -51,4 +52,5 @@ public class CursoController {
 //  TODO: Falta implementar
 //  - Lista de alumnos por curso
 //  - Lista de docentes por curso
-//  - Detalles del curso debe contener una lista unidades de aprendizaje por curso (incluye documentos y consultas)}
+//  - Lista de unidades de aprendizaje por curso. Incluir las subunidades.
+//  - Modificar el dto del curso para que incluya el porcentaje de avance del alumno
