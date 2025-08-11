@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.cibernext.models.dto.AlumnoDto;
-import pe.edu.cibernext.models.dto.UsuarioDto;
 import pe.edu.cibernext.services.AlumnoService;
-
 import java.util.List;
 
 @RestController
@@ -16,28 +14,29 @@ public class AlumnoController {
 
     private final AlumnoService alumnoService;
 
-    @GetMapping("/obtenerPorId/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<AlumnoDto> obtenerAlumnoPorId(@PathVariable("id") Long id) {
         return ResponseEntity.ok(alumnoService.buscarPorId(id));
     }
 
-    @GetMapping("/verificarExistenciaPorId/{id}")
+    @GetMapping("/{id}/existe")
     public ResponseEntity<Boolean> verificarExistenciaPorId(@PathVariable("id") Long id) {
         return ResponseEntity.ok(alumnoService.verificarExistenciaPorId(id));
     }
 
-
-    @GetMapping("/listar")
+    @GetMapping
     public ResponseEntity<List<AlumnoDto>> listarAlumnos() {
         return ResponseEntity.ok(alumnoService.listarTodos());
     }
 
-
-    @DeleteMapping("/eliminarPorId/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarAlumno(@PathVariable("id") Long id) {
         alumnoService.eliminarPorId(id);
         return ResponseEntity.noContent().build();
     }
 
-
 }
+
+// TODO: Falta implementar
+// - Actualizar alumno
+// - Lista de cursos por alumno
