@@ -108,6 +108,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         usuario.setNombre(dto.getNombre());
+        usuario.setApellido(dto.getApellido());
         usuario.setEmail(dto.getEmail());
         usuario.setDni(dto.getDni());
         usuario.setFotoPerfil(dto.getFotoPerfil());
