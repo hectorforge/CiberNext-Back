@@ -12,7 +12,7 @@
 -- 1. Insertar roles
 INSERT INTO `Rol` (`id`, `nombre`) VALUES
 (1, 'ADMIN'),
-(2, 'PROFESOR'),
+(2, 'DOCENTE'),
 (3, 'ALUMNO');
 
 -- 2. Variable de contraseña hasheada
