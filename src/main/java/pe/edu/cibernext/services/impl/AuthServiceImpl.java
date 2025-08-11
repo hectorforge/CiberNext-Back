@@ -37,8 +37,8 @@ public class AuthServiceImpl implements AuthService {
         }
 
         if (!emailValidatorService.isValidEmail(dto.getEmail())) {
-             throw new RuntimeException("El correo no parece válido o activo");
-         }
+            throw new RuntimeException("El correo no parece válido o activo");
+        }
 
         String passwordGenerateInitial = generatePasswordInitial();
 
@@ -49,12 +49,16 @@ public class AuthServiceImpl implements AuthService {
                     return rolRepository.save(nuevoRol);
                 });
 
+        String fotoPerfil = (dto.getFotoPerfil() == null || dto.getFotoPerfil().isBlank())
+                ? "https://static.vecteezy.com/system/resources/previews/012/742/173/large_2x/unknow-person-icon-free-vector.jpg"
+                : dto.getFotoPerfil();
+
         UsuarioEntity nuevoUsuario = UsuarioEntity.builder()
                 .nombre(dto.getNombre())
                 .apellido(dto.getApellido())
                 .email(dto.getEmail())
                 .dni(dto.getDni())
-                .fotoPerfil(dto.getFotoPerfil())
+                .fotoPerfil(fotoPerfil)
                 .password(passwordEncoder.encode(passwordGenerateInitial))
                 .roles(Set.of(rolUser))
                 .build();
