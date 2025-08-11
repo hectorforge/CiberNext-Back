@@ -31,8 +31,9 @@ public class ConsultaController {
     // TODO: Falta implementar
     /*
      - Consultas del alumno que están respondidas y no respondidas
-     - ConsultasPorCurso
+     - ConsultasPorUnidadAprendizaje
+       Los resultados de las consultas deben estar ordenados: consulta -> respuestas (consultas anidadas).
 
-     Todas las consultas deben estar ordenadas jerárquicamente: curso -> unidad de aprendizaje -> pregunta.
+     Todas las consultas deben estar ordenadas jerárquicamente: curso -> unidad de aprendizaje -> consulta -> respuestas (consultas anidadas).
      */
 }
