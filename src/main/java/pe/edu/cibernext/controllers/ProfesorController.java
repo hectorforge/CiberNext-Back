@@ -49,5 +49,4 @@ public class ProfesorController {
     // - Lista de cursos por profesor
     // - Listas de mensajes respondidos y no respondidos (traerlos desde ConsultaController)
 
-
 }
