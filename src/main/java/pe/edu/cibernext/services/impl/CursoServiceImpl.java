@@ -62,7 +62,6 @@ public class CursoServiceImpl implements CursoService {
         CursoEntity curso = cursoRepository.findById(idCurso)
                 .orElseThrow(() -> new RuntimeException("Curso no encontrado con ID: " + idCurso));
 
-        // Sacar lista de AlumnoEntity desde los registros
         List<AlumnoEntity> alumnos = curso.getRegistrosAlumnos().stream()
                 .map(RegistroAlumnoEntity::getAlumno)
                 .toList();
@@ -77,7 +76,6 @@ public class CursoServiceImpl implements CursoService {
         }
         return cursoRepository.listarProfesoresPorCurso(idCurso);
     }
-
 
     @Override
     public List<UnidadAprendizajePorCursoDto> listarUnidadesArbolPorCurso(Long idCurso) {

@@ -16,7 +16,6 @@ public class UnidadAprendizajeController {
 
     private final UnidadAprendizajeService unidadService;
 
-    // TODO: Mostrar como en listarJerarquico para que muestre el detalle de la unidad de aprendizaje con sus sub unidades
     @GetMapping("/jerarquico/{id}")
     public ResponseEntity<UnidadAprendizajeJerarquicoDto> obtenerJerarquicoPorId(@PathVariable Long id) {
         return ResponseEntity.ok(unidadService.buscarJerarquicoPorId(id));
@@ -25,8 +24,7 @@ public class UnidadAprendizajeController {
     public ResponseEntity<List<UnidadAprendizajeRespuestaDto>> listarTodos() {
         return ResponseEntity.ok(unidadService.listarTodos());
     }
-
-
+    
     @PostMapping
     public ResponseEntity<UnidadAprendizajeDto> registrar(@RequestBody UnidadAprendizajeDto dto) {
         return ResponseEntity.ok(unidadService.registrar(dto));
@@ -56,10 +54,3 @@ public class UnidadAprendizajeController {
     }
 
 }
-
-
-// TODO: Falta implementar
-/*
-- Listar consultas por unidad de aprendizaje: consulta -> respuestas (consultas anidadas).
-- Listar documentos por unidad de aprendizaje:
-*/

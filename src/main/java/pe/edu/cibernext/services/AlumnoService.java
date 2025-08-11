@@ -1,17 +1,18 @@
 package pe.edu.cibernext.services;
 
-import pe.edu.cibernext.models.dto.AlumnoDto;
-import pe.edu.cibernext.models.dto.AlumnoRegistroDto;
-import pe.edu.cibernext.models.dto.UsuarioDto;
+import pe.edu.cibernext.models.dto.AlumnoSimpleDto;
+import pe.edu.cibernext.models.dto.CursoDto;
 
 import java.util.List;
 
 public interface AlumnoService {
 
-
-    AlumnoDto buscarPorId(Long id);
     boolean verificarExistenciaPorId(Long id);
-    List<AlumnoDto> listarTodos();
     void eliminarPorId(Long id);
+    List<AlumnoSimpleDto> listarTodosPlano();
+    AlumnoSimpleDto buscarPlanoPorId(Long id);
+    AlumnoSimpleDto actualizarPlano(Long id, AlumnoSimpleDto dto);
+
+    List<CursoDto> listarCursosPorAlumno(Long idAlumno);
 
 }
