@@ -3,6 +3,8 @@ package pe.edu.cibernext.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.cibernext.models.dto.CurriculaDto;
+import pe.edu.cibernext.models.dto.CursoDto;
 import pe.edu.cibernext.models.dto.ProfesorDto;
 import pe.edu.cibernext.models.dto.ProfesorRegistroDto;
 import pe.edu.cibernext.services.ProfesorService;
@@ -20,6 +22,11 @@ public class ProfesorController {
     public ResponseEntity<ProfesorDto> registrarProfesor(@RequestBody ProfesorRegistroDto profesorRegistroDto) {
         ProfesorDto profesorDto = profesorService.registrar(profesorRegistroDto);
         return ResponseEntity.ok(profesorDto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProfesorDto> actualizarProfesor(@RequestBody ProfesorDto dto, @PathVariable("id") Long id) {
+        return ResponseEntity.ok(profesorService.actualizar(id, dto));
     }
 
     @GetMapping("/{id}")
@@ -43,10 +50,9 @@ public class ProfesorController {
         return ResponseEntity.noContent().build();
     }
 
-
-    // TODO: Falta implementar
-    // - Actualizar profesor
-    // - Lista de cursos por profesor
-    // - Listas de mensajes respondidos y no respondidos (traerlos desde ConsultaController)
+    @GetMapping("/{id}/cursos")
+    public ResponseEntity<List<CursoDto>> listarCursos(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(profesorService.listarCursos(id));
+    }
 
 }

@@ -1,5 +1,6 @@
 package pe.edu.cibernext.services;
 
+import pe.edu.cibernext.models.dto.CursoDto;
 import pe.edu.cibernext.models.dto.ProfesorDto;
 import pe.edu.cibernext.models.dto.ProfesorRegistroDto;
 
@@ -10,5 +11,8 @@ public interface ProfesorService {
     boolean verificarExistenciaPorId(Long id);
     List<ProfesorDto> listarTodos();
     ProfesorDto registrar(ProfesorRegistroDto profesorRegistroDto);
+    ProfesorDto actualizar(Long id, ProfesorDto profesorDto);
     void eliminarPorId(Long id);
+
+    List<CursoDto> listarCursos(Long idProfesor);
 }

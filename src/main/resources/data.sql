@@ -728,84 +728,80 @@ INSERT INTO `RegistroAlumno` (`curso_id`, `alumno_usuario_id`, `profesor_usuario
 -- ----------------------------------------------------
 -- 1. POBLAR `Consultas` (FOROS)
 -- ----------------------------------------------------
--- == Hilo 1: En el curso "React" (ID: 2) sobre la Unidad de Aprendizaje "useEffect" (ID: 12) ==
--- Gabriela Solis (Usuario ID: 15) en su matrícula de React (Registro ID: 12) tiene una duda.
+-- == Hilo 1: React (Curso 2, Unidad 12: useEffect) ==
+-- Gabriela Solis (Usuario 15) en su matrícula de React (Registro 12)
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
     (1, 'Duda sobre el array de dependencias en useEffect', 'Hola profesor, no entiendo bien cuándo debo poner variables en el array de dependencias de useEffect. ¿Si lo dejo vacío se ejecuta solo una vez?', 15, 12, 12, NULL);
 
--- El profesor del curso, Carlos Santana (Usuario ID: 3), responde.
+-- Profesor Carlos Santana (Usuario 3) responde
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (2, NULL, '¡Hola Gabriela! Exactamente. Si dejas el array de dependencias vacío `[]`, el efecto se ejecutará solo una vez, después del primer renderizado, similar a `componentDidMount`. Si incluyes una variable, el efecto se volverá a ejecutar cada vez que el valor de esa variable cambie.', 3, NULL, 12, 1);
+    (2, NULL, '¡Hola Gabriela! Exactamente. Si dejas el array de dependencias vacío `[]`, el efecto se ejecutará solo una vez, después del primer renderizado, similar a `componentDidMount`. Si incluyes una variable, el efecto se volverá a ejecutar cada vez que el valor de esa variable cambie.', 3, 12, 12, 1);
 
--- Otro alumno, Ana Lopez (Usuario ID: 9), añade un comentario.
+-- Ana Lopez (Usuario 9) también está matriculada en React (Registro 1)
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (3, NULL, '¡Gracias por la pregunta Gabriela! A mí me sirvió mucho pensar que el array le dice a React: "vigila estas variables y si alguna cambia, ejecuta el efecto de nuevo".', 9, NULL, 12, 1);
+    (3, NULL, '¡Gracias por la pregunta Gabriela! A mí me sirvió mucho pensar que el array le dice a React: "vigila estas variables y si alguna cambia, ejecuta el efecto de nuevo".', 9, 1, 12, 1);
 
--- == Hilo 2: En "Spring Boot" (ID: 12) sobre la Unidad "Fundamentos de Spring Boot 3" (ID: 112) ==
--- Fernando Torres (Usuario ID: 14) en su matrícula de Spring Boot (Registro ID: 18) pregunta.
+-- == Hilo 2: Spring Boot (Curso 12, Unidad 112) ==
+-- Fernando Torres (Usuario 14) en su matrícula de Spring Boot (Registro 18)
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
     (4, 'Diferencias entre @Component, @Service y @Repository', 'Profesor, he visto que las tres anotaciones parecen hacer lo mismo (crear un bean). ¿Cuál es la diferencia real y cuándo debo usar cada una?', 14, 18, 112, NULL);
 
--- El profesor del curso, Anthony Stark (Usuario ID: 6), responde.
+-- Profesor Anthony Stark (Usuario 6) responde
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (5, NULL, 'Excelente pregunta, Fernando. Si bien técnicamente las tres crean un bean, su uso es semántico. `@Repository` se usa en la capa de persistencia y traduce excepciones de la BD. `@Service` se usa en la capa de negocio para la lógica principal. `@Component` es genérica. Usar la correcta ayuda a que el código sea más legible y permite que los frameworks apliquen lógicas específicas (AOP).', 6, NULL, 112, 4);
+    (5, NULL, 'Excelente pregunta, Fernando. Si bien técnicamente las tres crean un bean, su uso es semántico. `@Repository` se usa en la capa de persistencia y traduce excepciones de la BD. `@Service` se usa en la capa de negocio para la lógica principal. `@Component` es genérica. Usar la correcta ayuda a que el código sea más legible y permite que los frameworks apliquen lógicas específicas (AOP).', 6, 18, 112, 4);
 
--- == Hilo 3: En "Desarrollo Web I" (ID: 1) sobre la Unidad "Flexbox" (ID: 4) ==
--- Laura Jimenez (Usuario ID: 20) en su matrícula de Dev Web I (Registro ID: 15) tiene problemas.
+-- == Hilo 3: Desarrollo Web I (Curso 1, Unidad 4: Flexbox) ==
+-- Laura Jimenez (Usuario 20) en su matrícula de Dev Web I (Registro 15)
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
     (6, '¿Cómo centrar un div vertical y horizontalmente con Flexbox?', 'He intentado con `align-items: center` pero no funciona como espero. ¿Qué me falta?', 20, 15, 4, NULL);
 
--- La profesora del curso, Natasha Romanoff (Usuario ID: 19), responde.
+-- Profesora Natasha Romanoff (Usuario 19) responde
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (7, NULL, 'Hola Laura, es una duda muy común. Para centrar en ambos ejes, necesitas dos propiedades en el contenedor padre: `align-items: center;` (para el eje vertical) y `justify-content: center;` (para el eje horizontal). Además, asegúrate de que el contenedor tenga una altura definida (ej. `height: 100vh;`) para que el centrado vertical tenga efecto.', 19, NULL, 4, 6);
+    (7, NULL, 'Hola Laura, es una duda muy común. Para centrar en ambos ejes, necesitas dos propiedades en el contenedor padre: `align-items: center;` (para el eje vertical) y `justify-content: center;` (para el eje horizontal). Además, asegúrate de que el contenedor tenga una altura definida (ej. `height: 100vh;`) para que el centrado vertical tenga efecto.', 19, 15, 4, 6);
 
-
--- == Hilo 4: En el curso "Angular" (ID: 3) sobre la Unidad "Componentes y Plantillas" (ID: 19) ==
--- Elena Garcia (Usuario ID: 13), en su matrícula de Angular (Registro ID: 11), tiene una duda fundamental.
+-- == Hilo 4: Angular (Curso 3, Unidad 19: Componentes y Plantillas) ==
+-- Elena Garcia (Usuario 13), matrícula de Angular (Registro 11)
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
     (8, '¿Cuándo usar ngOnInit vs el constructor?', 'Profesor, he visto ejemplos que inicializan propiedades en el constructor y otros en ngOnInit. ¿Cuál es la buena práctica y por qué?', 13, 11, 19, NULL);
 
--- El profesor del curso, Carlos Santana (Usuario ID: 3), responde con la mejor práctica.
+-- Profesor Carlos Santana (Usuario 3) responde
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (9, NULL, '¡Gran pregunta, Elena! La regla general es: usa el `constructor` para la inyección de dependencias (DI) y para inicializaciones muy simples que no dependan de inputs. Usa `ngOnInit` para toda la lógica de inicialización compleja, especialmente si necesitas acceder a las propiedades `@Input()` del componente, ya que en `ngOnInit` tienes la garantía de que ya están disponibles.', 3, NULL, 19, 8);
+    (9, NULL, '¡Gran pregunta, Elena! La regla general es: usa el `constructor` para la inyección de dependencias (DI) y para inicializaciones muy simples que no dependan de inputs. Usa `ngOnInit` para toda la lógica de inicialización compleja, especialmente si necesitas acceder a las propiedades `@Input()` del componente, ya que en `ngOnInit` tienes la garantía de que ya están disponibles.', 3, 11, 19, 8);
 
--- Carla Kent (Usuario ID: 11), otra alumna, comparte su experiencia.
+-- Carla Kent (Usuario 11), matrícula de Angular (Registro 9)
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (10, NULL, 'A mí me ayudó pensar que el constructor es para "preparar las herramientas" y ngOnInit es para "empezar a usarlas".', 11, NULL, 19, 8);
+    (10, NULL, 'A mí me ayudó pensar que el constructor es para "preparar las herramientas" y ngOnInit es para "empezar a usarlas".', 11, 9, 19, 8);
 
-
--- == Hilo 5: En "Spring Boot" (ID: 12) sobre la Unidad "Capa de Persistencia" (ID: 114) ==
--- Bruno Diaz (Usuario ID: 10), en su matrícula de Spring Boot (Registro ID: 5), pregunta sobre DTOs.
+-- == Hilo 5: Spring Boot (Curso 12, Unidad 114: Capa de Persistencia) ==
+-- Bruno Diaz (Usuario 10), matrícula de Spring Boot (Registro 5)
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
     (11, '¿Por qué usar DTOs si ya tengo la Entidad JPA?', 'Hola, me parece que crear una clase DTO para cada entidad es duplicar código. ¿No sería más fácil exponer la entidad `@Entity` directamente en el controlador? ¿Cuáles son los riesgos?', 10, 5, 114, NULL);
 
--- El profesor, Anthony Stark (Usuario ID: 6), da una respuesta de arquitecto.
+-- Profesor Anthony Stark (Usuario 6) responde
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (12, NULL, 'Bruno, es una de las preguntas más importantes en la arquitectura de APIs. Exponer la entidad directamente tiene varios riesgos graves: 1) Expones la estructura de tu BD al exterior. 2) Cualquier cambio en tu tabla (añadir una columna) se refleja inmediatamente en tu API, rompiendo contratos. 3) Puedes caer en bucles de serialización infinitos con relaciones bidireccionales. Los DTOs (Data Transfer Objects) actúan como una capa de protección y un contrato explícito con tus clientes. Te dan control total sobre qué datos mostrar y recibir.', 6, NULL, 114, 11);
+    (12, NULL, 'Bruno, es una de las preguntas más importantes en la arquitectura de APIs. Exponer la entidad directamente tiene varios riesgos graves: 1) Expones la estructura de tu BD al exterior. 2) Cualquier cambio en tu tabla (añadir una columna) se refleja inmediatamente en tu API, rompiendo contratos. 3) Puedes caer en bucles de serialización infinitos con relaciones bidireccionales. Los DTOs (Data Transfer Objects) actúan como una capa de protección y un contrato explícito con tus clientes. Te dan control total sobre qué datos mostrar y recibir.', 6, 5, 114, 11);
 
-
--- == Hilo 6: En "Introducción a la Algoritmia" (ID: 10) sobre la Unidad de Ordenamiento (ID: 97) ==
--- Hugo Sanchez (Usuario ID: 16), en su matrícula de Algoritmia (Registro ID: 19), tiene una duda teórica.
+-- == Hilo 6: Algoritmia (Curso 10, Unidad 97: Ordenamiento) ==
+-- Hugo Sanchez (Usuario 16), matrícula de Algoritmia (Registro 19)
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
     (13, '¿Por qué QuickSort es O(n^2) en el peor caso?', 'Entiendo que en promedio es O(n log n), pero no veo cómo puede llegar a ser tan lento como un Bubble Sort. ¿Podría dar un ejemplo del peor caso?', 16, 19, 97, NULL);
 
--- El profesor Anthony Stark (Usuario ID: 6) responde.
+-- Profesor Anthony Stark (Usuario 6) responde
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (14, NULL, 'Hugo, el peor caso para QuickSort ocurre cuando el pivote elegido es consistentemente el elemento más pequeño o más grande del sub-arreglo. Imagina un arreglo que ya está ordenado ([1, 2, 3, 4, 5]) y siempre eliges el primer elemento como pivote. En la primera partición, moverás n-1 elementos. En la siguiente, n-2, y así sucesivamente. Esto resulta en una suma de `n + (n-1) + (n-2) ... + 1`, que es O(n^2). Por eso, la elección de un buen pivote (como uno aleatorio o la mediana de tres) es crucial.', 6, NULL, 97, 13);
+    (14, NULL, 'Hugo, el peor caso para QuickSort ocurre cuando el pivote elegido es consistentemente el elemento más pequeño o más grande del sub-arreglo. Imagina un arreglo que ya está ordenado ([1, 2, 3, 4, 5]) y siempre eliges el primer elemento como pivote. En la primera partición, moverás n-1 elementos. En la siguiente, n-2, y así sucesivamente. Esto resulta en una suma de `n + (n-1) + (n-2) ... + 1`, que es O(n^2). Por eso, la elección de un buen pivote (como uno aleatorio o la mediana de tres) es crucial.', 6, 19, 97, 13);
 
-
--- == Hilo 7: En "POO con C#" (ID: 11) sobre la Unidad de SOLID (ID: 108) ==
--- Marcos Rojo (Usuario ID: 21), en su matrícula (Registro ID: 22), pide un ejemplo práctico.
+-- == Hilo 7: POO C# (Curso 11, Unidad 108: SOLID) ==
+-- Marcos Rojo (Usuario 21), matrícula de POO C# (Registro 22)
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
     (15, 'Ejemplo práctico del Principio de Inversión de Dependencias (DIP)', 'Entiendo la teoría de "depender de abstracciones, no de concreciones", pero me cuesta verlo en código real. ¿Cómo se vería un "antes" y un "después" de aplicar DIP?', 21, 22, 108, NULL);
 
--- El profesor Anthony Stark (Usuario ID: 6) responde con código.
+-- Profesor Anthony Stark (Usuario 6) responde
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (16, NULL, 'Claro, Marcos. **ANTES (Mal):** `class Notificador { private MySqlDatabase _db = new MySqlDatabase(); public void Notificar() { _db.GuardarNotificacion(); } }`. Aquí `Notificador` depende directamente de `MySqlDatabase`. **DESPUÉS (Bien):** `interface IDatabase { void Guardar(); } class Notificador { private IDatabase _db; public Notificador(IDatabase db) { _db = db; } public void Notificar() { _db.Guardar(); } }`. Ahora `Notificador` depende de una abstracción (`IDatabase`) y podemos pasarle cualquier base de datos (MySql, SqlServer) que la implemente. Eso es DIP.', 6, NULL, 108, 15);
+    (16, NULL, 'Claro, Marcos. **ANTES (Mal):** `class Notificador { private MySqlDatabase _db = new MySqlDatabase(); public void Notificar() { _db.GuardarNotificacion(); } }`. Aquí `Notificador` depende directamente de `MySqlDatabase`. **DESPUÉS (Bien):** `interface IDatabase { void Guardar(); } class Notificador { private IDatabase _db; public Notificador(IDatabase db) { _db = db; } public void Notificar() { _db.Guardar(); } }`. Ahora `Notificador` depende de una abstracción (`IDatabase`) y podemos pasarle cualquier base de datos (MySql, SqlServer) que la implemente. Eso es DIP.', 6, 22, 108, 15);
 
--- Fernando Torres (Usuario ID: 14), que también lleva el curso, añade un punto.
+-- Fernando Torres (Usuario 14), matrícula de POO C# (Registro 20)
 INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (17, NULL, '¡Buenísimo! Y eso también facilita mucho las pruebas unitarias. En el "después", podemos pasarle un `MockDatabase` al `Notificador` para probarlo sin necesidad de una base de datos real.', 14, NULL, 108, 15);
+    (17, NULL, '¡Buenísimo! Y eso también facilita mucho las pruebas unitarias. En el "después", podemos pasarle un `MockDatabase` al `Notificador` para probarlo sin necesidad de una base de datos real.', 14, 20, 108, 15);
 
 
 INSERT INTO `UnidadVista` (`unidadAprendizajeId`, `registroAlumnoId`) VALUES

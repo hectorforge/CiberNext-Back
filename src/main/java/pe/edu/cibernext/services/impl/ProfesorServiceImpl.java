@@ -3,10 +3,15 @@ package pe.edu.cibernext.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pe.edu.cibernext.exceptions.RecursoNoEncontradoException;
+import pe.edu.cibernext.mapper.ConsultaMapper;
+import pe.edu.cibernext.mapper.CursoMapper;
 import pe.edu.cibernext.mapper.ProfesorMapper;
+import pe.edu.cibernext.models.CursoEntity;
 import pe.edu.cibernext.models.ProfesorEntity;
+import pe.edu.cibernext.models.dto.CursoDto;
 import pe.edu.cibernext.models.dto.ProfesorDto;
 import pe.edu.cibernext.models.dto.ProfesorRegistroDto;
+import pe.edu.cibernext.repositories.CursoRepository;
 import pe.edu.cibernext.repositories.ProfesorRepository;
 import pe.edu.cibernext.repositories.RolRepository;
 import pe.edu.cibernext.services.ProfesorService;
@@ -21,6 +26,7 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     private final ProfesorRepository profesorRepository;
     private final RolRepository rolRepository;
+    private final CursoRepository cursoRepository;
 
     @Override
     public ProfesorDto buscarPorId(Long id) {
@@ -67,8 +73,22 @@ public class ProfesorServiceImpl implements ProfesorService {
     }
 
     @Override
+    public ProfesorDto actualizar(Long id, ProfesorDto profesorDto) {
+        ProfesorEntity profesor = ProfesorMapper.toEntity(profesorDto);
+        profesor.setId(id);
+        ProfesorEntity profesorGuardado = profesorRepository.save(profesor);
+        return ProfesorMapper.toDto(profesorGuardado);
+    }
+
+    @Override
     public void eliminarPorId(Long id) {
         profesorRepository.deleteById(id);
+    }
+
+    @Override
+    public List<CursoDto> listarCursos(Long idProfesor) {
+        List<CursoEntity> cursos = cursoRepository.findByProfesores_Id(idProfesor);
+        return CursoMapper.toDtoList(cursos);
     }
 }
 
