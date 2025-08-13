@@ -3,6 +3,7 @@ package pe.edu.cibernext.services;
 
 import pe.edu.cibernext.models.dto.DocumentoDto;
 import pe.edu.cibernext.models.dto.DocumentoRespuestaDto;
+import pe.edu.cibernext.models.dto.DocumentosPorCursoDto;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ public interface DocumentoService {
     DocumentoDto registrar(DocumentoDto dto);
     DocumentoDto actualizar(DocumentoDto dto);
     void eliminar(Long id);
+    List<DocumentosPorCursoDto> listarDocumentosPorCurso(Long cursoId);
 }

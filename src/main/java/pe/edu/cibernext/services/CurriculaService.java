@@ -12,4 +12,5 @@ public interface CurriculaService {
     CurriculaDto registrar(CurriculaDto dto);
     CurriculaDto actualizar(CurriculaDto dto);
     void eliminar(Long id);
+    List<CurriculaRespuestaDto> listarPorAreaEspecialidad(Long areaId);
 }

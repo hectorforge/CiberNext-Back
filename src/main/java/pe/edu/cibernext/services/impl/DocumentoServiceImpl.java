@@ -7,7 +7,9 @@ import pe.edu.cibernext.models.DocumentoEntity;
 import pe.edu.cibernext.models.TipoDocumentoEntity;
 import pe.edu.cibernext.models.UnidadAprendizajeEntity;
 import pe.edu.cibernext.models.dto.DocumentoDto;
+import pe.edu.cibernext.models.dto.DocumentoPorUnidadAprendizajeDto;
 import pe.edu.cibernext.models.dto.DocumentoRespuestaDto;
+import pe.edu.cibernext.models.dto.DocumentosPorCursoDto;
 import pe.edu.cibernext.repositories.DocumentoRepository;
 import pe.edu.cibernext.repositories.TipoDocumentoRepository;
 import pe.edu.cibernext.repositories.UnidadAprendizajeRepository;
@@ -77,5 +79,24 @@ public class DocumentoServiceImpl implements DocumentoService {
     @Override
     public void eliminar(Long id) {
         documentoRepo.deleteById(id);
+    }
+
+    @Override
+    public List<DocumentosPorCursoDto> listarDocumentosPorCurso(Long cursoId) {
+        List<UnidadAprendizajeEntity> unidades = unidadRepo.findByCursoId(cursoId);
+
+        return unidades.stream().map(unidad -> {
+            List<DocumentoPorUnidadAprendizajeDto> documentos = documentoRepo.findByUnidadAprendizajeId(unidad.getId())
+                    .stream()
+                    .map(mapper::toPorUnidadDto)
+                    .collect(Collectors.toList());
+
+            DocumentosPorCursoDto dto = new DocumentosPorCursoDto();
+            dto.setUnidadId(unidad.getId());
+            dto.setNombreUnidad(unidad.getNombre());
+            dto.setDocumentos(documentos);
+
+            return dto;
+        }).collect(Collectors.toList());
     }
 }

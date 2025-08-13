@@ -26,10 +26,9 @@ public class CurriculaController {
         return ResponseEntity.ok(curriculaService.listarTodos());
     }
 
-    // TODO: Cambiar funcionalidad a listar cursos por AreaEspecialidad
-    //    @GetMapping("/area/{areaId}/curso")
-    public ResponseEntity<List<CurriculaRespuestaDto>> listarPorCurso(@PathVariable Long cursoId) {
-        return ResponseEntity.ok(curriculaService.listarPorCurso(cursoId));
+    @GetMapping("/area/{areaId}/curso")
+    public ResponseEntity<List<CurriculaRespuestaDto>> listarCursosPorAreaEspecialidad(@PathVariable Long areaId) {
+        return ResponseEntity.ok(curriculaService.listarPorAreaEspecialidad(areaId));
     }
 
     @PostMapping

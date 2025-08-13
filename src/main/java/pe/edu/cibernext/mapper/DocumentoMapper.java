@@ -6,6 +6,7 @@ import pe.edu.cibernext.models.DocumentoEntity;
 import pe.edu.cibernext.models.TipoDocumentoEntity;
 import pe.edu.cibernext.models.UnidadAprendizajeEntity;
 import pe.edu.cibernext.models.dto.DocumentoDto;
+import pe.edu.cibernext.models.dto.DocumentoPorUnidadAprendizajeDto;
 import pe.edu.cibernext.models.dto.DocumentoRespuestaDto;
 
 @Component
@@ -46,5 +47,14 @@ public class DocumentoMapper {
         entity.setUnidadAprendizaje(unidad);
         entity.setTipoDocumento(tipo);
         return entity;
+    }
+
+    public DocumentoPorUnidadAprendizajeDto toPorUnidadDto(DocumentoEntity entity) {
+        DocumentoPorUnidadAprendizajeDto dto = new DocumentoPorUnidadAprendizajeDto();
+        dto.setId(entity.getId());
+        dto.setNombre(entity.getNombre());
+        dto.setArchivo(entity.getArchivo());
+        dto.setDescripcion(entity.getDescripcion());
+        return dto;
     }
 }

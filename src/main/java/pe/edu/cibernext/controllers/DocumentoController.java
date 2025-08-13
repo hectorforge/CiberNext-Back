@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.cibernext.models.dto.DocumentoDto;
 import pe.edu.cibernext.models.dto.DocumentoRespuestaDto;
+import pe.edu.cibernext.models.dto.DocumentosPorCursoDto;
 import pe.edu.cibernext.services.DocumentoService;
 
 import java.util.List;
@@ -26,13 +27,10 @@ public class DocumentoController {
         return ResponseEntity.ok(documentoService.listarTodos());
     }
 
-    //TODO: Este endpoint debe estar en el controlador de Unidad
-    // y debe recibir un id de unidad en la url
-    // para mantener la nomenclatura de los endpoints
-    // @GetMapping("/unidad/{unidadId}/documentos")
-    @GetMapping("/listarPorUnidad/{unidadId}")
-    public ResponseEntity<List<DocumentoRespuestaDto>> listarPorUnidad(@PathVariable Long unidadId) {
-        return ResponseEntity.ok(documentoService.listarPorUnidad(unidadId));
+
+    @GetMapping("/curso/{cursoId}/documentos")
+    public ResponseEntity<List<DocumentosPorCursoDto>> listarDocumentosPorCurso(@PathVariable Long cursoId) {
+        return ResponseEntity.ok(documentoService.listarDocumentosPorCurso(cursoId));
     }
 
 
@@ -53,8 +51,6 @@ public class DocumentoController {
     }
 }
 
-// TODO: Falta implementar
-// - Lista de documentos por curso, indicando a que unidad pertenece
 
 
 

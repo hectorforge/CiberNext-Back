@@ -78,4 +78,9 @@ public class CurriculaServiceImpl implements CurriculaService {
     public void eliminar(Long id) {
         curriculaRepo.deleteById(id);
     }
+
+    @Override
+    public List<CurriculaRespuestaDto> listarPorAreaEspecialidad(Long areaId) {
+        return List.of();
+    }
 }

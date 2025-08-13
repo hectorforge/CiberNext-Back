@@ -31,11 +31,9 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.registrar(dto));
     }
 
-    // TODO: Corregir la firma de este endpoint
-    // Debe recibir id de curricula en la url
-    // para mantener la nomenclatura de los endpoints
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDto> actualizarUsuario(@RequestBody UsuarioDto dto) {
+    public ResponseEntity<UsuarioDto> actualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDto dto) {
+        dto.setId(id);
         return ResponseEntity.ok(usuarioService.actualizar(dto));
     }
 

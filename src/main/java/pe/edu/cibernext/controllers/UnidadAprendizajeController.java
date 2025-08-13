@@ -16,6 +16,11 @@ public class UnidadAprendizajeController {
 
     private final UnidadAprendizajeService unidadService;
 
+    @GetMapping("/unidad/{unidadId}/documentos")
+    public ResponseEntity<List<DocumentoPorUnidadAprendizajeDto>> listarDocumentosPorUnidad(@PathVariable Long unidadId) {
+        return ResponseEntity.ok(unidadService.listarDocumentosPorUnidad(unidadId));
+    }
+
     @GetMapping("/jerarquico/{id}")
     public ResponseEntity<UnidadAprendizajeJerarquicoDto> obtenerJerarquicoPorId(@PathVariable Long id) {
         return ResponseEntity.ok(unidadService.buscarJerarquicoPorId(id));
