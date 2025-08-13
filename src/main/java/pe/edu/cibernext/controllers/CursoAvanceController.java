@@ -3,7 +3,7 @@ package pe.edu.cibernext.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.cibernext.models.AvanceResponse;
+import pe.edu.cibernext.models.dto.CursoAlumnoAvanceDto;
 import pe.edu.cibernext.models.dto.UnidadVistaDto;
 import pe.edu.cibernext.services.CursoAvanceService;
 
@@ -15,7 +15,7 @@ public class CursoAvanceController {
     private final CursoAvanceService cursoAvanceService;
 
     @GetMapping("/curso/{cursoId}/alumno/{alumnoId}")
-    public ResponseEntity<AvanceResponse> obtenerAvance(
+    public ResponseEntity<CursoAlumnoAvanceDto> obtenerAvance(
             @PathVariable Long cursoId,
             @PathVariable Long alumnoId
     ) {

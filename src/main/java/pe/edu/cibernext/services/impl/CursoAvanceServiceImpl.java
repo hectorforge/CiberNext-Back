@@ -3,7 +3,7 @@ package pe.edu.cibernext.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pe.edu.cibernext.mapper.UnidadVistaMapper;
-import pe.edu.cibernext.models.AvanceResponse;
+import pe.edu.cibernext.models.dto.CursoAlumnoAvanceDto;
 import pe.edu.cibernext.models.RegistroAlumnoEntity;
 import pe.edu.cibernext.models.UnidadVista;
 import pe.edu.cibernext.models.dto.UnidadVistaDto;
@@ -21,7 +21,7 @@ public class CursoAvanceServiceImpl implements CursoAvanceService {
     private final UnidadAprendizajeRepository unidadRepo;
 
     @Override
-    public AvanceResponse calcularAvance(Long cursoId, Long alumnoId) {
+    public CursoAlumnoAvanceDto calcularAvance(Long cursoId, Long alumnoId) {
         RegistroAlumnoEntity registro = registroRepo.findByCursoIdAndAlumno_Id(cursoId, alumnoId)
                 .orElseThrow(() -> new RuntimeException("Alumno no registrado en el curso"));
 
@@ -30,7 +30,7 @@ public class CursoAvanceServiceImpl implements CursoAvanceService {
 
         int porcentaje = total == 0 ? 0 : (int) ((vistas * 100.0) / total);
 
-        return AvanceResponse.builder()
+        return CursoAlumnoAvanceDto.builder()
                 .porcentajeAvance(porcentaje)
                 .totalUnidades(total)
                 .unidadesVistas(vistas)

@@ -5,17 +5,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pe.edu.cibernext.models.AlumnoEntity;
 import pe.edu.cibernext.models.RolEntity;
 import pe.edu.cibernext.models.UsuarioEntity;
 import pe.edu.cibernext.models.dto.auth.UsuarioLoginDto;
 import pe.edu.cibernext.models.dto.auth.UsuarioPasswordDto;
 import pe.edu.cibernext.models.dto.auth.UsuarioRegisterDto;
 import pe.edu.cibernext.models.dto.auth.UsuarioUpdateDto;
+import pe.edu.cibernext.repositories.AlumnoRepository;
 import pe.edu.cibernext.repositories.RolRepository;
 import pe.edu.cibernext.repositories.UsuarioRepository;
 import pe.edu.cibernext.services.AuthService;
+import pe.edu.cibernext.util.CodeGeneratorRandom;
 // import pe.edu.cibernext.services.EmailValidatorService;
 
+import java.time.Year;
 import java.util.Set;
 import java.util.UUID;
 
@@ -28,6 +32,7 @@ public class AuthServiceImpl implements AuthService {
     private String nombreApp;
 
     private final UsuarioRepository usuarioRepository;
+    private final AlumnoRepository alumnoRepository;
     private final RolRepository rolRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailSenderService emailSenderService;
@@ -36,6 +41,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UsuarioEntity register(UsuarioRegisterDto dto) {
+
+        if (usuarioRepository.findByDni(dto.getDni()).isPresent()) {
+            throw new RuntimeException("El DNI ya existe");
+        }
+
         if (usuarioRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new RuntimeException("El correo ya está registrado");
         }
@@ -46,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
 
         String passwordGenerateInitial = generatePasswordInitial();
 
-        var rolUser = rolRepository.findByNombre("ALUMNO")
+        var rolAlumno = rolRepository.findByNombre("ALUMNO")
                 .orElseGet(() -> {
                     var nuevoRol = new RolEntity();
                     nuevoRol.setNombre("ALUMNO");
@@ -57,29 +67,35 @@ public class AuthServiceImpl implements AuthService {
                 ? "https://static.vecteezy.com/system/resources/previews/012/742/173/large_2x/unknow-person-icon-free-vector.jpg"
                 : dto.getFotoPerfil();
 
-        UsuarioEntity nuevoUsuario = UsuarioEntity.builder()
-                .nombre(dto.getNombre())
-                .apellido(dto.getApellido())
-                .email(dto.getEmail())
-                .dni(dto.getDni())
-                .fotoPerfil(fotoPerfil)
-                .password(passwordEncoder.encode(passwordGenerateInitial))
-                .roles(Set.of(rolUser))
-                .build();
+        long totalAlumnos = alumnoRepository.count();
+        String codigoAlumno = CodeGeneratorRandom.generarCodigoUnico("A", totalAlumnos);
+        String correoInstitucional = codigoAlumno.toLowerCase() + "@cibernext.edu.pe";
 
-        System.out.println(nuevoUsuario);
+        AlumnoEntity alumno = new AlumnoEntity();
+        alumno.setNombre(dto.getNombre());
+        alumno.setApellido(dto.getApellido());
+        alumno.setEmail(dto.getEmail());
+        alumno.setDni(dto.getDni());
+        alumno.setFotoPerfil(fotoPerfil);
+        alumno.setPassword(passwordEncoder.encode(passwordGenerateInitial));
+        alumno.setRoles(Set.of(rolAlumno));
 
-        usuarioRepository.save(nuevoUsuario);
+        alumno.setCodigoAlumno(codigoAlumno);
+        alumno.setPais("PE");
+        alumno.setCorreoPersonal(correoInstitucional);
+
+        alumnoRepository.save(alumno);
 
         emailSenderService.enviarEmail(
-                nuevoUsuario.getEmail(),
+                alumno.getEmail(),
                 "Tu cuenta en " + nombreApp + " ha sido creada correctamente. Aquí tienes tu contraseña inicial para acceder a la plataforma.",
-                nuevoUsuario.getNombre(),
+                alumno.getNombre(),
                 passwordGenerateInitial
         );
 
-        return nuevoUsuario;
+        return alumno;
     }
+
 
     @Override
     public UsuarioEntity login(UsuarioLoginDto dto) {
@@ -113,6 +129,16 @@ public class AuthServiceImpl implements AuthService {
              }
 
             usuario.setEmail(dto.getEmail());
+        }
+
+        if (!dto.getDni().equalsIgnoreCase(usuario.getDni())) {
+            usuarioRepository.findByDni(dto.getDni()).ifPresent(existente -> {
+                if (!existente.getId().equals(usuario.getId())) {
+                    throw new RuntimeException("El DNI ya está registrado por otro usuario");
+                }
+            });
+
+            usuario.setDni(dto.getDni());
         }
 
         usuario.setNombre(dto.getNombre());

@@ -3,8 +3,13 @@ package pe.edu.cibernext.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pe.edu.cibernext.mapper.CursoMapper;
+import pe.edu.cibernext.models.AlumnoEntity;
 import pe.edu.cibernext.models.CursoEntity;
+import pe.edu.cibernext.models.RegistroAlumnoEntity;
+import pe.edu.cibernext.models.dto.AlumnoCursoDto;
 import pe.edu.cibernext.models.dto.CursoDto;
+import pe.edu.cibernext.models.dto.ProfesorCursoDto;
+import pe.edu.cibernext.models.dto.UnidadAprendizajePorCursoDto;
 import pe.edu.cibernext.repositories.CursoRepository;
 import pe.edu.cibernext.services.CursoService;
 
@@ -51,4 +56,35 @@ public class CursoServiceImpl implements CursoService {
     public void eliminarPorId(Long id) {
         cursoRepository.deleteById(id);
     }
+
+    @Override
+    public List<AlumnoCursoDto> listarAlumnosPorCurso(Long idCurso) {
+        CursoEntity curso = cursoRepository.findById(idCurso)
+                .orElseThrow(() -> new RuntimeException("Curso no encontrado con ID: " + idCurso));
+
+        List<AlumnoEntity> alumnos = curso.getRegistrosAlumnos().stream()
+                .map(RegistroAlumnoEntity::getAlumno)
+                .toList();
+
+        return CursoMapper.toAlumnoCursoList(alumnos);
+    }
+
+    @Override
+    public List<ProfesorCursoDto> listarProfesoresPorCurso(Long idCurso) {
+        if (!cursoRepository.existsById(idCurso)) {
+            throw new RuntimeException("Curso no encontrado con ID: " + idCurso);
+        }
+        return cursoRepository.listarProfesoresPorCurso(idCurso);
+    }
+
+    @Override
+    public List<UnidadAprendizajePorCursoDto> listarUnidadesArbolPorCurso(Long idCurso) {
+        if (!cursoRepository.existsById(idCurso)) {
+            throw new RuntimeException("Curso no encontrado con ID: " + idCurso);
+        }
+        // Trae todas las unidades del curso (con su padre) y construye el árbol vía mapper
+        var unidades = cursoRepository.listarUnidadesPorCurso(idCurso);
+        return CursoMapper.toUnidadesArbolPorCurso(unidades);
+    }
+
 }
