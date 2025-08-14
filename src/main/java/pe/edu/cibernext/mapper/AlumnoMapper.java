@@ -19,7 +19,7 @@ public class AlumnoMapper {
         dto.setCorreo(e.getEmail());
         dto.setFotoPerfil(e.getFotoPerfil());
         dto.setCodigoAlumno(e.getCodigoAlumno());
-        dto.setCorreoPersonal(e.getCorreoPersonal());
+        dto.setCorreoPersonal(e.getCorreoInstitucional());
         dto.setPais(e.getPais());
         return dto;
     }
@@ -31,7 +31,7 @@ public class AlumnoMapper {
         if (dto.getCorreo() != null)      e.setEmail(dto.getCorreo());
         if (dto.getFotoPerfil() != null)  e.setFotoPerfil(dto.getFotoPerfil());
         if (dto.getCodigoAlumno() != null)   e.setCodigoAlumno(dto.getCodigoAlumno());
-        if (dto.getCorreoPersonal() != null) e.setCorreoPersonal(dto.getCorreoPersonal());
+        if (dto.getCorreoPersonal() != null) e.setCorreoInstitucional(dto.getCorreoPersonal());
         if (dto.getPais() != null)           e.setPais(dto.getPais());
     }
 

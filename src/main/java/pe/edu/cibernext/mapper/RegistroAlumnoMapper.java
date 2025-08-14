@@ -19,7 +19,7 @@ public class RegistroAlumnoMapper {
         // Alumno
         dto.setAlumnoId(entity.getAlumno().getId());
         dto.setNombreAlumno(entity.getAlumno().getNombre());
-        dto.setCorreoAlumno(entity.getAlumno().getCorreoPersonal());
+        dto.setCorreoAlumno(entity.getAlumno().getCorreoInstitucional());
         dto.setCodigoAlumno(entity.getAlumno().getCodigoAlumno());
 
         // Profesor

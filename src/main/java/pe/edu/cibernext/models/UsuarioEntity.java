@@ -30,6 +30,9 @@ public class UsuarioEntity {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column()
+    private String telefono;
+
     @Column(name = "foto_perfil", length = 500)
     private String fotoPerfil;
 

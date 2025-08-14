@@ -19,7 +19,6 @@ import pe.edu.cibernext.services.AuthService;
 import pe.edu.cibernext.util.CodeGeneratorRandom;
 // import pe.edu.cibernext.services.EmailValidatorService;
 
-import java.time.Year;
 import java.util.Set;
 import java.util.UUID;
 
@@ -82,7 +81,7 @@ public class AuthServiceImpl implements AuthService {
 
         alumno.setCodigoAlumno(codigoAlumno);
         alumno.setPais("PE");
-        alumno.setCorreoPersonal(correoInstitucional);
+        alumno.setCorreoInstitucional(correoInstitucional);
 
         alumnoRepository.save(alumno);
 

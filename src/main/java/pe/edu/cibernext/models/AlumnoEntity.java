@@ -19,7 +19,7 @@ public class AlumnoEntity extends UsuarioEntity {
     private String codigoAlumno;
 
     @Column(name = "correo_personal", length = 100)
-    private String correoPersonal; // TODO: Sugeriria de que aqui sea correoInstitucional ya que el personal ya lo guardamos en el campo "email" del UsuarioEntity
+    private String correoInstitucional;
 
     @Column(name = "pais", length = 100)
     private String pais;
