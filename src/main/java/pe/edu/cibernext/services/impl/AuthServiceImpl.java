@@ -72,15 +72,15 @@ public class AuthServiceImpl implements AuthService {
 
         AlumnoEntity alumno = new AlumnoEntity();
         alumno.setNombre(dto.getNombre());
+        alumno.setPais(dto.getPais());
+        alumno.setTelefono(dto.getNumero());
         alumno.setApellido(dto.getApellido());
         alumno.setEmail(dto.getEmail());
         alumno.setDni(dto.getDni());
         alumno.setFotoPerfil(fotoPerfil);
         alumno.setPassword(passwordEncoder.encode(passwordGenerateInitial));
         alumno.setRoles(Set.of(rolAlumno));
-
         alumno.setCodigoAlumno(codigoAlumno);
-        alumno.setPais("PE");
         alumno.setCorreoInstitucional(correoInstitucional);
 
         alumnoRepository.save(alumno);
