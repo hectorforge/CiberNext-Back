@@ -19,7 +19,7 @@ public class UsuarioRegisterDto {
     @NotBlank(message = "El DNI es obligatorio")
     private String dni;
 
-    private String telefono;
+    private String numero;
     private String pais; // PE / Peru
 
     private String fotoPerfil;
