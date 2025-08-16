@@ -1,7 +1,6 @@
 package pe.edu.cibernext.services;
 
-import pe.edu.cibernext.models.dto.ConsultaConRespuestaDto;
-import pe.edu.cibernext.models.dto.ConsultaJerarquicaDto;
+import pe.edu.cibernext.models.dto.*;
 
 import java.util.List;
 
@@ -13,4 +12,7 @@ public interface ConsultaService {
     List<ConsultaJerarquicaDto> listarConsultasNoRespondidasAlumno(Long idAlumno);
 
     List<ConsultaJerarquicaDto> listarConsultasUnidadAprendizaje(Long idUnidad);
+
+    ConsultaResponseDto registrarConsulta(ConsultaRequestDto dto);
+    ConsultaResponseDto registrarRespuesta(RespuestaProfesorDto dto);
 }

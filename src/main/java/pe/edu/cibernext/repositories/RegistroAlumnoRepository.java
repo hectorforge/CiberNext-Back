@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface RegistroAlumnoRepository extends JpaRepository<RegistroAlumnoEntity,Long> {
     Optional<RegistroAlumnoEntity> findByCursoIdAndAlumno_Id(Long cursoId, Long alumnoId);
+    RegistroAlumnoEntity findByAlumnoIdAndCursoId(Long alumnoId, Long cursoId);
 
 }

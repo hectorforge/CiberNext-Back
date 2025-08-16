@@ -1,5 +1,6 @@
 package pe.edu.cibernext.services.impl;
 
+import pe.edu.cibernext.exceptions.RecursoNoEncontradoException;
 import pe.edu.cibernext.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,6 @@ public class GestionUsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final RolRepository rolRepository;
     private final AlumnoRepository alumnoRepository;
-    private final ProfesorRepository profesorRepository;
-    private final AdministradorRepository administradorRepository;
 
     @Override
     public UsuarioDto buscarPorId(Long id) {
@@ -73,8 +72,12 @@ public class GestionUsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void eliminarPorId(Long id) {
+        if (!usuarioRepository.existsById(id)) {
+            throw new RecursoNoEncontradoException("Usuario no encontrado con ID: " + id);
+        }
         usuarioRepository.deleteById(id);
     }
+
 
     @Override
     public List<UsuarioDto> buscarPorFiltro(String filtro) {

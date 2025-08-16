@@ -15,7 +15,6 @@ public class ConsultaPorUnidadAprendizajeDto {
     private LocalDateTime fecha;
     private boolean estado;
 
-    // Datos del USUARIO autor (puede ser alumno o profesor porque ambos son Usuario)
     private String autorTipo;
     private Long autorId;
     private String autorNombre;

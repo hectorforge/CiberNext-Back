@@ -1,12 +1,11 @@
 package pe.edu.cibernext.controllers;
 
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import pe.edu.cibernext.models.dto.ConsultaConRespuestaDto;
-import pe.edu.cibernext.models.dto.ConsultaJerarquicaDto;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import pe.edu.cibernext.models.dto.*;
 import pe.edu.cibernext.services.ConsultaService;
 
 import java.util.List;
@@ -14,33 +13,49 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/consultas")
 @RequiredArgsConstructor
+@Validated
 public class ConsultaController {
 
     private final ConsultaService consultaService;
 
     @GetMapping("/profesor/{idProfesor}/respondidas")
-    public List<ConsultaConRespuestaDto> obtenerRespondidasProfesor(@PathVariable Long idProfesor) {
-        return consultaService.listarRespondidasProfesor(idProfesor);
+    public ResponseEntity<List<ConsultaConRespuestaDto>> obtenerRespondidasProfesor(
+            @PathVariable @Positive Long idProfesor) {
+        return ResponseEntity.ok(consultaService.listarRespondidasProfesor(idProfesor));
     }
 
     @GetMapping("/profesor/{idProfesor}/no-respondidas")
-    public List<ConsultaConRespuestaDto> obtenerNoRespondidasProfesor(@PathVariable Long idProfesor) {
-        return consultaService.listarNoRespondidasProfesor(idProfesor);
+    public ResponseEntity<List<ConsultaConRespuestaDto>> obtenerNoRespondidasProfesor(
+            @PathVariable @Positive Long idProfesor) {
+        return ResponseEntity.ok(consultaService.listarNoRespondidasProfesor(idProfesor));
     }
 
     @GetMapping("/alumno/{idAlumno}/todas")
-    public List<ConsultaJerarquicaDto> obtenerTodasAlumno(@PathVariable Long idAlumno) {
-        return consultaService.listarConsultasAlumno(idAlumno);
+    public ResponseEntity<List<ConsultaJerarquicaDto>> obtenerTodasAlumno(
+            @PathVariable @Positive Long idAlumno) {
+        return ResponseEntity.ok(consultaService.listarConsultasAlumno(idAlumno));
     }
 
-    //no respondidas por el profesor
+    // No respondidas por el profesor
     @GetMapping("/alumno/{idAlumno}/no-respondidas")
-    public List<ConsultaJerarquicaDto> obtenerNoRespondidasAlumno(@PathVariable Long idAlumno) {
-        return consultaService.listarConsultasNoRespondidasAlumno(idAlumno);
+    public ResponseEntity<List<ConsultaJerarquicaDto>> obtenerNoRespondidasAlumno(
+            @PathVariable @Positive Long idAlumno) {
+        return ResponseEntity.ok(consultaService.listarConsultasNoRespondidasAlumno(idAlumno));
     }
 
     @GetMapping("/unidad/{idUnidad}/todas")
-    public List<ConsultaJerarquicaDto> obtenerConsultasUnidadAprendizaje(@PathVariable Long idUnidad) {
-        return consultaService.listarConsultasUnidadAprendizaje(idUnidad);
+    public ResponseEntity<List<ConsultaJerarquicaDto>> obtenerConsultasUnidadAprendizaje(
+            @PathVariable @Positive Long idUnidad) {
+        return ResponseEntity.ok(consultaService.listarConsultasUnidadAprendizaje(idUnidad));
+    }
+
+    @PostMapping("/registrar")
+    public ResponseEntity<ConsultaResponseDto> registrarConsulta(@RequestBody ConsultaRequestDto dto) {
+        return ResponseEntity.ok(consultaService.registrarConsulta(dto));
+    }
+
+    @PostMapping("/responder")
+    public ResponseEntity<ConsultaResponseDto> registrarRespuesta(@RequestBody RespuestaProfesorDto dto) {
+        return ResponseEntity.ok(consultaService.registrarRespuesta(dto));
     }
 }

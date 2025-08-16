@@ -1,6 +1,7 @@
 package pe.edu.cibernext.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import pe.edu.cibernext.exceptions.RecursoNoEncontradoException;
 import pe.edu.cibernext.mapper.ConsultaMapper;
@@ -82,11 +83,17 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     @Override
     public void eliminarPorId(Long id) {
-        profesorRepository.deleteById(id);
+        try {
+            profesorRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException ex) {
+            throw new RecursoNoEncontradoException("Profesor no encontrado con ID: " + id);
+        }
     }
-
     @Override
     public List<CursoDto> listarCursos(Long idProfesor) {
+        if (!profesorRepository.existsById(idProfesor)) {
+            throw new RecursoNoEncontradoException("Profesor no encontrado con ID: " + idProfesor);
+        }
         List<CursoEntity> cursos = cursoRepository.findByProfesores_Id(idProfesor);
         return CursoMapper.toDtoList(cursos);
     }

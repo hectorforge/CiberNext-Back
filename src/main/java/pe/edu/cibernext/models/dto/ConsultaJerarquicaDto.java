@@ -13,5 +13,5 @@ public class ConsultaJerarquicaDto {
     private String nombreAutor;
     private String unidad;
     private String curso;
-    private List<ConsultaJerarquicaDto> respuestas; // Respuestas anidadas
+    private List<ConsultaJerarquicaDto> respuestas;
 }

@@ -3,6 +3,7 @@ package pe.edu.cibernext.mapper;
 import pe.edu.cibernext.models.ConsultaEntity;
 import pe.edu.cibernext.models.dto.ConsultaConRespuestaDto;
 import pe.edu.cibernext.models.dto.ConsultaJerarquicaDto;
+import pe.edu.cibernext.models.dto.ConsultaResponseDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,8 +23,6 @@ public class ConsultaMapper {
             dto.setCurso(consulta.getRegistroAlumno().getCurso().getNombre());
         }
 
-
-        // Extrae la primera respuesta del profesor, si existe
         if (consulta.getRespuestas() != null) {
             consulta.getRespuestas().stream()
                     .filter(r -> r.getAutor().getId().equals(idProfesor))
@@ -53,7 +52,6 @@ public class ConsultaMapper {
         return dto;
     }
 
-
     public static List<ConsultaConRespuestaDto> toDtoList(List<ConsultaEntity> consultas, Long idProfesor) {
         return consultas.stream()
                 .map(c -> toDto(c, idProfesor))
@@ -64,5 +62,26 @@ public class ConsultaMapper {
         return consultas.stream()
                 .map(ConsultaMapper::toJerarquicoDto)
                 .collect(Collectors.toList());
+    }
+
+    public static ConsultaResponseDto toResponseDto(ConsultaEntity consulta) {
+        ConsultaResponseDto dto = new ConsultaResponseDto();
+        dto.setId(consulta.getId());
+        dto.setTitulo(consulta.getTitulo());
+        dto.setMensaje(consulta.getMensaje());
+        dto.setFecha(consulta.getFecha());
+        dto.setEstado(consulta.isEstado());
+
+        if (consulta.getAutor() != null) {
+            dto.setAutorId(consulta.getAutor().getId());
+            dto.setAutorNombre(consulta.getAutor().getNombre() + " " + consulta.getAutor().getApellido());
+        }
+        if (consulta.getUnidadAprendizaje() != null) {
+            dto.setUnidadAprendizajeId(consulta.getUnidadAprendizaje().getId());
+        }
+        if (consulta.getConsultaPadre() != null) {
+            dto.setConsultaPadreId(consulta.getConsultaPadre().getId());
+        }
+        return dto;
     }
 }
