@@ -12,6 +12,7 @@ public class ProfesorMapper {
         ProfesorDto dto = new ProfesorDto();
         dto.setId(profesorEntity.getId());
         dto.setNombre(profesorEntity.getNombre());
+        dto.setApellido(profesorEntity.getApellido());
         dto.setDni(profesorEntity.getDni());
         dto.setTelefono(profesorEntity.getTelefono());
         dto.setCorreo(profesorEntity.getEmail());
