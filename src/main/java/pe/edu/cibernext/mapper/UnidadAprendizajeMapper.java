@@ -59,7 +59,6 @@ public class UnidadAprendizajeMapper {
 
         if (e.getAutor() != null) {
             var autor = e.getAutor();
-            // Detecta el subtipo por herencia JOINED (AlumnoEntity / ProfesorEntity)
             if (autor instanceof AlumnoEntity) {
                 dto.setAutorTipo("ALUMNO");
             } else if (autor instanceof ProfesorEntity) {

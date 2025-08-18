@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface UnidadAprendizajeService {
 
-    List<UnidadAprendizajeRespuestaDto> listarTodos();
-
     UnidadAprendizajeDto registrar(UnidadAprendizajeDto dto);
     UnidadAprendizajeDto actualizar(UnidadAprendizajeDto dto);
     void eliminarPorId(Long id);

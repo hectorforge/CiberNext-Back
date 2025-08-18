@@ -7,5 +7,5 @@ public class AlumnoRegistroDto {
     private String dni;
     private String correo;
     private String password;
-    private Long rolId; // Debe ser el ID del rol "ALUMNO" (ej. 3)
+    private Long rolId;
 }

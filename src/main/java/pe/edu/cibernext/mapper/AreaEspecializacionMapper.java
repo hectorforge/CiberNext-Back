@@ -17,13 +17,4 @@ public class AreaEspecializacionMapper {
         return dto;
     }
 
-    public AreaEspecializacionEntity toEntity(AreaEspecializacionDto dto) {
-        if (dto == null) return null;
-
-        AreaEspecializacionEntity entity = new AreaEspecializacionEntity();
-        entity.setId(dto.getId());
-        entity.setNombre(dto.getNombre());
-        entity.setDescripcion(dto.getDescripcion());
-        return entity;
-    }
 }

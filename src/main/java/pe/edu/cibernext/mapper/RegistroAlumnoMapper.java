@@ -11,18 +11,14 @@ public class RegistroAlumnoMapper {
 
         dto.setId(entity.getId());
         dto.setFechaInscripcion(entity.getFechaInscripcion());
-
-        // Curso
         dto.setCursoId(entity.getCurso().getId());
         dto.setNombreCurso(entity.getCurso().getNombre());
 
-        // Alumno
         dto.setAlumnoId(entity.getAlumno().getId());
         dto.setNombreAlumno(entity.getAlumno().getNombre());
         dto.setCorreoAlumno(entity.getAlumno().getCorreoInstitucional());
         dto.setCodigoAlumno(entity.getAlumno().getCodigoAlumno());
 
-        // Profesor
         dto.setProfesorId(entity.getProfesor().getId());
         dto.setNombreProfesor(entity.getProfesor().getNombre());
         dto.setCorreoProfesor(entity.getProfesor().getCorreoProfesional());

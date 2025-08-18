@@ -25,14 +25,6 @@ public class UnidadAprendizajeServiceImpl implements UnidadAprendizajeService {
 
 
     @Override
-    public List<UnidadAprendizajeRespuestaDto> listarTodos() {
-        return unidadRepo.findAll().stream()
-                .map(mapper::toRespuestaDto)
-                .collect(Collectors.toList());
-    }
-
-
-    @Override
     public UnidadAprendizajeDto registrar(UnidadAprendizajeDto dto) {
         CursoEntity curso = cursoRepo.findById(dto.getCursoId())
                 .orElseThrow(() -> new RuntimeException("Curso no encontrado"));

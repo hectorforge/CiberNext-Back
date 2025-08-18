@@ -36,7 +36,6 @@ public class ConsultaController {
         return ResponseEntity.ok(consultaService.listarConsultasAlumno(idAlumno));
     }
 
-    // No respondidas por el profesor
     @GetMapping("/alumno/{idAlumno}/no-respondidas")
     public ResponseEntity<List<ConsultaJerarquicaDto>> obtenerNoRespondidasAlumno(
             @PathVariable @Positive Long idAlumno) {
