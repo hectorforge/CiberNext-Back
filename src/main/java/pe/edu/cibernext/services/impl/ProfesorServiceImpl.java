@@ -8,6 +8,7 @@ import pe.edu.cibernext.mapper.CursoMapper;
 import pe.edu.cibernext.mapper.ProfesorMapper;
 import pe.edu.cibernext.models.CursoEntity;
 import pe.edu.cibernext.models.ProfesorEntity;
+import pe.edu.cibernext.models.RolEntity;
 import pe.edu.cibernext.models.dto.CursoDto;
 import pe.edu.cibernext.models.dto.ProfesorDto;
 import pe.edu.cibernext.models.dto.ProfesorRegistroDto;
@@ -75,13 +76,33 @@ public class ProfesorServiceImpl implements ProfesorService {
         return ProfesorMapper.toDto(profesorGuardado);
     }
 
-    @Override
     public ProfesorDto actualizar(Long id, ProfesorDto profesorDto) {
-        ProfesorEntity profesor = ProfesorMapper.toEntity(profesorDto);
-        profesor.setId(id);
-        ProfesorEntity profesorGuardado = profesorRepository.save(profesor);
-        return ProfesorMapper.toDto(profesorGuardado);
+        ProfesorEntity profesor = profesorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Profesor no encontrado"));
+
+        // Actualizar campos
+        profesor.setNombre(profesorDto.getNombre());
+        profesor.setDni(profesorDto.getDni());
+        profesor.setEmail(profesorDto.getCorreo());
+        profesor.setTelefono(profesorDto.getTelefono());
+        profesor.setCodigoProfesor(profesorDto.getCodigoProfesor());
+        profesor.setCorreoProfesional(profesorDto.getCorreoProfesional());
+        profesor.setBiografia(profesorDto.getBiografia());
+        profesor.setFotoPerfil(profesorDto.getFotoPerfil());
+
+        // ✅ Aquí va el código importante
+        Set<RolEntity> roles = profesorDto.getRolIds().stream()
+                .map(idRol -> rolRepository.findById(idRol)
+                        .orElseThrow(() -> new RuntimeException("Rol no encontrado con ID: " + idRol)))
+                .collect(Collectors.toSet());
+        profesor.setRoles(roles); // o profesor.getUsuario().setRoles(roles) si lo tienes separado
+
+        // Guardar cambios
+        profesorRepository.save(profesor);
+
+        return ProfesorMapper.toDto(profesor);
     }
+
 
     @Override
     public void eliminarPorId(Long id) {

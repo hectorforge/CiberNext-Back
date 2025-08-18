@@ -520,7 +520,7 @@ INSERT INTO `Documento` (`nombre`, `archivo`, `tipo_documento_id`, `unidad_apren
 -- 1. Insertar roles
 INSERT INTO `Rol` (`id`, `nombre`) VALUES
                                        (1, 'ADMIN'),
-                                       (2, 'DOCENTE'),
+                                       (2, 'PROFESOR'),
                                        (3, 'ALUMNO');
 
 -- 2. Variable de contraseña hasheada

@@ -1,6 +1,8 @@
 package pe.edu.cibernext.models.dto;
 
 import lombok.Data;
+
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -11,7 +13,8 @@ public class ProfesorDto {
     private String apellido;
     private String telefono;
     private String correo;
-    private Set<String> roles;
+    private Set<Long> rolIds = new HashSet<>();
+    //private Set<String> roles = new HashSet<>();
     private String codigoProfesor;
     private String correoProfesional;
     private String biografia;
