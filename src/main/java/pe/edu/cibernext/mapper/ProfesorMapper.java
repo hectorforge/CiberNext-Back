@@ -4,8 +4,6 @@ import pe.edu.cibernext.models.ProfesorEntity;
 import pe.edu.cibernext.models.RolEntity;
 import pe.edu.cibernext.models.dto.ProfesorDto;
 
-import java.util.Arrays;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProfesorMapper {
@@ -18,6 +16,7 @@ public class ProfesorMapper {
         dto.setId(profesorEntity.getId());
         dto.setNombre(profesorEntity.getNombre());
         dto.setDni(profesorEntity.getDni());
+        dto.setTelefono(profesorEntity.getTelefono());
         dto.setCorreo(profesorEntity.getEmail());
         dto.setRoles(profesorEntity.getRoles().stream().map(rol -> rol.getNombre()).collect(Collectors.toSet()));
         dto.setCodigoProfesor(profesorEntity.getCodigoProfesor());

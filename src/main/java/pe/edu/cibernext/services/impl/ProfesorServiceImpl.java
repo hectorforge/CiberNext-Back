@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import pe.edu.cibernext.exceptions.RecursoNoEncontradoException;
-import pe.edu.cibernext.mapper.ConsultaMapper;
 import pe.edu.cibernext.mapper.CursoMapper;
 import pe.edu.cibernext.mapper.ProfesorMapper;
 import pe.edu.cibernext.models.CursoEntity;
@@ -57,7 +56,10 @@ public class ProfesorServiceImpl implements ProfesorService {
 
         ProfesorEntity profesor = new ProfesorEntity();
         profesor.setNombre(profesorRegistroDto.getNombre());
+        profesor.setApellido(profesorRegistroDto.getApellido());
+        profesor.setTelefono(profesorRegistroDto.getTelefono());
         profesor.setDni(profesorRegistroDto.getDni());
+
         profesor.setEmail(profesorRegistroDto.getCorreo());
 
         // Por ahora, guardar contraseña tal cual (sin encriptar)

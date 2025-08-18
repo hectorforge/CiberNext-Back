@@ -5,7 +5,9 @@ import lombok.Data;
 @Data
 public class UsuarioRegistroDto {
     private String nombre;
+    private String apellido;
     private String dni;
+    private String telefono;
     private String correo;
     private String fotoPerfil;
     private String password;

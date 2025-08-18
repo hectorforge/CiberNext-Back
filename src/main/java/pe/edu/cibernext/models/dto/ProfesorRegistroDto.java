@@ -6,6 +6,8 @@ import lombok.Data;
 public class ProfesorRegistroDto {
     private String nombre;
     private String dni;
+    private String apellido;
+    private String telefono;
     private String correo;
     private String password;
     private String codigoProfesor;
@@ -13,5 +15,6 @@ public class ProfesorRegistroDto {
     private String biografia;
     private String fotoPerfil;
     private Long rolId;
+
 }
 

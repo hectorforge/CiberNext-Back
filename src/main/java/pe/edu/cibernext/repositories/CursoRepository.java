@@ -39,6 +39,7 @@ public interface CursoRepository extends JpaRepository<CursoEntity, Long> {
             p.nombre,
             p.apellido,
             p.email,
+            p.telefono,
             p.correoProfesional,
             p.biografia,
             p.fotoPerfil,
