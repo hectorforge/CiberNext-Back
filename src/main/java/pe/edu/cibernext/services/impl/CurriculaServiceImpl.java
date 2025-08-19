@@ -81,6 +81,9 @@ public class CurriculaServiceImpl implements CurriculaService {
 
     @Override
     public List<CurriculaRespuestaDto> listarPorAreaEspecialidad(Long areaId) {
-        return List.of();
+        List<CurriculaEntity> entidades = curriculaRepo.findByAreaEspecializacionId(areaId);
+        return entidades.stream()
+                .map(mapper::toRespuestaDto)
+                .collect(Collectors.toList());
     }
 }

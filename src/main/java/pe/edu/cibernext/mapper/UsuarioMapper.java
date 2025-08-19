@@ -15,6 +15,8 @@ public class UsuarioMapper {
         UsuarioDto dto = new UsuarioDto();
         dto.setId(entity.getId());
         dto.setNombre(entity.getNombre());
+        dto.setApellido(entity.getApellido());
+        dto.setTelefono(entity.getTelefono());
         dto.setDni(entity.getDni());
         dto.setCorreo(entity.getEmail());
         dto.setFotoPerfil(entity.getFotoPerfil());
@@ -34,6 +36,8 @@ public class UsuarioMapper {
         UsuarioEntity entity = new UsuarioEntity();
         entity.setId(dto.getId());
         entity.setNombre(dto.getNombre());
+        entity.setApellido(dto.getApellido());
+        entity.setTelefono(dto.getTelefono());
         entity.setEmail(dto.getCorreo());
         entity.setDni(dto.getDni());
         entity.setFotoPerfil(dto.getFotoPerfil());

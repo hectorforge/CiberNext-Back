@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface CurriculaRepository extends JpaRepository<CurriculaEntity, Long> {
     List<CurriculaEntity> findByCursoId(Long cursoId);
+    List<CurriculaEntity> findByAreaEspecializacionId(Long areaEspecializacionId);
 }

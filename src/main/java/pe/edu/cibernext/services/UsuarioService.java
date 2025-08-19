@@ -14,5 +14,4 @@ public interface UsuarioService {
     UsuarioDto actualizar(UsuarioDto dto);
     void eliminarPorId(Long id);
     List<UsuarioDto> buscarPorFiltro(String filtro);
-
 }

@@ -34,11 +34,13 @@ public class ProfesorMapper {
         entity.setDni(profesorDto.getDni());
         entity.setEmail(profesorDto.getCorreo());
 
+        entity.setApellido(profesorDto.getApellido());
+        entity.setTelefono(profesorDto.getTelefono());
+
         entity.setCodigoProfesor(profesorDto.getCodigoProfesor());
         entity.setCorreoProfesional(profesorDto.getCorreoProfesional());
         entity.setBiografia(profesorDto.getBiografia());
         entity.setFotoPerfil(profesorDto.getFotoPerfil());
         return entity;
     }
-
 }

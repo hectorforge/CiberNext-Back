@@ -82,6 +82,7 @@ public class ProfesorServiceImpl implements ProfesorService {
 
         // Actualizar campos
         profesor.setNombre(profesorDto.getNombre());
+        profesor.setApellido(profesorDto.getApellido());
         profesor.setDni(profesorDto.getDni());
         profesor.setEmail(profesorDto.getCorreo());
         profesor.setTelefono(profesorDto.getTelefono());
