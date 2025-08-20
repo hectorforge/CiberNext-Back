@@ -1,5 +1,6 @@
 package pe.edu.cibernext.services;
 
+import pe.edu.cibernext.models.CursoEntity;
 import pe.edu.cibernext.models.dto.AlumnoCursoDto;
 import pe.edu.cibernext.models.dto.CursoDto;
 import pe.edu.cibernext.models.dto.ProfesorCursoDto;
@@ -17,5 +18,5 @@ public interface CursoService {
     List<AlumnoCursoDto> listarAlumnosPorCurso(Long idCurso);
     List<ProfesorCursoDto> listarProfesoresPorCurso(Long idCurso);
     List<UnidadAprendizajePorCursoDto> listarUnidadesArbolPorCurso(Long idCurso);
-
+    List<CursoDto> buscarPorFiltro(String filtro);
 }

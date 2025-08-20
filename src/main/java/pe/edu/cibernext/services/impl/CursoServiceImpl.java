@@ -87,4 +87,11 @@ public class CursoServiceImpl implements CursoService {
         return CursoMapper.toUnidadesArbolPorCurso(unidades);
     }
 
+    @Override
+    public List<CursoDto> buscarPorFiltro(String filtro) {
+        var cursos = cursoRepository.buscarPorFiltro(filtro);
+        return CursoMapper.toDtoList(cursos);
+    }
+
+
 }
