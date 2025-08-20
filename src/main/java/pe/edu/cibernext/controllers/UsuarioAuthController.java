@@ -28,7 +28,9 @@ public class UsuarioAuthController {
         return ResponseEntity.ok(Map.of(
                 "nombre",user.getUsuario().getNombre(),
                 "apellido",user.getUsuario().getApellido(),
-                "fotoPerfil",user.getUsuario().getFotoPerfil(),
+                "fotoPerfil",(user.getUsuario().getFotoPerfil() != null
+                        ? user.getUsuario().getFotoPerfil()
+                        : "No Ingresado (NULL)"),
                 "nombreCompleto", user.getUsuarioCompleto(),
                 "email", user.getUsuario().getEmail(),
                 "dni", user.getUsuario().getDni(),

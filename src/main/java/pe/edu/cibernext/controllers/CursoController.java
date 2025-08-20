@@ -63,5 +63,10 @@ public class CursoController {
         return ResponseEntity.ok(cursoService.listarUnidadesArbolPorCurso(idCurso));
     }
 
+    @GetMapping("/buscar")
+    public ResponseEntity<List<CursoDto>> buscarPorFiltro(@RequestParam("filtro") String filtro) {
+        return ResponseEntity.ok(cursoService.buscarPorFiltro(filtro));
+    }
+
 
 }

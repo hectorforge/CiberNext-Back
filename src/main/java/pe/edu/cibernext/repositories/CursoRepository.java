@@ -38,8 +38,8 @@ public interface CursoRepository extends JpaRepository<CursoEntity, Long> {
             p.codigoProfesor,
             p.nombre,
             p.apellido,
-            p.email,
             p.telefono,
+            p.email,
             p.correoProfesional,
             p.biografia,
             p.fotoPerfil,
@@ -62,5 +62,14 @@ public interface CursoRepository extends JpaRepository<CursoEntity, Long> {
     List<UnidadAprendizajeEntity> listarUnidadesPorCurso(@Param("idCurso") Long idCurso);
 
     List<CursoEntity> findByProfesores_Id(Long profesorId);
+
+    @Query("""
+    select c
+    from CursoEntity c
+    where lower(c.nombre) like lower(concat('%', :filtro, '%'))
+       or lower(c.codigo) like lower(concat('%', :filtro, '%'))
+       or lower(c.descripcion) like lower(concat('%', :filtro, '%'))
+""")
+    List<CursoEntity> buscarPorFiltro(@Param("filtro") String filtro);
 }
 
