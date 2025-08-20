@@ -30,7 +30,7 @@ public class AuthController {
             UsuarioEntity usuario = authService.login(request);
             Map<String, Object> claims = new HashMap<>();
             claims.put("roles", usuario.getRoles());
-   //         claims.put("roles", usuario.getRoles().stream().map(e -> e.getNombre()).toList());
+           // claims.put("roles", usuario.getRoles().stream().map(e -> e.getNombre()).toList());
             String token = jwtUtil.generateToken(usuario.getEmail(), claims);
             return ResponseEntity.ok(Map.of("token", token));
         } catch (RuntimeException e) {
