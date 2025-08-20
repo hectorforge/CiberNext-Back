@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.cibernext.models.dto.UsuarioDto;
-import pe.edu.cibernext.models.dto.UsuarioRegistroDto;
 import pe.edu.cibernext.services.UsuarioService;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDto> registrarUsuario(@RequestBody UsuarioRegistroDto dto) {
+    public ResponseEntity<UsuarioDto> registrarUsuario(@RequestBody UsuarioDto dto) {
         return ResponseEntity.ok(usuarioService.registrar(dto));
     }
 

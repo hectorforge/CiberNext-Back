@@ -13,6 +13,6 @@ public class UsuarioDto {
     private String dni;
     private String correo;
     private String fotoPerfil;
-    private List<String> nombresRol;
+    private Long idRol;
 
 }

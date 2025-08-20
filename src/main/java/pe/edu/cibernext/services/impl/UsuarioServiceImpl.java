@@ -1,17 +1,20 @@
 package pe.edu.cibernext.services.impl;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import pe.edu.cibernext.exceptions.RecursoNoEncontradoException;
 import pe.edu.cibernext.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pe.edu.cibernext.models.*;
 import pe.edu.cibernext.models.dto.UsuarioDto;
-import pe.edu.cibernext.models.dto.UsuarioRegistroDto;
 import pe.edu.cibernext.repositories.*;
 import pe.edu.cibernext.services.UsuarioService;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,57 +22,85 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final RolRepository rolRepository;
-    private final AlumnoRepository alumnoRepository;
+    private final UsuarioMapper usuarioMapper;
+    private final PasswordEncoder passwordEncoder;
+    private final EmailSenderService emailSenderService;
+
+    @Value("${spring.application.name}")
+    private String nombreApp;
 
     @Override
     public UsuarioDto buscarPorId(Long id) {
         UsuarioEntity entity = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
-        return UsuarioMapper.toDto(entity);
+                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado con ID: " + id));
+        return usuarioMapper.toDto(entity);
     }
 
     @Override
     public void verificarExistenciaPorId(Long id) {
         if (!usuarioRepository.existsById(id)) {
-            throw new RuntimeException("No existe el usuario con ID: " + id);
+            throw new RecursoNoEncontradoException("No existe el usuario con ID: " + id);
         }
     }
 
     @Override
     public List<UsuarioDto> listarTodos() {
-        return UsuarioMapper.toDtoList(usuarioRepository.findAll());
+        return usuarioRepository.findAll()
+                .stream()
+                .map(usuarioMapper::toDto)
+                .collect(Collectors.toList());
     }
-
     @Override
-    public UsuarioDto registrar(UsuarioRegistroDto dto) {
-        RolEntity rol = rolRepository.findById(dto.getRolId())
-                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+    public UsuarioDto registrar(UsuarioDto dto) {
+        // Buscar rol a partir del idRol
+        RolEntity rol = rolRepository.findById(dto.getIdRol())
+                .orElseThrow(() -> new RecursoNoEncontradoException("Rol no encontrado con ID: " + dto.getIdRol()));
 
-        UsuarioEntity usuario = UsuarioMapper.toEntity(dto, rol);
-        UsuarioEntity guardado = usuarioRepository.save(usuario);
+        // Convertir DTO a Entity
+        UsuarioEntity entity = usuarioMapper.toEntity(dto, rol);
 
-        return UsuarioMapper.toDto(guardado);
+        // Generar contraseña inicial
+        String passwordGenerada = UUID.randomUUID().toString().substring(0, 8);
+        String passwordEncriptada = passwordEncoder.encode(passwordGenerada);
+        entity.setPassword(passwordEncriptada);
+
+        // Guardar usuario
+        UsuarioEntity usuarioGuardado = usuarioRepository.save(entity);
+
+        // Enviar correo
+        emailSenderService.enviarEmail(
+                usuarioGuardado.getEmail(),
+                "Tu cuenta en " + nombreApp + " ha sido creada correctamente. Aquí tienes tu contraseña inicial para acceder a la plataforma.",
+                usuarioGuardado.getNombre(),
+                passwordGenerada
+        );
+
+        return usuarioMapper.toDto(usuarioGuardado);
     }
 
     @Override
     public UsuarioDto actualizar(UsuarioDto dto) {
         UsuarioEntity entity = usuarioRepository.findById(dto.getId())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado con ID: " + dto.getId()));
 
+        // Actualizar campos básicos
         entity.setNombre(dto.getNombre());
+        entity.setApellido(dto.getApellido());
+        entity.setTelefono(dto.getTelefono());
         entity.setEmail(dto.getCorreo());
         entity.setDni(dto.getDni());
+        entity.setFotoPerfil(dto.getFotoPerfil());
 
-        if (dto.getNombresRol() != null && !dto.getNombresRol().isEmpty()) {
-            String primerRol = dto.getNombresRol().get(0);
-            RolEntity rol = rolRepository.findByNombre(primerRol)
-                    .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+        // Actualizar rol si se envió uno
+        if (dto.getIdRol() != null) {
+            RolEntity rol = rolRepository.findById(dto.getIdRol())
+                    .orElseThrow(() -> new RecursoNoEncontradoException("Rol no encontrado con ID: " + dto.getIdRol()));
             entity.setRoles(Set.of(rol));
         }
 
-        return UsuarioMapper.toDto(usuarioRepository.save(entity));
+        UsuarioEntity actualizado = usuarioRepository.save(entity);
+        return usuarioMapper.toDto(actualizado);
     }
-
     @Override
     public void eliminarPorId(Long id) {
         if (!usuarioRepository.existsById(id)) {
@@ -78,9 +109,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-
     @Override
     public List<UsuarioDto> buscarPorFiltro(String filtro) {
-        return UsuarioMapper.toDtoList(usuarioRepository.buscarPorFiltro(filtro));
+        return usuarioRepository.buscarPorFiltro(filtro)
+                .stream()
+                .map(usuarioMapper::toDto)
+                .collect(Collectors.toList());
     }
 }
