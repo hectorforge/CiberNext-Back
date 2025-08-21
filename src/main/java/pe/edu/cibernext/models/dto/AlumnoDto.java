@@ -4,18 +4,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class ProfesorDto {
+public class AlumnoDto {
     private Long id;
     private String nombre;
-    private String dni;
     private String apellido;
+    private String dni;
     private String telefono;
     private String email;
     private String password;
-    private String codigoProfesor;
-    private String correoProfesional;
-    private String biografia;
     private String fotoPerfil;
+    private String codigoAlumno;
+    private String correoPersonal;
+    private String pais;
 
     private Long rolId;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

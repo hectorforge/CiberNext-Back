@@ -1,7 +1,8 @@
 package pe.edu.cibernext.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pe.edu.cibernext.exceptions.RecursoNoEncontradoException;
 import pe.edu.cibernext.mapper.CursoMapper;
@@ -11,14 +12,12 @@ import pe.edu.cibernext.models.ProfesorEntity;
 import pe.edu.cibernext.models.RolEntity;
 import pe.edu.cibernext.models.dto.CursoDto;
 import pe.edu.cibernext.models.dto.ProfesorDto;
-import pe.edu.cibernext.models.dto.ProfesorRegistroDto;
 import pe.edu.cibernext.repositories.CursoRepository;
 import pe.edu.cibernext.repositories.ProfesorRepository;
 import pe.edu.cibernext.repositories.RolRepository;
 import pe.edu.cibernext.services.ProfesorService;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +27,11 @@ public class ProfesorServiceImpl implements ProfesorService {
     private final ProfesorRepository profesorRepository;
     private final RolRepository rolRepository;
     private final CursoRepository cursoRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final EmailSenderService emailSenderService;
+
+    @Value("${spring.application.name}")
+    private String nombreApp;
 
     @Override
     public ProfesorDto buscarPorId(Long id) {
@@ -36,83 +40,81 @@ public class ProfesorServiceImpl implements ProfesorService {
         return ProfesorMapper.toDto(profesor);
     }
 
-   @Override
-   public boolean verificarExistenciaPorId(Long id) {
-       return profesorRepository.existsById(id);
+    @Override
+    public boolean verificarExistenciaPorId(Long id) {
+        return profesorRepository.existsById(id);
     }
 
     @Override
-   public List<ProfesorDto> listarTodos() {
-       return profesorRepository.findAll()
-               .stream()
-               .map(ProfesorMapper::toDto)
+    public List<ProfesorDto> listarTodos() {
+        return profesorRepository.findAll()
+                .stream()
+                .map(ProfesorMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public ProfesorDto registrar(ProfesorRegistroDto profesorRegistroDto) {
+    public ProfesorDto registrar(ProfesorDto dto) {
+        RolEntity rol = rolRepository.findById(dto.getRolId())
+                .orElseThrow(() -> new RecursoNoEncontradoException("Rol no encontrado con ID: " + dto.getRolId()));
 
-        var rol = rolRepository.findById(profesorRegistroDto.getRolId())
-                .orElseThrow(() -> new RecursoNoEncontradoException("Rol no encontrado con ID: " + profesorRegistroDto.getRolId()));
+        ProfesorEntity profesor = ProfesorMapper.toEntity(dto);
 
-        ProfesorEntity profesor = new ProfesorEntity();
-        profesor.setNombre(profesorRegistroDto.getNombre());
-        profesor.setApellido(profesorRegistroDto.getApellido());
-        profesor.setTelefono(profesorRegistroDto.getTelefono());
-        profesor.setDni(profesorRegistroDto.getDni());
+        String passwordInicial = UUID.randomUUID().toString().substring(0, 6);
+        String passwordEncriptada = passwordEncoder.encode(passwordInicial);
+        profesor.setPassword(passwordEncriptada);
 
-        profesor.setEmail(profesorRegistroDto.getCorreo());
+        profesor.setRoles(new HashSet<>(List.of(rol)));
 
-        // Por ahora, guardar contraseña tal cual (sin encriptar)
-        profesor.setPassword(profesorRegistroDto.getPassword());
+        ProfesorEntity guardado = profesorRepository.save(profesor);
 
-        profesor.setRoles(Set.of(rol));
-        profesor.setCodigoProfesor(profesorRegistroDto.getCodigoProfesor());
-        profesor.setCorreoProfesional(profesorRegistroDto.getCorreoProfesional());
-        profesor.setBiografia(profesorRegistroDto.getBiografia());
-        profesor.setFotoPerfil(profesorRegistroDto.getFotoPerfil());
+        emailSenderService.enviarEmail(
+                guardado.getEmail(),
+                "Tu cuenta en " + nombreApp + " ha sido creada correctamente. Aquí tienes tu contraseña inicial para acceder a la plataforma.",
+                guardado.getNombre(),
+                passwordInicial
+        );
 
-        ProfesorEntity profesorGuardado = profesorRepository.save(profesor);
-        return ProfesorMapper.toDto(profesorGuardado);
+        return ProfesorMapper.toDto(guardado);
     }
 
-    public ProfesorDto actualizar(Long id, ProfesorDto profesorDto) {
+    @Override
+    public ProfesorDto actualizar(Long id, ProfesorDto dto) {
         ProfesorEntity profesor = profesorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Profesor no encontrado"));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Profesor no encontrado con ID: " + id));
 
-        // Actualizar campos
-        profesor.setNombre(profesorDto.getNombre());
-        profesor.setApellido(profesorDto.getApellido());
-        profesor.setDni(profesorDto.getDni());
-        profesor.setEmail(profesorDto.getCorreo());
-        profesor.setTelefono(profesorDto.getTelefono());
-        profesor.setCodigoProfesor(profesorDto.getCodigoProfesor());
-        profesor.setCorreoProfesional(profesorDto.getCorreoProfesional());
-        profesor.setBiografia(profesorDto.getBiografia());
-        profesor.setFotoPerfil(profesorDto.getFotoPerfil());
+        profesor.setNombre(dto.getNombre());
+        profesor.setApellido(dto.getApellido());
+        profesor.setDni(dto.getDni());
+        profesor.setTelefono(dto.getTelefono());
+        profesor.setEmail(dto.getEmail());
+        profesor.setCodigoProfesor(dto.getCodigoProfesor());
+        profesor.setCorreoProfesional(dto.getCorreoProfesional());
+        profesor.setBiografia(dto.getBiografia());
+        profesor.setFotoPerfil(dto.getFotoPerfil());
 
-        // ✅ Aquí va el código importante
-        Set<RolEntity> roles = profesorDto.getRolIds().stream()
-                .map(idRol -> rolRepository.findById(idRol)
-                        .orElseThrow(() -> new RuntimeException("Rol no encontrado con ID: " + idRol)))
-                .collect(Collectors.toSet());
-        profesor.setRoles(roles); // o profesor.getUsuario().setRoles(roles) si lo tienes separado
+        if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+            profesor.setPassword(passwordEncoder.encode(dto.getPassword())); // ✅ cifrada si viene manual
+        }
 
-        // Guardar cambios
-        profesorRepository.save(profesor);
+        if (dto.getRolId() != null) {
+            RolEntity rol = rolRepository.findById(dto.getRolId())
+                    .orElseThrow(() -> new RecursoNoEncontradoException("Rol no encontrado con ID: " + dto.getRolId()));
+            profesor.setRoles(new HashSet<>(List.of(rol)));
+        }
 
-        return ProfesorMapper.toDto(profesor);
+        ProfesorEntity actualizado = profesorRepository.save(profesor);
+        return ProfesorMapper.toDto(actualizado);
     }
-
 
     @Override
     public void eliminarPorId(Long id) {
-        try {
-            profesorRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException ex) {
+        if (!profesorRepository.existsById(id)) {
             throw new RecursoNoEncontradoException("Profesor no encontrado con ID: " + id);
         }
+        profesorRepository.deleteById(id);
     }
+
     @Override
     public List<CursoDto> listarCursos(Long idProfesor) {
         if (!profesorRepository.existsById(idProfesor)) {
@@ -122,4 +124,3 @@ public class ProfesorServiceImpl implements ProfesorService {
         return CursoMapper.toDtoList(cursos);
     }
 }
-

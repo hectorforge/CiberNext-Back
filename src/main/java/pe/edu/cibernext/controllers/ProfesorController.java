@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.cibernext.models.dto.CursoDto;
 import pe.edu.cibernext.models.dto.ProfesorDto;
-import pe.edu.cibernext.models.dto.ProfesorRegistroDto;
 import pe.edu.cibernext.services.ProfesorService;
 
 import java.util.List;
@@ -18,8 +17,8 @@ public class ProfesorController {
     private final ProfesorService profesorService;
 
     @PostMapping
-    public ResponseEntity<ProfesorDto> registrarProfesor(@RequestBody ProfesorRegistroDto profesorRegistroDto) {
-        ProfesorDto profesorDto = profesorService.registrar(profesorRegistroDto);
+    public ResponseEntity<ProfesorDto> registrarProfesor(@RequestBody ProfesorDto profesorrDto) {
+        ProfesorDto profesorDto = profesorService.registrar(profesorrDto);
         return ResponseEntity.ok(profesorDto);
     }
 

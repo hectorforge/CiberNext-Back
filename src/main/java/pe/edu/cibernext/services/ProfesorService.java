@@ -2,7 +2,6 @@ package pe.edu.cibernext.services;
 
 import pe.edu.cibernext.models.dto.CursoDto;
 import pe.edu.cibernext.models.dto.ProfesorDto;
-import pe.edu.cibernext.models.dto.ProfesorRegistroDto;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ public interface ProfesorService {
     ProfesorDto buscarPorId(Long id);
     boolean verificarExistenciaPorId(Long id);
     List<ProfesorDto> listarTodos();
-    ProfesorDto registrar(ProfesorRegistroDto profesorRegistroDto);
+    ProfesorDto registrar(ProfesorDto dto);
     ProfesorDto actualizar(Long id, ProfesorDto profesorDto);
     void eliminarPorId(Long id);
 

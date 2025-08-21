@@ -1,46 +1,52 @@
 package pe.edu.cibernext.mapper;
 
 import pe.edu.cibernext.models.AlumnoEntity;
-import pe.edu.cibernext.models.CursoEntity;
-import pe.edu.cibernext.models.dto.AlumnoSimpleDto;
-import pe.edu.cibernext.models.dto.CursoDto;
-
-import java.util.ArrayList;
-import java.util.List;
+import pe.edu.cibernext.models.RolEntity;
+import pe.edu.cibernext.models.dto.AlumnoDto;
 
 public class AlumnoMapper {
 
-    public static AlumnoSimpleDto toSimpleDto(AlumnoEntity e) {
+    public static AlumnoDto toDto(AlumnoEntity e) {
         if (e == null) return null;
-        AlumnoSimpleDto dto = new AlumnoSimpleDto();
+        AlumnoDto dto = new AlumnoDto();
         dto.setId(e.getId());
         dto.setNombre(e.getNombre());
+        dto.setApellido(e.getApellido());
         dto.setDni(e.getDni());
-        dto.setCorreo(e.getEmail());
+        dto.setTelefono(e.getTelefono());
+        dto.setEmail(e.getEmail());
+        dto.setPassword(e.getPassword());
         dto.setFotoPerfil(e.getFotoPerfil());
+
         dto.setCodigoAlumno(e.getCodigoAlumno());
         dto.setCorreoPersonal(e.getCorreoInstitucional());
         dto.setPais(e.getPais());
+
+        if (e.getRoles() != null && !e.getRoles().isEmpty()) {
+            RolEntity rol = e.getRoles().iterator().next();
+            dto.setRolId(rol.getId());
+            dto.setRolNombre(rol.getNombre());
+        }
+
         return dto;
     }
 
-    public static void updateEntityFromSimpleDto(AlumnoSimpleDto dto, AlumnoEntity e) {
-        if (dto == null || e == null) return;
-        if (dto.getNombre() != null)      e.setNombre(dto.getNombre());
-        if (dto.getDni() != null)         e.setDni(dto.getDni());
-        if (dto.getCorreo() != null)      e.setEmail(dto.getCorreo());
-        if (dto.getFotoPerfil() != null)  e.setFotoPerfil(dto.getFotoPerfil());
-        if (dto.getCodigoAlumno() != null)   e.setCodigoAlumno(dto.getCodigoAlumno());
-        if (dto.getCorreoPersonal() != null) e.setCorreoInstitucional(dto.getCorreoPersonal());
-        if (dto.getPais() != null)           e.setPais(dto.getPais());
-    }
+    public static AlumnoEntity toEntity(AlumnoDto dto) {
+        if (dto == null) return null;
+        AlumnoEntity e = new AlumnoEntity();
+        e.setId(dto.getId());
+        e.setNombre(dto.getNombre());
+        e.setApellido(dto.getApellido());
+        e.setDni(dto.getDni());
+        e.setTelefono(dto.getTelefono());
+        e.setEmail(dto.getEmail());
+        e.setPassword(dto.getPassword());
+        e.setFotoPerfil(dto.getFotoPerfil());
 
-    public static List<CursoDto> toCursosDto(List<CursoEntity> cursos) {
-        List<CursoDto> out = new ArrayList<>();
-        if (cursos == null) return out;
-        for (CursoEntity c : cursos) {
-            out.add(CursoMapper.toDto(c));
-        }
-        return out;
+        e.setCodigoAlumno(dto.getCodigoAlumno());
+        e.setCorreoInstitucional(dto.getCorreoPersonal());
+        e.setPais(dto.getPais());
+
+        return e;
     }
 }
