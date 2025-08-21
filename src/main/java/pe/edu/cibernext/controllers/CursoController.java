@@ -3,11 +3,9 @@ package pe.edu.cibernext.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.cibernext.models.dto.AlumnoCursoDto;
-import pe.edu.cibernext.models.dto.CursoDto;
-import pe.edu.cibernext.models.dto.ProfesorCursoDto;
-import pe.edu.cibernext.models.dto.UnidadAprendizajePorCursoDto;
+import pe.edu.cibernext.models.dto.*;
 import pe.edu.cibernext.services.CursoService;
+import pe.edu.cibernext.services.DocumentoService;
 
 import java.util.List;
 
@@ -17,6 +15,7 @@ import java.util.List;
 public class CursoController {
 
     private final CursoService cursoService;
+    private final DocumentoService documentoService;
 
 
     @GetMapping("/{id}")
@@ -66,6 +65,27 @@ public class CursoController {
     @GetMapping("/buscar")
     public ResponseEntity<List<CursoDto>> buscarPorFiltro(@RequestParam("filtro") String filtro) {
         return ResponseEntity.ok(cursoService.buscarPorFiltro(filtro));
+    }
+
+    @PutMapping("/{id}/actualizar-documento")
+    public ResponseEntity<DocumentoDto> actualizarActualizar( @PathVariable("id") Long id, @RequestBody DocumentoDto dto) {
+        dto.setId(id);
+        return ResponseEntity.ok(documentoService.actualizar(dto));
+    }
+
+    @GetMapping("/{id}/documentos")
+    public ResponseEntity<List<DocumentoDto>> listarDocumentosPorCurso(@PathVariable("id") Long cursoId) {
+        return ResponseEntity.ok(documentoService.listarDocumentosPorCurso(cursoId));
+    }
+
+     @DeleteMapping("/{id}/eliminar-documento")
+    public ResponseEntity<Void> eliminarDocumento(@PathVariable("id")  Long id) {
+        documentoService.eliminar(id);
+        return ResponseEntity.noContent().build();
+    }
+    @PostMapping("registrar-documento")
+    public ResponseEntity<DocumentoDto> registrarDocumento(@RequestBody DocumentoDto dto) {
+        return ResponseEntity.ok(documentoService.registrar(dto));
     }
 
 

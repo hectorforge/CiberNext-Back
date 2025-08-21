@@ -1,20 +1,12 @@
 package pe.edu.cibernext.mapper;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pe.edu.cibernext.models.DocumentoEntity;
 import pe.edu.cibernext.models.TipoDocumentoEntity;
 import pe.edu.cibernext.models.UnidadAprendizajeEntity;
 import pe.edu.cibernext.models.dto.DocumentoDto;
-import pe.edu.cibernext.models.dto.DocumentoPorUnidadAprendizajeDto;
-import pe.edu.cibernext.models.dto.DocumentoRespuestaDto;
-
 @Component
-@RequiredArgsConstructor
 public class DocumentoMapper {
-
-    private final UnidadAprendizajeMapper unidadMapper;
-    private final TipoDocumentoMapper tipoMapper;
 
     public DocumentoDto toDto(DocumentoEntity entity) {
         DocumentoDto dto = new DocumentoDto();
@@ -22,19 +14,19 @@ public class DocumentoMapper {
         dto.setNombre(entity.getNombre());
         dto.setArchivo(entity.getArchivo());
         dto.setDescripcion(entity.getDescripcion());
-        dto.setUnidadAprendizajeId(entity.getUnidadAprendizaje().getId());
-        dto.setTipoDocumentoId(entity.getTipoDocumento().getId());
-        return dto;
-    }
 
-    public DocumentoRespuestaDto toRespuestaDto(DocumentoEntity entity) {
-        DocumentoRespuestaDto dto = new DocumentoRespuestaDto();
-        dto.setId(entity.getId());
-        dto.setNombre(entity.getNombre());
-        dto.setArchivo(entity.getArchivo());
-        dto.setDescripcion(entity.getDescripcion());
-        dto.setUnidadAprendizaje(unidadMapper.toDto(entity.getUnidadAprendizaje()));
-        dto.setTipoDocumento(tipoMapper.toDto(entity.getTipoDocumento()));
+        dto.setIdUnidadAprendizaje(entity.getUnidadAprendizaje().getId());
+        dto.setIdTipoDocumento(entity.getTipoDocumento().getId());
+
+        dto.setNombreTipoDucumento(entity.getTipoDocumento().getNombre());
+        dto.setExtensionTipoDocumento(entity.getTipoDocumento().getExtension());
+
+        dto.setNombreUnidadaprendizaje(entity.getUnidadAprendizaje().getNombre());
+        dto.setCodigoUnidadaprendizaje(entity.getUnidadAprendizaje().getCodigo());
+        dto.setDescripcionUnidadaprendizaje(entity.getUnidadAprendizaje().getDescripcion());
+        dto.setEstadoUnidadaprendizaje(entity.getUnidadAprendizaje().getEstado());
+        dto.setCursoId(entity.getUnidadAprendizaje().getCurso().getId());
+
         return dto;
     }
 
@@ -47,14 +39,5 @@ public class DocumentoMapper {
         entity.setUnidadAprendizaje(unidad);
         entity.setTipoDocumento(tipo);
         return entity;
-    }
-
-    public DocumentoPorUnidadAprendizajeDto toPorUnidadDto(DocumentoEntity entity) {
-        DocumentoPorUnidadAprendizajeDto dto = new DocumentoPorUnidadAprendizajeDto();
-        dto.setId(entity.getId());
-        dto.setNombre(entity.getNombre());
-        dto.setArchivo(entity.getArchivo());
-        dto.setDescripcion(entity.getDescripcion());
-        return dto;
     }
 }
