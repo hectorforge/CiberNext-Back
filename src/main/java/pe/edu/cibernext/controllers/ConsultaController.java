@@ -18,17 +18,6 @@ public class ConsultaController {
 
     private final ConsultaService consultaService;
 
-    @GetMapping("/profesor/{idProfesor}/respondidas")
-    public ResponseEntity<List<ConsultaConRespuestaDto>> obtenerRespondidasProfesor(
-            @PathVariable @Positive Long idProfesor) {
-        return ResponseEntity.ok(consultaService.listarRespondidasProfesor(idProfesor));
-    }
-
-    @GetMapping("/profesor/{idProfesor}/no-respondidas")
-    public ResponseEntity<List<ConsultaConRespuestaDto>> obtenerNoRespondidasProfesor(
-            @PathVariable @Positive Long idProfesor) {
-        return ResponseEntity.ok(consultaService.listarNoRespondidasProfesor(idProfesor));
-    }
 
     @GetMapping("/alumno/{idAlumno}/todas")
     public ResponseEntity<List<ConsultaJerarquicaDto>> obtenerTodasAlumno(

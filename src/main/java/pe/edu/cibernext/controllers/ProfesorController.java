@@ -1,10 +1,13 @@
 package pe.edu.cibernext.controllers;
 
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.cibernext.models.dto.ConsultaConRespuestaDto;
 import pe.edu.cibernext.models.dto.CursoDto;
 import pe.edu.cibernext.models.dto.ProfesorDto;
+import pe.edu.cibernext.services.ConsultaService;
 import pe.edu.cibernext.services.ProfesorService;
 
 import java.util.List;
@@ -15,6 +18,7 @@ import java.util.List;
 public class ProfesorController {
 
     private final ProfesorService profesorService;
+    private final ConsultaService consultaService;
 
     @PostMapping
     public ResponseEntity<ProfesorDto> registrarProfesor(@RequestBody ProfesorDto profesorrDto) {
@@ -52,4 +56,17 @@ public class ProfesorController {
     public ResponseEntity<List<CursoDto>> listarCursos(@PathVariable("id") Long id) {
         return ResponseEntity.ok(profesorService.listarCursos(id));
     }
+
+    @GetMapping("/{idProfesor}/respondidas")
+    public ResponseEntity<List<ConsultaConRespuestaDto>> obtenerRespondidasProfesor(
+            @PathVariable @Positive Long idProfesor) {
+        return ResponseEntity.ok(consultaService.listarRespondidasProfesor(idProfesor));
+    }
+
+    @GetMapping("/{idProfesor}/no-respondidas")
+    public ResponseEntity<List<ConsultaConRespuestaDto>> obtenerNoRespondidasProfesor(
+            @PathVariable @Positive Long idProfesor) {
+        return ResponseEntity.ok(consultaService.listarNoRespondidasProfesor(idProfesor));
+    }
+
 }
