@@ -534,14 +534,14 @@ INSERT INTO `Usuario` (`id`, `nombre`, `apellido`, `dni`, `email`, `password`, `
                                                                                                             (2, 'Coordinador', 'Academico', '00000002', 'coordinador@sistema.com', @hashed_password, NULL);
 
 -- == Profesores ==
-INSERT INTO `Usuario` (`id`, `nombre`, `apellido`, `dni`, `email`, `password`, `foto_perfil`) VALUES
-                                                                                                            (3, 'Carlos', 'Santana', '10000001', 'c.santana@profesor.com', @hashed_password, 'https://img.com/csantana.jpg'),
-                                                                                                            (4, 'Diana', 'Prince', '10000002', 'd.prince@profesor.com', @hashed_password, 'https://img.com/dprince.jpg'),
-                                                                                                            (5, 'Ricardo', 'Tapia', '10000003', 'r.tapia@profesor.com', @hashed_password, 'https://img.com/rtapia.jpg'),
-                                                                                                            (6, 'Anthony', 'Stark', '10000004', 'a.stark@profesor.com', @hashed_password, 'https://img.com/astark.jpg'),
-                                                                                                            (7, 'Barbara', 'Gordon', '10000005', 'b.gordon@profesor.com', @hashed_password, 'https://img.com/bgordon.jpg'),
-                                                                                                            (8, 'Steve', 'Rogers', '10000006', 's.rogers@profesor.com', @hashed_password, 'https://img.com/srogers.jpg'),
-                                                                                                            (19, 'Natasha', 'Romanoff', '10000007', 'n.romanoff@profesor.com', @hashed_password, 'https://img.com/nromanoff.jpg');
+INSERT INTO `Usuario` (`id`, `nombre`, `apellido`, `dni`, `email`, `password`, `foto_perfil`, `telefono`) VALUES
+                                                                                                            (3, 'Carlos', 'Santana', '10000001', 'c.santana@profesor.com', @hashed_password, 'https://img.com/csantana.jpg', '987654321'),
+                                                                                                            (4, 'Diana', 'Prince', '10000002', 'd.prince@profesor.com', @hashed_password, 'https://img.com/dprince.jpg', '990001133'),
+                                                                                                            (5, 'Ricardo', 'Tapia', '10000003', 'r.tapia@profesor.com', @hashed_password, 'https://img.com/rtapia.jpg', '985551134'),
+                                                                                                            (6, 'Anthony', 'Stark', '10000004', 'a.stark@profesor.com', @hashed_password, 'https://img.com/astark.jpg', '972221135'),
+                                                                                                            (7, 'Barbara', 'Gordon', '10000005', 'b.gordon@profesor.com', @hashed_password, 'https://img.com/bgordon.jpg', '968881136'),
+                                                                                                            (8, 'Steve', 'Rogers', '10000006', 's.rogers@profesor.com', @hashed_password, 'https://img.com/srogers.jpg', '954441137'),
+                                                                                                            (19, 'Natasha', 'Romanoff', '10000007', 'n.romanoff@profesor.com', @hashed_password, 'https://img.com/nromanoff.jpg', '937771137');
 
 -- == Alumnos ==
 INSERT INTO `Usuario` (`id`, `nombre`, `apellido`, `dni`, `email`, `password`, `foto_perfil`) VALUES
