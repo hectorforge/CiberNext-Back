@@ -25,16 +25,27 @@ public class RegistroAlumnoServiceImpl implements RegistroAlumnoService {
 
     @Override
     public RegistroAlumnoResponseDto registrar(RegistroAlumnoRequestDto request) {
+        var curso = cursoRepo.findById(request.getCursoId())
+                .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
+
+        var alumno = alumnoRepo.findById(request.getAlumnoId())
+                .orElseThrow(() -> new RuntimeException("Alumno no encontrado"));
+
+        var profesor = profesorRepo.findById(request.getProfesorId())
+                .orElseThrow(() -> new RuntimeException("Profesor no encontrado"));
+
+        boolean profesorAsignado = curso.getProfesores().stream()
+                .anyMatch(p -> p.getId().equals(profesor.getId()));
+
+        if (!profesorAsignado) {
+            throw new RuntimeException("El profesor con ID " + profesor.getId() +
+                    " no está asignado al curso con ID " + curso.getId());
+        }
+
         RegistroAlumnoEntity entity = new RegistroAlumnoEntity();
-
-        entity.setCurso(cursoRepo.findById(request.getCursoId())
-                .orElseThrow(() -> new RuntimeException("Curso no encontrado")));
-
-        entity.setAlumno(alumnoRepo.findById(request.getAlumnoId())
-                .orElseThrow(() -> new RuntimeException("Alumno no encontrado")));
-
-        entity.setProfesor(profesorRepo.findById(request.getProfesorId())
-                .orElseThrow(() -> new RuntimeException("Profesor no encontrado")));
+        entity.setCurso(curso);
+        entity.setAlumno(alumno);
+        entity.setProfesor(profesor);
 
         RegistroAlumnoEntity saved = registroRepo.save(entity);
         return RegistroAlumnoMapper.toDto(saved);
@@ -68,17 +79,14 @@ public class RegistroAlumnoServiceImpl implements RegistroAlumnoService {
                     dto.setId(registro.getId());
                     dto.setFechaInscripcion(registro.getFechaInscripcion());
 
-                    // Curso
                     dto.setCursoId(registro.getCurso().getId());
                     dto.setNombreCurso(registro.getCurso().getNombre());
 
-                    // Alumno
                     dto.setAlumnoId(registro.getAlumno().getId());
                     dto.setNombreAlumno(registro.getAlumno().getNombre() + " " + registro.getAlumno().getApellido());
                     dto.setCorreoAlumno(registro.getAlumno().getEmail());
                     dto.setCodigoAlumno(registro.getAlumno().getCodigoAlumno());
 
-                    // Profesor (si hay varios, devolvemos uno, o puedes concatenar)
                     registro.getCurso().getProfesores().stream().findFirst().ifPresent(prof -> {
                         dto.setProfesorId(prof.getId());
                         dto.setNombreProfesor(prof.getNombre() + " " + prof.getApellido());
