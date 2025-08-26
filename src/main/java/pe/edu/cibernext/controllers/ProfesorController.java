@@ -69,4 +69,10 @@ public class ProfesorController {
         return ResponseEntity.ok(consultaService.listarNoRespondidasProfesor(idProfesor));
     }
 
+    @GetMapping("/buscar")
+    public ResponseEntity<List<ProfesorDto>> buscarPorFiltro(@RequestParam("filtro") String filtro) {
+        return ResponseEntity.ok(profesorService.buscarPorFiltro(filtro));
+    }
+
+
 }

@@ -58,4 +58,37 @@ public class RegistroAlumnoServiceImpl implements RegistroAlumnoService {
     public void eliminar(Long id) {
         registroRepo.deleteById(id);
     }
+
+    @Override
+    public List<RegistroAlumnoResponseDto> buscarPorFiltro(String filtro) {
+        return registroRepo.buscarPorFiltro(filtro)
+                .stream()
+                .map(registro -> {
+                    RegistroAlumnoResponseDto dto = new RegistroAlumnoResponseDto();
+                    dto.setId(registro.getId());
+                    dto.setFechaInscripcion(registro.getFechaInscripcion());
+
+                    // Curso
+                    dto.setCursoId(registro.getCurso().getId());
+                    dto.setNombreCurso(registro.getCurso().getNombre());
+
+                    // Alumno
+                    dto.setAlumnoId(registro.getAlumno().getId());
+                    dto.setNombreAlumno(registro.getAlumno().getNombre() + " " + registro.getAlumno().getApellido());
+                    dto.setCorreoAlumno(registro.getAlumno().getEmail());
+                    dto.setCodigoAlumno(registro.getAlumno().getCodigoAlumno());
+
+                    // Profesor (si hay varios, devolvemos uno, o puedes concatenar)
+                    registro.getCurso().getProfesores().stream().findFirst().ifPresent(prof -> {
+                        dto.setProfesorId(prof.getId());
+                        dto.setNombreProfesor(prof.getNombre() + " " + prof.getApellido());
+                        dto.setCorreoProfesor(prof.getEmail());
+                        dto.setCodigoProfesor(prof.getCodigoProfesor());
+                    });
+
+                    return dto;
+                })
+                .toList();
+    }
+
 }

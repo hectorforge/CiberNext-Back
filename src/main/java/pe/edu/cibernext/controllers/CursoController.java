@@ -89,4 +89,11 @@ public class CursoController {
     }
 
 
+    @PostMapping("/{cursoId}/asignar-profesor/{profesorId}")
+    public ResponseEntity<Void> asignarProfesor(@PathVariable Long cursoId, @PathVariable Long profesorId) {
+        cursoService.asignarProfesor(cursoId, profesorId);
+        return ResponseEntity.ok().build();
+    }
+
+
 }

@@ -37,4 +37,10 @@ public class RegistroAlumnoController {
         registroService.eliminar(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<List<RegistroAlumnoResponseDto>> buscarPorFiltro(@RequestParam("filtro") String filtro) {
+        return ResponseEntity.ok(registroService.buscarPorFiltro(filtro));
+    }
+
 }

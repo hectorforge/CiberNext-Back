@@ -5,12 +5,14 @@ import org.springframework.stereotype.Service;
 import pe.edu.cibernext.mapper.CursoMapper;
 import pe.edu.cibernext.models.AlumnoEntity;
 import pe.edu.cibernext.models.CursoEntity;
+import pe.edu.cibernext.models.ProfesorEntity;
 import pe.edu.cibernext.models.RegistroAlumnoEntity;
 import pe.edu.cibernext.models.dto.AlumnoCursoDto;
 import pe.edu.cibernext.models.dto.CursoDto;
 import pe.edu.cibernext.models.dto.ProfesorCursoDto;
 import pe.edu.cibernext.models.dto.UnidadAprendizajePorCursoDto;
 import pe.edu.cibernext.repositories.CursoRepository;
+import pe.edu.cibernext.repositories.ProfesorRepository;
 import pe.edu.cibernext.services.CursoService;
 
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.List;
 public class CursoServiceImpl implements CursoService {
 
     private final CursoRepository cursoRepository;
+    private final ProfesorRepository profesorRepository;
 
     @Override
     public CursoDto buscarPorId(Long id) {
@@ -92,6 +95,19 @@ public class CursoServiceImpl implements CursoService {
         var cursos = cursoRepository.buscarPorFiltro(filtro);
         return CursoMapper.toDtoList(cursos);
     }
+
+    @Override
+    public void asignarProfesor(Long cursoId, Long profesorId) {
+        CursoEntity curso = cursoRepository.findById(cursoId)
+                .orElseThrow(() -> new RuntimeException("Curso no encontrado con ID: " + cursoId));
+
+        ProfesorEntity profesor = profesorRepository.findById(profesorId)
+                .orElseThrow(() -> new RuntimeException("Profesor no encontrado con ID: " + profesorId));
+
+        curso.getProfesores().add(profesor);
+        cursoRepository.save(curso);
+    }
+
 
 
 }

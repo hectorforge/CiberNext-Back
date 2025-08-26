@@ -58,6 +58,11 @@ public class ProfesorServiceImpl implements ProfesorService {
         RolEntity rol = rolRepository.findById(dto.getRolId())
                 .orElseThrow(() -> new RecursoNoEncontradoException("Rol no encontrado con ID: " + dto.getRolId()));
 
+        if (!"PROFESOR".equalsIgnoreCase(rol.getNombre())) {
+            throw new IllegalArgumentException("El rol asignado no es válido para un Profesor.");
+        }
+
+
         ProfesorEntity profesor = ProfesorMapper.toEntity(dto);
 
         String passwordInicial = UUID.randomUUID().toString().substring(0, 6);
@@ -123,4 +128,13 @@ public class ProfesorServiceImpl implements ProfesorService {
         List<CursoEntity> cursos = cursoRepository.findByProfesores_Id(idProfesor);
         return CursoMapper.toDtoList(cursos);
     }
+
+    @Override
+    public List<ProfesorDto> buscarPorFiltro(String filtro) {
+        List<ProfesorEntity> profesores = profesorRepository.buscarPorFiltro(filtro);
+        return profesores.stream()
+                .map(ProfesorMapper::toDto)
+                .toList();
+    }
+
 }

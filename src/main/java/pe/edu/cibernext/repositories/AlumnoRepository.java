@@ -18,4 +18,16 @@ public interface AlumnoRepository extends JpaRepository<AlumnoEntity,Long> {
     """)
     List<CursoEntity> listarCursosPorAlumno(@Param("idAlumno") Long idAlumno);
 
+
+    @Query("""
+        select a
+        from AlumnoEntity a
+        where lower(a.codigoAlumno) like lower(concat('%', :filtro, '%'))
+           or lower(a.nombre) like lower(concat('%', :filtro, '%'))
+           or lower(a.apellido) like lower(concat('%', :filtro, '%'))
+           or lower(a.pais) like lower(concat('%', :filtro, '%'))
+           or lower(a.email) like lower(concat('%', :filtro, '%'))
+    """)
+    List<AlumnoEntity> buscarPorFiltro(@Param("filtro") String filtro);
+
 }

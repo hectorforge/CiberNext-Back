@@ -11,6 +11,7 @@ import pe.edu.cibernext.models.AlumnoEntity;
 import pe.edu.cibernext.models.CursoEntity;
 import pe.edu.cibernext.models.RolEntity;
 import pe.edu.cibernext.models.dto.AlumnoDto;
+import pe.edu.cibernext.models.dto.CursoDocumentoDto;
 import pe.edu.cibernext.models.dto.CursoDto;
 import pe.edu.cibernext.repositories.AlumnoRepository;
 import pe.edu.cibernext.repositories.CursoRepository;
@@ -133,4 +134,54 @@ public class AlumnoServiceImpl implements AlumnoService {
         List<CursoEntity> cursos = alumnoRepository.listarCursosPorAlumno(idAlumno);
         return CursoMapper.toDtoList(cursos);
     }
+
+    @Override
+    public List<CursoDocumentoDto> listarCursosConDocumentos(Long idAlumno) {
+        if (!alumnoRepository.existsById(idAlumno)) {
+            throw new RecursoNoEncontradoException("Alumno no encontrado con ID: " + idAlumno);
+        }
+
+        List<CursoEntity> cursos = alumnoRepository.listarCursosPorAlumno(idAlumno);
+
+        return cursos.stream()
+                .flatMap(curso -> curso.getUnidades().stream()
+                        .flatMap(unidad -> unidad.getDocumentos().stream().map(documento -> {
+                            CursoDocumentoDto dto = new CursoDocumentoDto();
+
+                            dto.setCursoId(curso.getId());
+                            dto.setCursoCodigo(curso.getCodigo());
+                            dto.setCursoNombre(curso.getNombre());
+                            dto.setCursoDescripcion(curso.getDescripcion());
+
+                            dto.setUnidadId(unidad.getId());
+                            dto.setUnidadNombre(unidad.getNombre());
+                            dto.setUnidadCodigo(unidad.getCodigo());
+                            dto.setUnidadDescripcion(unidad.getDescripcion());
+                            dto.setUnidadEstado(unidad.getEstado());
+
+                            dto.setDocumentoId(documento.getId());
+                            dto.setDocumentoNombre(documento.getNombre());
+                            dto.setDocumentoArchivo(documento.getArchivo());
+                            dto.setDocumentoDescripcion(documento.getDescripcion());
+
+                            if (documento.getTipoDocumento() != null) {
+                                dto.setTipoDocumentoId(documento.getTipoDocumento().getId());
+                                dto.setTipoDocumentoNombre(documento.getTipoDocumento().getNombre());
+                                dto.setTipoDocumentoExtension(documento.getTipoDocumento().getExtension());
+                            }
+
+                            return dto;
+                        })))
+                .toList();
+    }
+
+    @Override
+    public List<AlumnoDto> buscarPorFiltro(String filtro) {
+        List<AlumnoEntity> alumnos = alumnoRepository.buscarPorFiltro(filtro);
+        return alumnos.stream()
+                .map(AlumnoMapper::toDto)
+                .toList();
+    }
+
+
 }

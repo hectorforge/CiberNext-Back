@@ -14,4 +14,6 @@ public interface ProfesorService {
     void eliminarPorId(Long id);
 
     List<CursoDto> listarCursos(Long idProfesor);
+    List<ProfesorDto> buscarPorFiltro(String filtro);
+
 }

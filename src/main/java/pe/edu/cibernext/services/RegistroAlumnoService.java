@@ -10,4 +10,7 @@ public interface RegistroAlumnoService {
     List<RegistroAlumnoResponseDto> listar();
     RegistroAlumnoResponseDto obtenerPorId(Long id);
     void eliminar(Long id);
+
+    List<RegistroAlumnoResponseDto> buscarPorFiltro(String filtro);
+
 }

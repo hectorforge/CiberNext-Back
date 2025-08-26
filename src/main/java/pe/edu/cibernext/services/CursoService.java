@@ -19,4 +19,7 @@ public interface CursoService {
     List<ProfesorCursoDto> listarProfesoresPorCurso(Long idCurso);
     List<UnidadAprendizajePorCursoDto> listarUnidadesArbolPorCurso(Long idCurso);
     List<CursoDto> buscarPorFiltro(String filtro);
+
+    void asignarProfesor(Long cursoId, Long profesorId);
+
 }
