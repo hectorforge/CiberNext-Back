@@ -57,17 +57,17 @@ public class ProfesorController {
         return ResponseEntity.ok(profesorService.listarCursos(id));
     }
 
-    @GetMapping("/{idProfesor}/respondidas")
-    public ResponseEntity<List<ConsultaConRespuestaDto>> obtenerRespondidasProfesor(
-            @PathVariable @Positive Long idProfesor) {
-        return ResponseEntity.ok(consultaService.listarRespondidasProfesor(idProfesor));
-    }
-
-    @GetMapping("/{idProfesor}/no-respondidas")
-    public ResponseEntity<List<ConsultaConRespuestaDto>> obtenerNoRespondidasProfesor(
-            @PathVariable @Positive Long idProfesor) {
-        return ResponseEntity.ok(consultaService.listarNoRespondidasProfesor(idProfesor));
-    }
+//    @GetMapping("/{idProfesor}/respondidas")
+//    public ResponseEntity<List<ConsultaConRespuestaDto>> obtenerRespondidasProfesor(
+//            @PathVariable @Positive Long idProfesor) {
+//        return ResponseEntity.ok(consultaService.listarRespondidasProfesor(idProfesor));
+//    }
+//
+//    @GetMapping("/{idProfesor}/no-respondidas")
+//    public ResponseEntity<List<ConsultaConRespuestaDto>> obtenerNoRespondidasProfesor(
+//            @PathVariable @Positive Long idProfesor) {
+//        return ResponseEntity.ok(consultaService.listarNoRespondidasProfesor(idProfesor));
+//    }
 
     @GetMapping("/buscar")
     public ResponseEntity<List<ProfesorDto>> buscarPorFiltro(@RequestParam("filtro") String filtro) {

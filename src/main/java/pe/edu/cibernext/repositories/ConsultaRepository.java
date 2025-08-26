@@ -11,24 +11,11 @@ public interface ConsultaRepository extends JpaRepository<ConsultaEntity, Long> 
     // Consultas respondidas por el profesor
     @Query("""
         SELECT c FROM ConsultaEntity c
+        JOIN c.registroAlumno ra
         WHERE c.consultaPadre IS NULL
-        AND EXISTS (
-            SELECT 1 FROM ConsultaEntity r
-            WHERE r.consultaPadre.id = c.id AND r.autor.id = :idProfesor
-        )
+        AND ra.profesor.id = :idProfesor
     """)
-    List<ConsultaEntity> findConsultasRespondidasPorProfesor(Long idProfesor);
-
-    // Consultas NO respondidas por el profesor
-//    @Query("""
-//        SELECT c FROM ConsultaEntity c
-//        WHERE c.consultaPadre IS NULL
-//        AND NOT EXISTS (
-//            SELECT 1 FROM ConsultaEntity r
-//            WHERE r.consultaPadre.id = c.id AND r.autor.id = :idProfesor
-//        )
-//    """)
-//    List<ConsultaEntity> findConsultasNoRespondidasPorProfesor(Long idProfesor);
+    List<ConsultaEntity> findConsultasPorProfesor(Long idProfesor);
 
     @Query("""
         SELECT c FROM ConsultaEntity c
@@ -53,17 +40,16 @@ public interface ConsultaRepository extends JpaRepository<ConsultaEntity, Long> 
     """)
     List<ConsultaEntity> findConsultasAlumno(Long idAlumno);
 
-    // Consultas sin responder del alumno
     @Query("""
         SELECT c FROM ConsultaEntity c
         JOIN c.registroAlumno ra
         WHERE c.consultaPadre IS NULL
-        AND ra.alumno.id = :idAlumno
-        AND NOT EXISTS (
-            SELECT 1 FROM ConsultaEntity r
-            WHERE r.consultaPadre.id = c.id
-            AND r.autor.id = ra.profesor.id
-        )
+          AND ra.alumno.id = :idAlumno
+          AND NOT EXISTS (
+              SELECT 1 FROM ConsultaEntity r
+              WHERE r.consultaPadre = c
+                AND r.autor.id = ra.profesor.id
+          )
     """)
     List<ConsultaEntity> findConsultasNoRespondidasAlumno(Long idAlumno);
 

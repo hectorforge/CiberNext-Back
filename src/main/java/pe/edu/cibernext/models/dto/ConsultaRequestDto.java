@@ -6,6 +6,11 @@ import lombok.Data;
 public class ConsultaRequestDto {
     private String titulo;
     private String mensaje;
-    private Long alumnoId;
     private Long unidadAprendizajeId;
+
+    private Long usuarioId;
+    private Long registroAlumnoId;
+    private Long consultaPadreId;
+
+    //private Long alumnoId;
 }

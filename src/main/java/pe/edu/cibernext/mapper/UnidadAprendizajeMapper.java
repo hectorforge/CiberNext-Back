@@ -55,7 +55,7 @@ public class UnidadAprendizajeMapper {
         dto.setTitulo(e.getTitulo());
         dto.setMensaje(e.getMensaje());
         dto.setFecha(e.getFecha());
-        dto.setEstado(e.isEstado());
+       // dto.setEstado(e.isEstado());
 
         if (e.getAutor() != null) {
             var autor = e.getAutor();

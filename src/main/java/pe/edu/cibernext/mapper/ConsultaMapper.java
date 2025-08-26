@@ -43,6 +43,10 @@ public class ConsultaMapper {
         dto.setUnidad(consulta.getUnidadAprendizaje().getNombre());
         dto.setCurso(consulta.getRegistroAlumno().getCurso().getNombre());
 
+        dto.setIdAutor(consulta.getAutor().getId());
+        dto.setIdUnidad(consulta.getUnidadAprendizaje().getId());
+        dto.setIdRegistroAlumno(consulta.getRegistroAlumno().getId());
+
         if (consulta.getRespuestas() != null && !consulta.getRespuestas().isEmpty()) {
             List<ConsultaJerarquicaDto> respuestasDto = consulta.getRespuestas().stream()
                     .map(ConsultaMapper::toJerarquicoDto)
@@ -65,23 +69,19 @@ public class ConsultaMapper {
     }
 
     public static ConsultaResponseDto toResponseDto(ConsultaEntity consulta) {
+        if (consulta == null) return null;
         ConsultaResponseDto dto = new ConsultaResponseDto();
         dto.setId(consulta.getId());
         dto.setTitulo(consulta.getTitulo());
         dto.setMensaje(consulta.getMensaje());
         dto.setFecha(consulta.getFecha());
-        dto.setEstado(consulta.isEstado());
+        dto.setEstado(Boolean.TRUE.equals(consulta.getEstado()));
 
-        if (consulta.getAutor() != null) {
-            dto.setAutorId(consulta.getAutor().getId());
-            dto.setAutorNombre(consulta.getAutor().getNombre() + " " + consulta.getAutor().getApellido());
-        }
-        if (consulta.getUnidadAprendizaje() != null) {
-            dto.setUnidadAprendizajeId(consulta.getUnidadAprendizaje().getId());
-        }
-        if (consulta.getConsultaPadre() != null) {
-            dto.setConsultaPadreId(consulta.getConsultaPadre().getId());
-        }
+        dto.setAutorId(consulta.getAutor() != null ? consulta.getAutor().getId() : null);
+        dto.setUnidadAprendizajeId(consulta.getUnidadAprendizaje() != null ? consulta.getUnidadAprendizaje().getId() : null);
+        dto.setConsultaPadreId(consulta.getConsultaPadre() != null ? consulta.getConsultaPadre().getId() : null);
+        //dto.setRegistroAlumnoId(consulta.getRegistroAlumno() != null ? consulta.getRegistroAlumno().getId() : null);
+
         return dto;
     }
 }

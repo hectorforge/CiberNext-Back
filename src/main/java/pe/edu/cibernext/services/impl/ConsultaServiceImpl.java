@@ -26,21 +26,21 @@ public class ConsultaServiceImpl implements ConsultaService {
     private final RegistroAlumnoRepository registroAlumnoRepository;
 
     @Override
-    public List<ConsultaConRespuestaDto> listarRespondidasProfesor(Long idProfesor) {
+    public List<ConsultaJerarquicaDto> listarConsultasProfesor(Long idProfesor) {
         if (!profesorRepository.existsById(idProfesor)) {
             throw new RecursoNoEncontradoException("Profesor no encontrado con ID: " + idProfesor);
         }
-        List<ConsultaEntity> consultas = consultaRepository.findConsultasRespondidasPorProfesor(idProfesor);
-        return ConsultaMapper.toDtoList(consultas, idProfesor);
+        List<ConsultaEntity> consultas = consultaRepository.findConsultasPorProfesor(idProfesor);
+        return ConsultaMapper.toJerarquicoDtoList(consultas);
     }
 
     @Override
-    public List<ConsultaConRespuestaDto> listarNoRespondidasProfesor(Long idProfesor) {
+    public List<ConsultaJerarquicaDto> listarConsultasNoRespondidasProfesor(Long idProfesor) {
         if (!profesorRepository.existsById(idProfesor)) {
             throw new RecursoNoEncontradoException("Profesor no encontrado con ID: " + idProfesor);
         }
         List<ConsultaEntity> consultas = consultaRepository.findConsultasNoRespondidasPorProfesor(idProfesor);
-        return ConsultaMapper.toDtoList(consultas, null);
+        return ConsultaMapper.toJerarquicoDtoList(consultas);
     }
 
     @Override
@@ -73,21 +73,69 @@ public class ConsultaServiceImpl implements ConsultaService {
     @Override
     @Transactional
     public ConsultaResponseDto registrarConsulta(ConsultaRequestDto dto) {
-        UsuarioEntity alumno = usuarioRepository.findById(dto.getAlumnoId())
-                .orElseThrow(() -> new RecursoNoEncontradoException("Alumno no encontrado"));
-        UnidadAprendizajeEntity unidad = unidadAprendizajeRepository.findById(dto.getUnidadAprendizajeId())
-                .orElseThrow(() -> new RecursoNoEncontradoException("Unidad no encontrada"));
-        RegistroAlumnoEntity registro = registroAlumnoRepository
-                .findByAlumnoIdAndCursoId(alumno.getId(), unidad.getCurso().getId());
+        if (dto == null) {
+            throw new IllegalArgumentException("Solicitud nula");
+        }
+
+        String titulo = dto.getTitulo();
+        if (titulo != null) {
+            titulo = titulo.trim();
+            if (titulo.isEmpty()) {
+                titulo = null; // tratar blanco como null
+            } else if (titulo.length() > 200) {
+                throw new IllegalArgumentException("Titulo excede 200 caracteres");
+            }
+        }
+
+        // Validar mensaje
+        String mensaje = dto.getMensaje();
+        if (mensaje == null || (mensaje = mensaje.trim()).isEmpty()) {
+            throw new IllegalArgumentException("Mensaje obligatorio");
+        }
+        if (mensaje.length() > 2000) {
+            throw new IllegalArgumentException("Mensaje excede 2000 caracteres");
+        }
+
+        // Validar unidad
+        Long unidadId = dto.getUnidadAprendizajeId();
+        if (unidadId == null) {
+            throw new IllegalArgumentException("unidadAprendizajeId obligatorio");
+        }
+        UnidadAprendizajeEntity unidad = unidadAprendizajeRepository.findById(unidadId)
+                .orElseThrow(() -> new IllegalArgumentException("Unidad no encontrada"));
+
+        // Usuario (puede ser alumno o profesor)
+        Long usuarioId = dto.getUsuarioId();
+        if (usuarioId == null) throw new IllegalArgumentException("usuarioId obligatorio");
+        UsuarioEntity autor = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        // Validar registro alumno
+        Long registroId = dto.getRegistroAlumnoId();
+        if (registroId == null) {
+            throw new IllegalArgumentException("registroAlumnoId obligatorio");
+        }
+        RegistroAlumnoEntity registro = registroAlumnoRepository.findById(registroId)
+                .orElseThrow(() -> new IllegalArgumentException("Registro alumno no encontrado"));
+
+        // Crear entidad
         ConsultaEntity consulta = new ConsultaEntity();
-        consulta.setTitulo(dto.getTitulo());
-        consulta.setMensaje(dto.getMensaje());
-        consulta.setFecha(LocalDateTime.now());
-        consulta.setEstado(true);
-        consulta.setAutor(alumno);
+        consulta.setTitulo(titulo);
+        consulta.setMensaje(mensaje);
+        consulta.setAutor(autor);
         consulta.setRegistroAlumno(registro);
         consulta.setUnidadAprendizaje(unidad);
-        return ConsultaMapper.toResponseDto(consultaRepository.save(consulta));
+
+        // Validar y asignar consulta padre (opcional)
+        Long padreId = dto.getConsultaPadreId();
+        if (padreId != null) {
+            ConsultaEntity padre = consultaRepository.findById(padreId)
+                    .orElseThrow(() -> new IllegalArgumentException("Consulta padre no encontrada"));
+            consulta.setConsultaPadre(padre);
+        }
+
+        ConsultaEntity guardada = consultaRepository.save(consulta);
+        return ConsultaMapper.toResponseDto(guardada);
     }
 
     @Override

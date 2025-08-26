@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 
 @Getter
@@ -24,9 +25,12 @@ public class ConsultaEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String mensaje;
 
+    @CreationTimestamp // opcional; se aplicará si no envías valor
+    @Column(name = "fecha", updatable = false)
     private LocalDateTime fecha;
 
-    private boolean estado;
+    @Column(nullable = false)
+    private Boolean estado;
 
     // Relaciones .............................................................
 
@@ -51,5 +55,16 @@ public class ConsultaEntity {
 
     @OneToMany(mappedBy = "consultaPadre", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ConsultaEntity> respuestas;
+
+
+    @PrePersist
+    public void prePersist() {
+        if (fecha == null) {
+            fecha = LocalDateTime.now();
+        }
+        if (estado == null) {
+            estado = Boolean.TRUE;
+        }
+    }
 
 }

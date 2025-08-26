@@ -725,88 +725,423 @@ INSERT INTO `RegistroAlumno` (`curso_id`, `alumno_usuario_id`, `profesor_usuario
 -- participación en foros. Asume que todos los scripts anteriores han sido ejecutados.
 -- ================================================================================= --
 
--- ----------------------------------------------------
--- 1. POBLAR `Consultas` (FOROS)
--- ----------------------------------------------------
--- == Hilo 1: React (Curso 2, Unidad 12: useEffect) ==
--- Gabriela Solis (Usuario 15) en su matrícula de React (Registro 12)
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (1, 'Duda sobre el array de dependencias en useEffect', 'Hola profesor, no entiendo bien cuándo debo poner variables en el array de dependencias de useEffect. ¿Si lo dejo vacío se ejecuta solo una vez?', 15, 12, 12, NULL);
+-- Datos de prueba consistentes para Consultas (100 registros)
+-- Pregunta 1: Ana Lopez en Desarrollo Web I (curso 1, unidad 1, matrícula 1)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es HTML semántico?', 'No entiendo la diferencia entre <section> y <article>.', 9, 1, 1, NULL);
 
--- Profesor Carlos Santana (Usuario 3) responde
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (2, NULL, '¡Hola Gabriela! Exactamente. Si dejas el array de dependencias vacío `[]`, el efecto se ejecutará solo una vez, después del primer renderizado, similar a `componentDidMount`. Si incluyes una variable, el efecto se volverá a ejecutar cada vez que el valor de esa variable cambie.', 3, 12, 12, 1);
+-- Respuesta 1: Natasha R. (profesor 19)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'La diferencia es el propósito del contenido. <section> agrupa temas, <article> es contenido independiente.', 19, NULL, 1, 1);
 
--- Ana Lopez (Usuario 9) también está matriculada en React (Registro 1)
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (3, NULL, '¡Gracias por la pregunta Gabriela! A mí me sirvió mucho pensar que el array le dice a React: "vigila estas variables y si alguna cambia, ejecuta el efecto de nuevo".', 9, 1, 12, 1);
+-- Pregunta 2: Bruno Diaz en Algoritmia (curso 10, unidad 95, matrícula 4)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Cómo se mide la eficiencia de un algoritmo?', '¿Qué significa O(n)?', 10, 4, 95, NULL);
 
--- == Hilo 2: Spring Boot (Curso 12, Unidad 112) ==
--- Fernando Torres (Usuario 14) en su matrícula de Spring Boot (Registro 18)
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (4, 'Diferencias entre @Component, @Service y @Repository', 'Profesor, he visto que las tres anotaciones parecen hacer lo mismo (crear un bean). ¿Cuál es la diferencia real y cuándo debo usar cada una?', 14, 18, 112, NULL);
+-- Respuesta 2: Anthony S. (profesor 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'O(n) indica que el tiempo de ejecución crece linealmente con la entrada.', 6, NULL, 95, 3);
 
--- Profesor Anthony Stark (Usuario 6) responde
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (5, NULL, 'Excelente pregunta, Fernando. Si bien técnicamente las tres crean un bean, su uso es semántico. `@Repository` se usa en la capa de persistencia y traduce excepciones de la BD. `@Service` se usa en la capa de negocio para la lógica principal. `@Component` es genérica. Usar la correcta ayuda a que el código sea más legible y permite que los frameworks apliquen lógicas específicas (AOP).', 6, 18, 112, 4);
+-- Pregunta 3: Carla Kent en Angular (curso 3, unidad 18, matrícula 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es un componente standalone?', '¿Por qué Angular 16 los recomienda?', 11, 6, 18, NULL);
 
--- == Hilo 3: Desarrollo Web I (Curso 1, Unidad 4: Flexbox) ==
--- Laura Jimenez (Usuario 20) en su matrícula de Dev Web I (Registro 15)
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (6, '¿Cómo centrar un div vertical y horizontalmente con Flexbox?', 'He intentado con `align-items: center` pero no funciona como espero. ¿Qué me falta?', 20, 15, 4, NULL);
+-- Respuesta 3: Carlos Santana (profesor 3)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Permiten crear componentes independientes sin módulos, simplificando la arquitectura.', 3, NULL, 18, 5);
 
--- Profesora Natasha Romanoff (Usuario 19) responde
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (7, NULL, 'Hola Laura, es una duda muy común. Para centrar en ambos ejes, necesitas dos propiedades en el contenedor padre: `align-items: center;` (para el eje vertical) y `justify-content: center;` (para el eje horizontal). Además, asegúrate de que el contenedor tenga una altura definida (ej. `height: 100vh;`) para que el centrado vertical tenga efecto.', 19, 15, 4, 6);
+-- Pregunta 4: Elena Garcia en React (curso 2, unidad 10, matrícula 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es JSX?', '¿Por qué se usa en React?', 13, 8, 10, NULL);
 
--- == Hilo 4: Angular (Curso 3, Unidad 19: Componentes y Plantillas) ==
--- Elena Garcia (Usuario 13), matrícula de Angular (Registro 11)
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (8, '¿Cuándo usar ngOnInit vs el constructor?', 'Profesor, he visto ejemplos que inicializan propiedades en el constructor y otros en ngOnInit. ¿Cuál es la buena práctica y por qué?', 13, 11, 19, NULL);
+-- Respuesta 4: Carlos Santana (profesor 3)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'JSX es una sintaxis que permite escribir HTML dentro de JavaScript, facilitando la creación de componentes.', 3, NULL, 10, 7);
 
--- Profesor Carlos Santana (Usuario 3) responde
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (9, NULL, '¡Gran pregunta, Elena! La regla general es: usa el `constructor` para la inyección de dependencias (DI) y para inicializaciones muy simples que no dependan de inputs. Usa `ngOnInit` para toda la lógica de inicialización compleja, especialmente si necesitas acceder a las propiedades `@Input()` del componente, ya que en `ngOnInit` tienes la garantía de que ya están disponibles.', 3, 11, 19, 8);
+-- Pregunta 5: Fernando Torres en Spring Boot (curso 12, unidad 112, matrícula 12)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es IoC en Spring?', '¿Por qué es importante la inyección de dependencias?', 14, 12, 112, NULL);
 
--- Carla Kent (Usuario 11), matrícula de Angular (Registro 9)
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (10, NULL, 'A mí me ayudó pensar que el constructor es para "preparar las herramientas" y ngOnInit es para "empezar a usarlas".', 11, 9, 19, 8);
+-- Respuesta 5: Anthony S. (profesor 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'IoC permite que el framework gestione las dependencias, facilitando el mantenimiento.', 6, NULL, 112, 9);
 
--- == Hilo 5: Spring Boot (Curso 12, Unidad 114: Capa de Persistencia) ==
--- Bruno Diaz (Usuario 10), matrícula de Spring Boot (Registro 5)
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (11, '¿Por qué usar DTOs si ya tengo la Entidad JPA?', 'Hola, me parece que crear una clase DTO para cada entidad es duplicar código. ¿No sería más fácil exponer la entidad `@Entity` directamente en el controlador? ¿Cuáles son los riesgos?', 10, 5, 114, NULL);
+-- Pregunta 6: David Perez en Android Studio (curso 16, unidad 152, matrícula 16)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es una coroutine en Kotlin?', '¿Cómo ayuda en Android?', 12, 16, 152, NULL);
 
--- Profesor Anthony Stark (Usuario 6) responde
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (12, NULL, 'Bruno, es una de las preguntas más importantes en la arquitectura de APIs. Exponer la entidad directamente tiene varios riesgos graves: 1) Expones la estructura de tu BD al exterior. 2) Cualquier cambio en tu tabla (añadir una columna) se refleja inmediatamente en tu API, rompiendo contratos. 3) Puedes caer en bucles de serialización infinitos con relaciones bidireccionales. Los DTOs (Data Transfer Objects) actúan como una capa de protección y un contrato explícito con tus clientes. Te dan control total sobre qué datos mostrar y recibir.', 6, 5, 114, 11);
+-- Respuesta 6: Steve R. (profesor 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Las coroutines permiten manejar operaciones asíncronas de forma sencilla y eficiente.', 8, NULL, 152, 11);
 
--- == Hilo 6: Algoritmia (Curso 10, Unidad 97: Ordenamiento) ==
--- Hugo Sanchez (Usuario 16), matrícula de Algoritmia (Registro 19)
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (13, '¿Por qué QuickSort es O(n^2) en el peor caso?', 'Entiendo que en promedio es O(n log n), pero no veo cómo puede llegar a ser tan lento como un Bubble Sort. ¿Podría dar un ejemplo del peor caso?', 16, 19, 97, NULL);
+-- Pregunta 7: Patricia Luna en Flutter (curso 17, unidad 160, matrícula 20)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es un widget en Flutter?', '¿Cuál es la diferencia entre Stateless y Stateful?', 24, 20, 160, NULL);
 
--- Profesor Anthony Stark (Usuario 6) responde
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (14, NULL, 'Hugo, el peor caso para QuickSort ocurre cuando el pivote elegido es consistentemente el elemento más pequeño o más grande del sub-arreglo. Imagina un arreglo que ya está ordenado ([1, 2, 3, 4, 5]) y siempre eliges el primer elemento como pivote. En la primera partición, moverás n-1 elementos. En la siguiente, n-2, y así sucesivamente. Esto resulta en una suma de `n + (n-1) + (n-2) ... + 1`, que es O(n^2). Por eso, la elección de un buen pivote (como uno aleatorio o la mediana de tres) es crucial.', 6, 19, 97, 13);
+-- Respuesta 7: Steve R. (profesor 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'StatelessWidget no cambia su estado, StatefulWidget sí puede cambiarlo durante la ejecución.', 8, NULL, 160, 13);
 
--- == Hilo 7: POO C# (Curso 11, Unidad 108: SOLID) ==
--- Marcos Rojo (Usuario 21), matrícula de POO C# (Registro 22)
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (15, 'Ejemplo práctico del Principio de Inversión de Dependencias (DIP)', 'Entiendo la teoría de "depender de abstracciones, no de concreciones", pero me cuesta verlo en código real. ¿Cómo se vería un "antes" y un "después" de aplicar DIP?', 21, 22, 108, NULL);
+-- Pregunta 8: Ana Lopez en Modelado BD (curso 7, unidad 67, matrícula 22)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es una clave primaria?', '¿Por qué es importante en una tabla?', 9, 22, 67, NULL);
 
--- Profesor Anthony Stark (Usuario 6) responde
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (16, NULL, 'Claro, Marcos. **ANTES (Mal):** `class Notificador { private MySqlDatabase _db = new MySqlDatabase(); public void Notificar() { _db.GuardarNotificacion(); } }`. Aquí `Notificador` depende directamente de `MySqlDatabase`. **DESPUÉS (Bien):** `interface IDatabase { void Guardar(); } class Notificador { private IDatabase _db; public Notificador(IDatabase db) { _db = db; } public void Notificar() { _db.Guardar(); } }`. Ahora `Notificador` depende de una abstracción (`IDatabase`) y podemos pasarle cualquier base de datos (MySql, SqlServer) que la implemente. Eso es DIP.', 6, 22, 108, 15);
+-- Respuesta 8: Ricardo Tapia (profesor 5)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'La clave primaria identifica de forma única cada fila en una tabla.', 5, NULL, 67, 15);
 
--- Fernando Torres (Usuario 14), matrícula de POO C# (Registro 20)
-INSERT INTO `Consultas` (`id`, `titulo`, `mensaje`, `usuario_id`, `registro_alumno_id`, `unidad_aprendizaje_id`, `consulta_padre_id`) VALUES
-    (17, NULL, '¡Buenísimo! Y eso también facilita mucho las pruebas unitarias. En el "después", podemos pasarle un `MockDatabase` al `Notificador` para probarlo sin necesidad de una base de datos real.', 14, 20, 108, 15);
+-- Pregunta 9: Bruno Diaz en BD I SQL (curso 8, unidad 76, matrícula 23)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es un constraint en SQL?', '¿Para qué sirve?', 10, 23, 76, NULL);
+
+-- Respuesta 9: Ricardo Tapia (profesor 5)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Un constraint impone reglas sobre los datos, como claves primarias o foráneas.', 5, NULL, 76, 17);
+
+-- Pregunta 10: Fernando Torres en SCRUM (curso 6, unidad 120, matrícula 25)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es el manifiesto ágil?', '¿Por qué es relevante en SCRUM?', 14, 25, 120, NULL);
+
+-- Respuesta 10: Natasha R. (profesor 19)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'El manifiesto ágil define los valores y principios que guían el desarrollo ágil.', 19, NULL, 120, 19);
 
 
-INSERT INTO `UnidadVista` (`unidadAprendizajeId`, `registroAlumnoId`) VALUES
-                                                                          (1, 1),  -- HTML Semántico
-                                                                          (2, 1),  -- Formularios y Accesibilidad
-                                                                          (3, 1),  -- CSS Moderno
-                                                                          (4, 1),  -- Flexbox
-                                                                          (6, 1);  -- Responsive Design
+-- Pregunta 11: Carla Kent en Angular (unidad 19, matrícula 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es un servicio en Angular?', '¿Cómo se inyecta en un componente?', 11, 6, 19, NULL);
+-- Respuesta 11: Carlos Santana (profesor 3)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Se inyecta usando el constructor y el decorador @Injectable.', 3, NULL, 19, 21);
+
+-- Pregunta 12: Elena Garcia en React (unidad 11, matrícula 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es un hook personalizado?', '¿Cuándo conviene crearlo?', 13, 8, 11, NULL);
+-- Respuesta 12: Carlos Santana (profesor 3)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Cuando necesitas reutilizar lógica de estado o efectos entre componentes.', 3, NULL, 11, 23);
+
+-- Pregunta 13: Bruno Diaz en Algoritmia (unidad 96, matrícula 4)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es la recursividad?', '¿Cuándo es útil?', 10, 4, 96, NULL);
+-- Respuesta 13: Anthony S. (profesor 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'La recursividad es útil para problemas que pueden dividirse en subproblemas similares.', 6, NULL, 96, 25);
+
+-- Pregunta 14: Ana Lopez en Dev Web I (unidad 3, matrícula 1)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Para qué sirve <nav>?', '¿Debe estar en todas las páginas?', 9, 1, 3, NULL);
+-- Respuesta 14: Natasha R. (profesor 19)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, '<nav> define la navegación principal o secundaria de un sitio.', 19, NULL, 3, 27);
+
+-- Pregunta 15: Patricia Luna en Flutter (unidad 161, matrícula 20)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es un FutureBuilder?', '¿Cómo se usa?', 24, 20, 161, NULL);
+-- Respuesta 15: Steve R. (profesor 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'FutureBuilder permite construir widgets basados en el resultado de un Future.', 8, NULL, 161, 29);
+
+-- Pregunta 16: David Perez en Android Studio (unidad 153, matrícula 16)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es un ViewModel?', '¿Por qué es útil en MVVM?', 12, 16, 153, NULL);
+-- Respuesta 16: Steve R. (profesor 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'ViewModel separa la lógica de UI de los datos, facilitando el mantenimiento.', 8, NULL, 153, 31);
+
+-- Pregunta 17: Ana Lopez en Modelado BD (unidad 68, matrícula 22)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es una relación 1 a muchos?', '¿Cómo se representa en un diagrama?', 9, 22, 68, NULL);
+-- Respuesta 17: Ricardo Tapia (profesor 5)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Se representa con una línea que conecta dos entidades, una con multiplicidad 1 y la otra con N.', 5, NULL, 68, 33);
+
+-- Pregunta 18: Bruno Diaz en BD I SQL (unidad 78, matrícula 23)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es un índice en SQL?', '¿Mejora el rendimiento?', 10, 23, 78, NULL);
+-- Respuesta 18: Ricardo Tapia (profesor 5)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Un índice mejora la velocidad de las consultas sobre columnas específicas.', 5, NULL, 78, 35);
+
+-- Pregunta 19: Carla Kent en Angular (unidad 20, matrícula 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es un pipe en Angular?', '¿Cómo se crea uno personalizado?', 11, 6, 20, NULL);
+-- Respuesta 19: Carlos Santana (profesor 3)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Un pipe transforma datos en plantillas. Se crea con el decorador @Pipe.', 3, NULL, 20, 37);
+
+-- Pregunta 20: Elena Garcia en React (unidad 12, matrícula 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es el estado global?', '¿Cuándo usar Redux?', 13, 8, 12, NULL);
+-- Respuesta 20: Carlos Santana (profesor 3)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Redux se usa cuando necesitas compartir estado entre muchos componentes.', 3, NULL, 12, 39);
+
+-- Pregunta 21: Patricia Luna en iOS (unidad 168, matrícula 30)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es SwiftUI?', '¿Ventajas sobre UIKit?', 24, 30, 168, NULL);
+-- Respuesta 21: Anthony S. (profesor 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'SwiftUI es declarativo y más moderno que UIKit.', 6, NULL, 168, 41);
+
+-- Pregunta 22: David Perez en Flutter (unidad 163, matrícula 20)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es un Stream en Dart?', '¿Cómo se usa en Flutter?', 12, 20, 163, NULL);
+-- Respuesta 22: Steve R. (profesor 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Un Stream permite manejar flujos de datos asíncronos.', 8, NULL, 163, 43);
+
+-- Pregunta 23: Ana Lopez en Dev Web I (unidad 6, matrícula 1)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es CSS Grid?', '¿Cuándo usarlo en vez de Flexbox?', 9, 1, 6, NULL);
+-- Respuesta 23: Natasha R. (profesor 19)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'CSS Grid es ideal para layouts bidimensionales, Flexbox para unidimensionales.', 19, NULL, 6, 45);
+
+-- Pregunta 24: Bruno Diaz en Algoritmia (unidad 97, matrícula 4)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es un algoritmo voraz?', '¿Cuándo se usa?', 10, 4, 97, NULL);
+-- Respuesta 24: Anthony S. (profesor 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Un algoritmo voraz toma la mejor decisión local en cada paso.', 6, NULL, 97, 47);
+
+-- Pregunta 25: Carla Kent en Angular (unidad 21, matrícula 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es un guard en Angular?', '¿Para qué sirve?', 11, 6, 21, NULL);
+-- Respuesta 25: Carlos Santana (profesor 3)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Un guard protege rutas y controla el acceso a ellas.', 3, NULL, 21, 49);
+
+-- Pregunta 26: Patricia Luna en Flutter (unidad 164, matrícula 20)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es un Provider?', '¿Cómo gestiona el estado?', 24, 20, 164, NULL);
+-- Respuesta 26: Steve R. (profesor 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Provider es una solución para gestión de estado en Flutter.', 8, NULL, 164, 51);
+
+-- Pregunta 27: Ana Lopez en Modelado BD (unidad 70, matrícula 22)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es una clave compuesta?', '¿Cuándo se usa?', 9, 22, 70, NULL);
+-- Respuesta 27: Ricardo Tapia (profesor 5)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Una clave compuesta usa más de una columna para identificar filas.', 5, NULL, 70, 53);
+
+-- Pregunta 28: David Perez en Android Studio (unidad 154, matrícula 16)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es LiveData?', '¿Por qué es útil?', 12, 16, 154, NULL);
+-- Respuesta 28: Steve R. (profesor 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'LiveData permite observar cambios en los datos y actualizar la UI automáticamente.', 8, NULL, 154, 55);
+
+-- Pregunta 29: Bruno Diaz en BD I SQL (unidad 79, matrícula 23)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es una vista en SQL?', '¿Para qué sirve?', 10, 23, 79, NULL);
+-- Respuesta 29: Ricardo Tapia (profesor 5)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Una vista es una consulta almacenada que se puede tratar como una tabla.', 5, NULL, 79, 57);
+
+-- Pregunta 30: Elena Garcia en React (unidad 14, matrícula 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es el Virtual DOM?', '¿Cómo mejora el rendimiento?', 13, 8, 14, NULL);
+-- Respuesta 30: Carlos Santana (profesor 3)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'El Virtual DOM minimiza los cambios reales en el DOM, mejorando la eficiencia.', 3, NULL, 14, 59);
+
+-- Pregunta 31: Hugo Sanchez en Spring Boot (unidad 113, matrícula 15)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es un endpoint REST?', '¿Cómo se define en Spring Boot?', 16, 15, 113, NULL);
+-- Respuesta 31: Anthony S. (profesor 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Un endpoint REST es un método anotado con @GetMapping, @PostMapping, etc.', 6, NULL, 113, 61);
+
+-- Pregunta 32: Laura Jimenez en Dev Web I (unidad 7, matrícula 19)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es el DOM?', '¿Cómo lo manipula JavaScript?', 20, 19, 7, NULL);
+-- Respuesta 32: Natasha R. (profesor 19)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'El DOM es la estructura de objetos de la página. JS lo manipula con métodos como getElementById.', 19, NULL, 7, 63);
+
+-- Pregunta 33: Marcos Rojo en POO C# (unidad 104, matrícula 27)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es la herencia?', '¿Cómo se implementa en C#?', 21, 27, 104, NULL);
+-- Respuesta 33: Anthony S. (profesor 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'La herencia permite que una clase derive de otra usando el operador ":".', 6, NULL, 104, 65);
+
+-- Pregunta 34: Nora Castillo en React (unidad 16, matrícula 22)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es TanStack Query?', '¿Por qué usarlo en vez de fetch?', 22, 22, 16, NULL);
+-- Respuesta 34: Carlos Santana (profesor 3)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'TanStack Query gestiona caché, sincronización y estados de carga automáticamente.', 3, NULL, 16, 67);
+
+-- Pregunta 35: Oscar Velez en Algoritmia (unidad 98, matrícula 32)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es la búsqueda binaria?', '¿Cuándo es eficiente?', 23, 32, 98, NULL);
+-- Respuesta 35: Anthony S. (profesor 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Es eficiente en listas ordenadas, reduce el tiempo de búsqueda a O(log n).', 6, NULL, 98, 69);
+
+-- Pregunta 36: Patricia Luna en iOS (unidad 169, matrícula 30)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es un View en SwiftUI?', '¿Cómo se compone la UI?', 24, 30, 169, NULL);
+-- Respuesta 36: Anthony S. (profesor 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Un View es una estructura que representa una parte de la UI. Se compone de otros Views.', 6, NULL, 169, 71);
+
+-- Pregunta 37: Tomas Rincon en Flutter (unidad 165, matrícula 34)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Cómo consumir una API en Flutter?', '¿Qué paquete se recomienda?', 27, 34, 165, NULL);
+-- Respuesta 37: Steve R. (profesor 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Se recomienda usar el paquete http o dio para consumir APIs.', 8, NULL, 165, 73);
+
+-- Pregunta 38: Ursula Corbero en Android Studio (unidad 157, matrícula 36)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es Retrofit?', '¿Cómo se configura?', 28, 36, 157, NULL);
+-- Respuesta 38: Steve R. (profesor 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Retrofit es una librería para consumir APIs REST. Se configura con interfaces y anotaciones.', 8, NULL, 157, 75);
+
+-- Pregunta 39: Victor Valdes en iOS (unidad 173, matrícula 38)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es async/await en Swift?', '¿Cómo mejora el código?', 29, 38, 173, NULL);
+-- Respuesta 39: Anthony S. (profesor 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Permite escribir código asíncrono de forma más legible y estructurada.', 6, NULL, 173, 77);
+
+-- Pregunta 40: Ana Lopez en Dev Web I (unidad 9, matrícula 1)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es async/await en JS?', '¿Por qué es mejor que promesas?', 9, 1, 9, NULL);
+-- Respuesta 40: Natasha R. (profesor 19)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'async/await simplifica el manejo de código asíncrono y lo hace más legible.', 19, NULL, 9, 79);
+
+-- Pregunta 41: Bruno Diaz en BD I SQL (unidad 80, matrícula 23)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es una transacción?', '¿Por qué es importante?', 10, 23, 80, NULL);
+-- Respuesta 41: Ricardo Tapia (profesor 5)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Una transacción agrupa operaciones para asegurar consistencia y atomicidad.', 5, NULL, 80, 81);
+
+-- Pregunta 42: Carla Kent en Angular (unidad 22, matrícula 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es RxJS?', '¿Por qué se usa en Angular?', 11, 6, 22, NULL);
+-- Respuesta 42: Carlos Santana (profesor 3)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'RxJS permite manejar flujos de datos asíncronos y reactivos.', 3, NULL, 22, 83);
+
+-- Pregunta 43: Gabriela Solis en React (unidad 15, matrícula 13)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es React Hook Form?', '¿Ventajas sobre formularios controlados?', 15, 13, 15, NULL);
+-- Respuesta 43: Carlos Santana (profesor 3)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'React Hook Form simplifica la gestión de formularios y mejora el rendimiento.', 3, NULL, 15, 85);
+
+-- Pregunta 44: David Perez en Android Studio (unidad 156, matrícula 16)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es Room?', '¿Cómo se usa para persistencia?', 12, 16, 156, NULL);
+-- Respuesta 44: Steve R. (profesor 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Room es una librería para manejar bases de datos SQLite de forma sencilla.', 8, NULL, 156, 87);
+
+-- Pregunta 45: Elena Garcia en React (unidad 13, matrícula 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es un hook avanzado?', '¿Ejemplo de useMemo?', 13, 8, 13, NULL);
+-- Respuesta 45: Carlos Santana (profesor 3)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'useMemo memoriza valores calculados para evitar cálculos innecesarios.', 3, NULL, 13, 89);
+
+-- Pregunta 46: Hugo Sanchez en Spring Boot (unidad 117, matrícula 31)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es JWT?', '¿Cómo protege una API?', 16, 31, 117, NULL);
+-- Respuesta 46: Anthony S. (profesor 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'JWT es un token seguro que autentica usuarios en APIs.', 6, NULL, 117, 91);
+
+-- Pregunta 47: Ana Lopez en Modelado BD (unidad 71, matrícula 22)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es una relación muchos a muchos?', '¿Cómo se implementa?', 9, 22, 71, NULL);
+-- Respuesta 47: Ricardo Tapia (profesor 5)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Se implementa con una tabla intermedia que contiene las claves de ambas tablas.', 5, NULL, 71, 93);
+
+-- Pregunta 48: Patricia Luna en Flutter (unidad 166, matrícula 20)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es sqflite?', '¿Para qué sirve?', 24, 20, 166, NULL);
+-- Respuesta 48: Steve R. (profesor 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'sqflite es un paquete para manejar bases de datos SQLite en Flutter.', 8, NULL, 166, 95);
+
+-- Pregunta 49: Raul Gonzalez en Python (unidad 144, matrícula 40)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es venv?', '¿Por qué usar entornos virtuales?', 25, 40, 144, NULL);
+-- Respuesta 49: Anthony S. (profesor 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'venv permite aislar dependencias de proyectos Python.', 6, NULL, 144, 97);
+
+-- Pregunta 50: Sofia Vergara en Android Studio (unidad 155, matrícula 42)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es Navigation Component?', '¿Ventajas sobre Intents?', 26, 33, 155, NULL);
+-- Respuesta 50: Steve R. (profesor 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Navigation Component facilita la gestión de rutas y el paso de datos entre pantallas.', 8, NULL, 155, 99);
+
+-- Pregunta 51: Tomas Rincon en Flutter (unidad 164, matrícula 34)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es Riverpod?', '¿Diferencias con Provider?', 27, 34, 164, NULL);
+-- Respuesta 51: Steve R. (profesor 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Riverpod es una alternativa más robusta y escalable que Provider.', 8, NULL, 164, 101);
+
+-- Pregunta 52: Victor Valdes en iOS (unidad 174, matrícula 38)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es SwiftData?', '¿Cómo se usa para persistencia?', 29, 38, 174, NULL);
+-- Respuesta 52: Anthony S. (profesor 6)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'SwiftData es el nuevo framework de persistencia local en iOS.', 6, NULL, 174, 103);
+
+-- Pregunta 53: Laura Jimenez en Dev Web I (unidad 4, matrícula 19)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es Flexbox?', '¿Cuándo usarlo?', 20, 19, 4, NULL);
+-- Respuesta 53: Natasha R. (profesor 19)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'Flexbox es ideal para layouts unidimensionales y alineación flexible.', 19, NULL, 4, 105);
+
+-- Pregunta 54: Elena Garcia en React (unidad 11, matrícula 8)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es useEffect?', '¿Para qué sirve?', 13, 8, 11, NULL);
+-- Respuesta 54: Carlos Santana (profesor 3)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'useEffect ejecuta efectos secundarios en componentes funcionales.', 3, NULL, 11, 107);
+
+-- Pregunta 55: Ana Lopez en Modelado BD (unidad 73, matrícula 22)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES ('¿Qué es normalización?', '¿Por qué es importante?', 9, 22, 73, NULL);
+-- Respuesta 55: Ricardo Tapia (profesor 5)
+INSERT INTO Consultas (titulo, mensaje, usuario_id, registro_alumno_id, unidad_aprendizaje_id, consulta_padre_id)
+VALUES (NULL, 'La normalización organiza los datos para reducir redundancia y mejorar integridad.', 5, NULL, 73, 109);
+
+
+-- Corrección automática de usuario_id en Consultas
+UPDATE Consultas c
+JOIN RegistroAlumno ra ON c.registro_alumno_id = ra.id
+SET c.usuario_id = ra.alumno_usuario_id
+WHERE c.usuario_id NOT IN (ra.alumno_usuario_id, ra.profesor_usuario_id);
+
+-- Corrección automática de registro_alumno_id en Consultas (respuestas)
+UPDATE Consultas c
+join Consultas padre ON c.consulta_padre_id = padre.id
+SET c.registro_alumno_id = padre.registro_alumno_id
+WHERE c.registro_alumno_id is null;
+
+-- Eliminación de entradas para tener consultas sin respuestas (respuestas sin pregunta)
+DELETE FROM Consultas
+WHERE id IN (2, 4);
+
+-- Segunda corrección automática de usuario_id en Consultas
+UPDATE Consultas c
+JOIN RegistroAlumno ra ON c.registro_alumno_id = ra.id
+SET c.usuario_id = ra.profesor_usuario_id
+WHERE c.usuario_id NOT IN (ra.alumno_usuario_id, ra.profesor_usuario_id)
+and EXISTS (SELECT 1 FROM Profesor a WHERE a.usuario_id = C.usuario_id);

@@ -20,15 +20,27 @@ public class ConsultaController {
 
 
     @GetMapping("/alumno/{idAlumno}/todas")
-    public ResponseEntity<List<ConsultaJerarquicaDto>> obtenerTodasAlumno(
+    public ResponseEntity<List<ConsultaJerarquicaDto>> obtenerConsultasAlumno(
             @PathVariable @Positive Long idAlumno) {
         return ResponseEntity.ok(consultaService.listarConsultasAlumno(idAlumno));
     }
 
     @GetMapping("/alumno/{idAlumno}/no-respondidas")
-    public ResponseEntity<List<ConsultaJerarquicaDto>> obtenerNoRespondidasAlumno(
+    public ResponseEntity<List<ConsultaJerarquicaDto>> obtenerConsultasNoRespondidasAlumno(
             @PathVariable @Positive Long idAlumno) {
         return ResponseEntity.ok(consultaService.listarConsultasNoRespondidasAlumno(idAlumno));
+    }
+
+    @GetMapping("/profesor/{idProfesor}/todas")
+    public ResponseEntity<List<ConsultaJerarquicaDto>> obtenerConsultasProfesor(
+            @PathVariable @Positive Long idProfesor) {
+        return ResponseEntity.ok(consultaService.listarConsultasProfesor(idProfesor));
+    }
+
+    @GetMapping("/profesor/{idProfesor}/no-respondidas")
+    public ResponseEntity<List<ConsultaJerarquicaDto>> obtenerConsultasNoRespondidasProfesor(
+            @PathVariable @Positive Long idProfesor) {
+        return ResponseEntity.ok(consultaService.listarConsultasNoRespondidasProfesor(idProfesor));
     }
 
     @GetMapping("/unidad/{idUnidad}/todas")
@@ -36,6 +48,9 @@ public class ConsultaController {
             @PathVariable @Positive Long idUnidad) {
         return ResponseEntity.ok(consultaService.listarConsultasUnidadAprendizaje(idUnidad));
     }
+
+
+
 
     @PostMapping("/registrar")
     public ResponseEntity<ConsultaResponseDto> registrarConsulta(@RequestBody ConsultaRequestDto dto) {

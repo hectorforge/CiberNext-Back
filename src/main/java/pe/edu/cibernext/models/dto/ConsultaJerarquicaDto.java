@@ -14,4 +14,8 @@ public class ConsultaJerarquicaDto {
     private String unidad;
     private String curso;
     private List<ConsultaJerarquicaDto> respuestas;
+
+    private Long idAutor;
+    private Long idRegistroAlumno;
+    private Long idUnidad;
 }
