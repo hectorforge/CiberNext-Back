@@ -16,6 +16,7 @@ import pe.edu.cibernext.repositories.CursoRepository;
 import pe.edu.cibernext.repositories.ProfesorRepository;
 import pe.edu.cibernext.repositories.RolRepository;
 import pe.edu.cibernext.services.ProfesorService;
+import pe.edu.cibernext.util.CodeGeneratorRandom;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -62,12 +63,18 @@ public class ProfesorServiceImpl implements ProfesorService {
             throw new IllegalArgumentException("El rol asignado no es válido para un Profesor.");
         }
 
-
         ProfesorEntity profesor = ProfesorMapper.toEntity(dto);
 
         String passwordInicial = UUID.randomUUID().toString().substring(0, 6);
         String passwordEncriptada = passwordEncoder.encode(passwordInicial);
         profesor.setPassword(passwordEncriptada);
+
+        long totalProfesores = profesorRepository.count();
+        String codigoProfesor = CodeGeneratorRandom.generarCodigoUnico("P", totalProfesores);
+        String correoProfesional = codigoProfesor.toLowerCase() + "@cibernext.edu.pe";
+
+        profesor.setCodigoProfesor(codigoProfesor);
+        profesor.setCorreoProfesional(correoProfesional);
 
         profesor.setRoles(new HashSet<>(List.of(rol)));
 
@@ -82,6 +89,7 @@ public class ProfesorServiceImpl implements ProfesorService {
 
         return ProfesorMapper.toDto(guardado);
     }
+
 
     @Override
     public ProfesorDto actualizar(Long id, ProfesorDto dto) {

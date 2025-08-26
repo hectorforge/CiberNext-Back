@@ -17,6 +17,7 @@ import pe.edu.cibernext.repositories.AlumnoRepository;
 import pe.edu.cibernext.repositories.CursoRepository;
 import pe.edu.cibernext.repositories.RolRepository;
 import pe.edu.cibernext.services.AlumnoService;
+import pe.edu.cibernext.util.CodeGeneratorRandom;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -68,6 +69,13 @@ public class AlumnoServiceImpl implements AlumnoService {
         String passwordInicial = UUID.randomUUID().toString().substring(0, 6);
         String passwordEncriptada = passwordEncoder.encode(passwordInicial);
         alumno.setPassword(passwordEncriptada);
+
+        long totalAlumnos = alumnoRepository.count();
+        String codigoAlumno = CodeGeneratorRandom.generarCodigoUnico("A", totalAlumnos);
+        String correoInstitucional = codigoAlumno.toLowerCase() + "@cibernext.edu.pe";
+
+        alumno.setCodigoAlumno(codigoAlumno);
+        alumno.setCorreoInstitucional(correoInstitucional);
 
         alumno.setRoles(new HashSet<>(List.of(rol)));
 
