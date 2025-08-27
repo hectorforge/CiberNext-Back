@@ -155,4 +155,40 @@ public class ConsultaServiceImpl implements ConsultaService {
         respuesta.setUnidadAprendizaje(consultaPadre.getUnidadAprendizaje());
         return ConsultaMapper.toResponseDto(consultaRepository.save(respuesta));
     }
+
+
+    @Override
+    public List<ConsultaConRespuestaDto> listarRespondidasProfesor(Long idProfesor) {
+        if (!profesorRepository.existsById(idProfesor)) {
+            throw new RecursoNoEncontradoException("Profesor no encontrado con ID: " + idProfesor);
+        }
+
+        List<ConsultaEntity> consultas = consultaRepository.findConsultasPorProfesor(idProfesor);
+
+        // Filtrar solo las que ya tienen respuesta de ese profesor
+        return consultas.stream()
+                .filter(c -> c.getRespuestas() != null &&
+                        c.getRespuestas().stream()
+                                .anyMatch(r -> r.getAutor().getId().equals(idProfesor)))
+                .map(c -> ConsultaMapper.toDto(c, idProfesor))
+                .toList();
+    }
+
+    @Override
+    public List<ConsultaConRespuestaDto> listarNoRespondidasProfesor(Long idProfesor) {
+        if (!profesorRepository.existsById(idProfesor)) {
+            throw new RecursoNoEncontradoException("Profesor no encontrado con ID: " + idProfesor);
+        }
+
+        List<ConsultaEntity> consultas = consultaRepository.findConsultasPorProfesor(idProfesor);
+
+        // Filtrar las que no tienen respuesta de ese profesor
+        return consultas.stream()
+                .filter(c -> c.getRespuestas() == null ||
+                        c.getRespuestas().stream()
+                                .noneMatch(r -> r.getAutor().getId().equals(idProfesor)))
+                .map(c -> ConsultaMapper.toDto(c, idProfesor))
+                .toList();
+    }
+
 }

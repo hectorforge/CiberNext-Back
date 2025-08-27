@@ -15,4 +15,7 @@ public interface ConsultaService {
 
     ConsultaResponseDto registrarConsulta(ConsultaRequestDto dto);
     ConsultaResponseDto registrarRespuesta(RespuestaProfesorDto dto);
+
+    List<ConsultaConRespuestaDto> listarRespondidasProfesor(Long idProfesor);
+    List<ConsultaConRespuestaDto> listarNoRespondidasProfesor(Long idProfesor);
 }
