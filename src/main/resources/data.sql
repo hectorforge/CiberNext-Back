@@ -1145,3 +1145,499 @@ JOIN RegistroAlumno ra ON c.registro_alumno_id = ra.id
 SET c.usuario_id = ra.profesor_usuario_id
 WHERE c.usuario_id NOT IN (ra.alumno_usuario_id, ra.profesor_usuario_id)
 and EXISTS (SELECT 1 FROM Profesor a WHERE a.usuario_id = C.usuario_id);
+
+
+-- ================================================================================= --
+--     SCRIPT DE INSERCIÓN - PARTE 5: DOCUMENTOS                       --
+-- ================================================================================= --
+
+-- ================================================================================= --
+
+
+-- Curso 4: (26-32)
+INSERT INTO `Documento` (`unidad_aprendizaje_id`, `tipo_documento_id`, `nombre`, `archivo`) VALUES
+(26, 1, 'Video: Introducción a BPM', 'https://www.youtube.com/watch?v=abc_bpm'),
+(26, 2, 'PDF: Fundamentos de BPM', 'https://bpmn.org/fundamentos.pdf'),
+(26, 5, 'Presentación: Ciclo de vida BPM', 'https://slideshare.net/bpm_ciclo'),
+(27, 1, 'Video: Elementos básicos de BPMN 2.0', 'https://www.youtube.com/watch?v=xyz_bpmn'),
+(27, 2, 'Guía BPMN 2.0', 'https://omg.org/spec/BPMN/2.0/pdf'),
+(27, 3, 'Ejemplo en Bizagi', 'https://bizagi.com/bpmn-demo'),
+(28, 1, 'Video: Compuertas en BPMN', 'https://www.youtube.com/watch?v=compuertas'),
+(28, 2, 'PDF: Taller de compuertas', 'https://bpmn.org/compuertas.pdf'),
+(29, 1, 'Video: Pools y Lanes', 'https://www.youtube.com/watch?v=poolslanes'),
+(29, 2, 'Guía: Flujos de mensaje en BPMN', 'https://bpmn.org/flows.pdf'),
+(30, 1, 'Video: Artefactos BPMN', 'https://www.youtube.com/watch?v=artefactos'),
+(30, 2, 'PDF: Objetos de datos', 'https://bpmn.org/data_objects.pdf'),
+(31, 1, 'Video: Caso práctico BPM', 'https://www.youtube.com/watch?v=caso_bpm'),
+(31, 5, 'Presentación: Modelado en Bizagi', 'https://slideshare.net/bpm_bizagi'),
+
+-- Curso 5: (32-38)
+(32, 1, 'Video: Ingeniería de Requerimientos', 'https://www.youtube.com/watch?v=req'),
+(32, 2, 'PDF: Técnicas de elicitación', 'https://uml.org/req.pdf'),
+(33, 1, 'Video: Diagramas de casos de uso', 'https://www.youtube.com/watch?v=casouso'),
+(33, 2, 'PDF: Ejemplo casos de uso', 'https://uml.org/casouso.pdf'),
+(34, 1, 'Video: Diagramas de clases', 'https://www.youtube.com/watch?v=clases'),
+(34, 2, 'PDF: Diseño estructural UML', 'https://uml.org/clases.pdf'),
+(35, 1, 'Video: Principios GRASP', 'https://www.youtube.com/watch?v=grasp'),
+(35, 2, 'PDF: Ejemplo aplicado', 'https://uml.org/grasp.pdf'),
+(36, 1, 'Video: Secuencia UML', 'https://www.youtube.com/watch?v=secuencia'),
+(36, 2, 'PDF: Interacción entre objetos', 'https://uml.org/secuencia.pdf'),
+(37, 1, 'Video: Patrones creacionales', 'https://www.youtube.com/watch?v=singleton'),
+(37, 2, 'PDF: Adapter y Facade', 'https://uml.org/patrones.pdf'),
+(38, 1, 'Video: Estilos arquitectónicos', 'https://www.youtube.com/watch?v=arquitectura'),
+(38, 2, 'PDF: Microservicios vs Monolito', 'https://uml.org/arquitectura.pdf');
+
+INSERT INTO Documento (unidad_aprendizaje_id, nombre, tipo_documento_id, archivo) VALUES
+-- Curso 6: SCRUM (120-126)
+(120, 'Video: Introducción al Manifiesto Ágil', 1, 'https://videos.edu/scrum/fundamentos-agiles.mp4'),
+(120, 'Lectura: Principios del Manifiesto Ágil', 2, 'https://docs.edu/scrum/principios-agiles.pdf'),
+(121, 'Video: Teoría de Scrum y Pilares', 1, 'https://videos.edu/scrum/framework.mp4'),
+(122, 'Presentación: Roles de Scrum', 5, 'https://slides.edu/scrum/roles-scrum.pptx'),
+(123, 'Video: Eventos de Scrum', 1, 'https://videos.edu/scrum/eventos.mp4'),
+(124, 'Lectura: Artefactos de Scrum', 2, 'https://docs.edu/scrum/artefactos.pdf'),
+(125, 'Guía: Historias de Usuario INVEST', 2, 'https://docs.edu/scrum/historias-invest.pdf'),
+(126, 'Video: Planning Poker y Velocidad', 1, 'https://videos.edu/scrum/estimacion.mp4'),
+
+-- Curso 7: Modelación de bases de datos (67-74)
+(67, 'Video: El Modelo Relacional explicado', 1, 'https://videos.edu/db/modelo-relacional.mp4'),
+(68, 'Lectura: Introducción a ER', 2, 'https://docs.edu/db/modelo-er.pdf'),
+(69, 'Ejercicios: Relaciones 1:1, 1:N, N:M', 3, 'https://code.edu/db/ejercicios-cardinalidad.zip'),
+(70, 'Lectura: Modelo EER', 2, 'https://docs.edu/db/modelo-eer.pdf'),
+(71, 'Video: Normalización de Bases de Datos', 1, 'https://videos.edu/db/normalizacion.mp4'),
+(72, 'Taller: Normalización práctica', 3, 'https://code.edu/db/normalizacion-ejemplos.zip'),
+(73, 'Lectura: Del Modelo Lógico al Físico', 2, 'https://docs.edu/db/logico-fisico.pdf'),
+(74, 'Enlace externo: Desnormalización en OLAP', 4, 'https://blog.edu/db/desnormalizacion'),
+
+-- Curso 8: Bases de Datos I SQL (76-83)
+(76, 'Video: Fundamentos de DDL en SQL', 1, 'https://videos.edu/sql/ddl.mp4'),
+(77, 'Guía: Tipos de Datos y Constraints', 2, 'https://docs.edu/sql/tipos-datos.pdf'),
+(78, 'Ejemplos: INSERT, UPDATE, DELETE', 3, 'https://code.edu/sql/dml-ejemplos.sql'),
+(79, 'Video: Consultas SELECT', 1, 'https://videos.edu/sql/select.mp4'),
+(80, 'Guía: Uso de JOINS', 2, 'https://docs.edu/sql/joins.pdf'),
+(81, 'Video: Funciones de Agregación', 1, 'https://videos.edu/sql/agregacion.mp4'),
+(82, 'Lectura: Subconsultas y CTEs', 2, 'https://docs.edu/sql/consultas-avanzadas.pdf'),
+(83, 'Ejemplo: Uso de Transacciones', 3, 'https://code.edu/sql/transacciones.sql'),
+
+-- Curso 9: Bases de Datos II NoSQL (86-92)
+(86, 'Video: El mundo NoSQL y CAP', 1, 'https://videos.edu/nosql/teorema-cap.mp4'),
+(87, 'Video: Introducción a MongoDB', 1, 'https://videos.edu/nosql/mongodb.mp4'),
+(88, 'Ejemplos: CRUD en MongoDB', 3, 'https://code.edu/nosql/crud-mongo.js'),
+(89, 'Video: Redis y estructuras clave-valor', 1, 'https://videos.edu/nosql/redis.mp4'),
+(90, 'Guía: Introducción a Cassandra', 2, 'https://docs.edu/nosql/cassandra.pdf'),
+(91, 'Video: Neo4j y grafos', 1, 'https://videos.edu/nosql/neo4j.mp4'),
+(92, 'Lectura: SQL vs NoSQL comparativo', 2, 'https://docs.edu/nosql/sql-vs-nosql.pdf'),
+
+-- Curso 10: Algoritmia (95-101)
+(95, 'Video: Notación Big O', 1, 'https://videos.edu/algoritmos/big-o.mp4'),
+(96, 'Guía: Listas, Pilas y Colas', 2, 'https://docs.edu/algoritmos/estructuras-lineales.pdf'),
+(97, 'Ejemplos: Algoritmos de Ordenamiento', 3, 'https://code.edu/algoritmos/ordenamiento.zip'),
+(98, 'Video: Búsqueda Lineal vs Binaria', 1, 'https://videos.edu/algoritmos/busqueda.mp4'),
+(99, 'Lectura: Tablas Hash', 2, 'https://docs.edu/algoritmos/hash-tables.pdf'),
+(100, 'Video: Árboles Binarios', 1, 'https://videos.edu/algoritmos/arboles.mp4'),
+(101, 'Guía: Grafos y BFS/DFS', 2, 'https://docs.edu/algoritmos/grafos.pdf'),
+
+-- Curso 11: POO C# (104-110)
+(104, 'Video: Pilares de la POO en C#', 1, 'https://videos.edu/csharp/poo-pilares.mp4'),
+(105, 'Lectura: Clases, Structs y Records', 2, 'https://docs.edu/csharp/clases-structs.pdf'),
+(106, 'Ejemplo: Herencia en C#', 3, 'https://code.edu/csharp/herencia.zip'),
+(107, 'Video: Interfaces y Abstractas', 1, 'https://videos.edu/csharp/interfaces.mp4'),
+(108, 'Lectura: Principios SOLID', 2, 'https://docs.edu/csharp/solid.pdf'),
+(109, 'Ejemplo: Singleton y Factory', 3, 'https://code.edu/csharp/patrones-creacionales.zip'),
+(110, 'Video: Programación Asíncrona', 1, 'https://videos.edu/csharp/asincronia.mp4'),
+
+-- Curso 12: Spring Boot (112-119)
+(112, 'Video: Introducción a Spring Boot 3', 1, 'https://videos.edu/spring/intro-springboot.mp4'),
+(113, 'Lectura: Controladores REST', 2, 'https://docs.edu/spring/rest-controllers.pdf'),
+(114, 'Ejemplo: Entidades y Repositorios JPA', 3, 'https://code.edu/spring/jpa-repositorios.zip'),
+(115, 'Lectura: Consultas con @Query', 2, 'https://docs.edu/spring/query.pdf'),
+(116, 'Video: Servicios y Transacciones', 1, 'https://videos.edu/spring/servicios.mp4'),
+(117, 'Lectura: Seguridad con JWT', 2, 'https://docs.edu/spring/security-jwt.pdf'),
+(118, 'Video: Manejo Global de Excepciones', 1, 'https://videos.edu/spring/excepciones.mp4'),
+(119, 'Ejemplo: Testing con Mockito', 3, 'https://code.edu/spring/testing.zip'),
+
+-- Curso 13: PHP (128-133)
+(128, 'Video: Novedades PHP 8+', 1, 'https://videos.edu/php/php8.mp4'),
+(129, 'Lectura: POO en PHP', 2, 'https://docs.edu/php/poo.pdf'),
+(130, 'Ejemplo: Consultas PDO', 3, 'https://code.edu/php/pdo.zip'),
+(131, 'Video: Enrutamiento en PHP', 1, 'https://videos.edu/php/ruteo.mp4'),
+(132, 'Lectura: Introducción a Laravel', 2, 'https://docs.edu/php/laravel.pdf'),
+(133, 'Ejemplo: API REST con Laravel', 3, 'https://code.edu/php/api-rest-laravel.zip'),
+
+-- Curso 14: Node.js (136-141)
+(136, 'Video: Event Loop y Asincronía', 1, 'https://videos.edu/node/event-loop.mp4'),
+(137, 'Lectura: Ecosistema Node.js', 2, 'https://docs.edu/node/ecosistema.pdf'),
+(138, 'Ejemplo: Servidor Express', 3, 'https://code.edu/node/express-server.zip'),
+(139, 'Video: API REST con MongoDB', 1, 'https://videos.edu/node/rest-mongo.mp4'),
+(140, 'Ejemplo: Autenticación con JWT', 3, 'https://code.edu/node/jwt.zip'),
+(141, 'Video: Testing con Jest', 1, 'https://videos.edu/node/testing.mp4'),
+
+-- Curso 15: Python (144-149)
+(144, 'Video: POO en Python', 1, 'https://videos.edu/python/poo.mp4'),
+(145, 'Lectura: Flask vs Django', 2, 'https://docs.edu/python/flask-django.pdf'),
+(146, 'Ejemplo: API REST con Flask', 3, 'https://code.edu/python/api-flask.zip'),
+(147, 'Video: Django MVT', 1, 'https://videos.edu/python/django-mvt.mp4'),
+(148, 'Lectura: ORM de Django', 2, 'https://docs.edu/python/django-orm.pdf'),
+(149, 'Ejemplo: DRF con Serializadores', 3, 'https://code.edu/python/drf.zip'),
+
+-- Curso 16: Android Studio (152-157)
+(152, 'Video: Kotlin y Coroutines', 1, 'https://videos.edu/android/kotlin-coroutines.mp4'),
+(153, 'Lectura: Jetpack Compose UI', 2, 'https://docs.edu/android/jetpack-compose.pdf'),
+(154, 'Ejemplo: MVVM con ViewModel', 3, 'https://code.edu/android/mvvm.zip'),
+(155, 'Video: Navigation Component', 1, 'https://videos.edu/android/navigation.mp4'),
+(156, 'Lectura: Persistencia con Room', 2, 'https://docs.edu/android/room.pdf'),
+(157, 'Ejemplo: Consumo API con Retrofit', 3, 'https://code.edu/android/retrofit.zip'),
+
+-- Curso 17: Flutter (160-166)
+(160, 'Video: Fundamentos de Dart', 1, 'https://videos.edu/flutter/dart.mp4'),
+(161, 'Lectura: Widgets en Flutter', 2, 'https://docs.edu/flutter/widgets.pdf'),
+(162, 'Ejemplo: Widgets de Layout', 3, 'https://code.edu/flutter/widgets-layout.zip'),
+(163, 'Video: Navigator 2.0', 1, 'https://videos.edu/flutter/navigator2.mp4'),
+(164, 'Lectura: Manejo de Estado con Riverpod', 2, 'https://docs.edu/flutter/riverpod.pdf'),
+(165, 'Ejemplo: Consumo de APIs con dio', 3, 'https://code.edu/flutter/api-dio.zip'),
+(166, 'Video: Persistencia con sqflite', 1, 'https://videos.edu/flutter/sqflite.mp4'),
+
+-- Curso 18: iOS (168-174)
+(168, 'Video: Fundamentos de Swift', 1, 'https://videos.edu/ios/swift.mp4'),
+(169, 'Lectura: Introducción a SwiftUI', 2, 'https://docs.edu/ios/swiftui.pdf'),
+(170, 'Ejemplo: Controles de SwiftUI', 3, 'https://code.edu/ios/swiftui-controles.zip'),
+(171, 'Video: Manejo de Estado en SwiftUI', 1, 'https://videos.edu/ios/estado.mp4'),
+(172, 'Lectura: Navegación en SwiftUI', 2, 'https://docs.edu/ios/navegacion.pdf'),
+(173, 'Ejemplo: Networking con Async/Await', 3, 'https://code.edu/ios/networking.zip'),
+(174, 'Video: Persistencia con SwiftData', 1, 'https://videos.edu/ios/swiftdata.mp4');
+
+
+-- ================================================
+-- Actualización de documentos tipo 'video'
+-- para cursos 1 (Desarrollo Web I), 2 (React), 3 (Angular)
+-- ================================================
+
+-- 1. Introducción a HTML Semántico
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=wx92etmlHtc'
+WHERE id = 1;
+
+-- 2. Dominando el Modelo de Caja en CSS
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=WItW2SKZaIo'
+WHERE id = 4;
+
+-- 3. JavaScript Moderno - ES6+
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=NCwa_xi0Uuc'
+WHERE id = 8;
+
+-- 4. Configurando un proyecto con Vite
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=fC5xG3ra9eA'
+WHERE id = 11;
+
+-- 5. El Hook useState
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=O6P86uwfdR0'
+WHERE id = 14;
+
+-- 6. El Hook useEffect
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=0ZJgIjIuY7U'
+WHERE id = 15;
+
+-- 7. Formularios con React Hook Form
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=-mFXqOaqgZk'
+WHERE id = 18;
+
+-- 8. Data Binding en Angular
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=pY0J0GJwJkQ'
+WHERE id = 21;
+
+-- 9. Inyección de Dependencias Explicada
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=Vxjo1l2x0Rk'
+WHERE id = 23;
+
+-- 10. El Futuro del Estado: Angular Signals
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=RhscTK3XUxA'
+WHERE id = 26;
+
+-- 11. Comparativa Visual de Algoritmos de Ordenamiento
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=ZZuD6iUe3Pc'
+WHERE id = 29;
+
+-- 12. Recorridos de Árboles (In-Order, Pre-Order, Post-Order)
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=9RHO6jU--GU'
+WHERE id = 32;
+
+-- 13. Records en C# - Inmutabilidad Fácil
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=7iHckrpa4sg'
+WHERE id = 35;
+
+-- 14. Patrón Factory en C#
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=EcFVTgRHJLM'
+WHERE id = 39;
+
+-- 15. Creando tu Primer Endpoint (Spring Boot)
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=9SGDpanrc8U'
+WHERE id = 42;
+
+-- 16. Asegurando una API con JWT y Spring Security 6
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=soGRyl9ztjI'
+WHERE id = 46;
+
+-- 17. Introducción a BPM
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=vhU3ZxJQhFI'
+WHERE id = 49;
+
+-- 18. Elementos básicos de BPMN 2.0
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=a_T7c0z6Wc0'
+WHERE id = 52;
+
+-- 19. Compuertas en BPMN
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=2I9BM1GwrBk'
+WHERE id = 55;
+
+-- 20. Pools y Lanes
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=U7Dsvw4Zx5I'
+WHERE id = 57;
+
+-- 21. Artefactos BPMN
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=fBM2fZuwB58'
+WHERE id = 59;
+
+-- 22. Caso práctico BPM
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=LDj5dEJShKo'
+WHERE id = 61;
+
+-- 23. Ingeniería de Requerimientos
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=gpn2aXfCjFI'
+WHERE id = 63;
+
+-- 24. Diagramas de casos de uso
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=UzOTp6K0FhM'
+WHERE id = 65;
+
+-- 25. Diagramas de clases
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=UI6lqHOVHic'
+WHERE id = 67;
+
+-- 26. Principios GRASP
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=jDNxV1J0dDQ'
+WHERE id = 69;
+
+-- 27. Secuencia UML
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=9Q1EFfF8M7g'
+WHERE id = 71;
+
+-- 28. Patrones creacionales
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=tAuRQs_d9F8'
+WHERE id = 73;
+
+-- 29. Estilos arquitectónicos
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=NMIZlkgKwWA'
+WHERE id = 75;
+
+-- 30. Introducción al Manifiesto Ágil
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=502ILHjX9EE'
+WHERE id = 77;
+
+-- 31. Teoría de Scrum y Pilares
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=2Vt7Ik8Ublw'
+WHERE id = 79;
+
+-- 32. Eventos de Scrum
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=JtQ4MEABuks'
+WHERE id = 81;
+
+-- 33. Planning Poker y Velocidad
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=YGg9jD8z2RM'
+WHERE id = 84;
+
+-- 34. El Modelo Relacional explicado
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=4cWkVbC2bNE'
+WHERE id = 85;
+
+-- 35. Normalización de Bases de Datos
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=UrYLYV7WSHM'
+WHERE id = 89;
+
+-- 36. Fundamentos de DDL en SQL
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=4fFz5bt8WmQ'
+WHERE id = 93;
+
+-- 37. Consultas SELECT
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=9Pzj7Aj25lw'
+WHERE id = 96;
+
+-- 38. Funciones de Agregación
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=6Iu45VZGQDk'
+WHERE id = 98;
+
+-- 39. El mundo NoSQL y CAP
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=ue8A-b3t0zc'
+WHERE id = 101;
+
+-- 40. Introducción a MongoDB
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=-bt_y4Loofg'
+WHERE id = 102;
+
+-- 41. Redis y estructuras clave-valor
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=Hbt56gFj998'
+WHERE id = 104;
+
+-- 42. Neo4j y grafos
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=8jNPelugC2s'
+WHERE id = 106;
+
+-- 43. Notación Big O
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=Mo4vesaut8g'
+WHERE id = 108;
+
+-- 44. Búsqueda Lineal vs Binaria
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=frxF7Vs8c1s'
+WHERE id = 111;
+
+-- 45. Árboles Binarios
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=H5JubkIy_p8'
+WHERE id = 113;
+
+-- 46. Pilares de la POO en C#
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=pTB0EiLXUC8'
+WHERE id = 115;
+
+-- 47. Interfaces y Abstractas en C#
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=UDmJGvM-OUw'
+WHERE id = 118;
+
+-- 48. Programación Asíncrona en C#
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=2moh18sh5p4'
+WHERE id = 121;
+
+-- 49. Introducción a Spring Boot 3
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=35EQXmHKZYs'
+WHERE id = 122;
+
+-- 50. Creando tu Primer Servicio y Transacción (Spring)
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=sp7EhjLkFY4'
+WHERE id = 126;
+
+-- 51. Manejo Global de Excepciones en Spring
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=2G7V3G6jIio'
+WHERE id = 128;
+
+-- 52. Novedades PHP 8+
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=Wy2f6xT0KCw'
+WHERE id = 130;
+
+-- 53. Enrutamiento en PHP
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=kdt-HAtAO0E'
+WHERE id = 133;
+
+-- 54. Event Loop y Asincronía en Node.js
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=8aGhZQkoFbQ'
+WHERE id = 136;
+
+-- 55. API REST con MongoDB (Node.js)
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=BXv85yBoVFs'
+WHERE id = 139;
+
+-- 56. Testing con Jest
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=7r4xVDI2vho'
+WHERE id = 141;
+
+-- 57. POO en Python
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=Ej_02ICOIgs'
+WHERE id = 142;
+
+-- 58. Django MVT
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=F5mRW0jo-U4'
+WHERE id = 145;
+
+-- 59. Kotlin y Coroutines
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=BOHK_w09pVA'
+WHERE id = 148;
+
+-- 60. Navigation Component en Android
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=5gFrXGbQ8QI'
+WHERE id = 151;
+
+-- 61. Fundamentos de Dart
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=Ej_Pcr4uC2Q'
+WHERE id = 154;
+
+-- 62. Navigator 2.0 en Flutter
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=kn0EOS-ZiIc'
+WHERE id = 157;
+
+-- 63. Persistencia con sqflite en Flutter
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=UpKrhZ0Hppk'
+WHERE id = 160;
+
+-- 64. Fundamentos de Swift
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=F2ojC6TNwws'
+WHERE id = 161;
+
+-- 65. Manejo de Estado en SwiftUI
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=WW3S3HB9nFI'
+WHERE id = 164;
+
+-- 66. Persistencia con SwiftData
+UPDATE Documento
+SET archivo = 'https://www.youtube.com/watch?v=0N-3R0jD6Cw'
+WHERE id = 167;
+
