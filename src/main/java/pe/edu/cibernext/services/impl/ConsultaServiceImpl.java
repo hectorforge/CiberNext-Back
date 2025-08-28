@@ -113,7 +113,12 @@ public class ConsultaServiceImpl implements ConsultaService {
         // Validar registro alumno
         Long registroId = dto.getRegistroAlumnoId();
         if (registroId == null) {
-            throw new IllegalArgumentException("registroAlumnoId obligatorio");
+            // obtenerlo con el id del alumno + id de la unidad
+            UnidadAprendizajeEntity unidadTemporal = unidadAprendizajeRepository.findById(unidadId).orElseThrow(() -> new IllegalArgumentException("No existe registro del alumno para esta unidad"));
+            Long cursoIdTemporal = unidadTemporal.getCurso().getId();
+            RegistroAlumnoEntity registro = registroAlumnoRepository.findByCursoIdAndAlumno_Id(cursoIdTemporal, autor.getId())
+                    .orElseThrow(() -> new IllegalArgumentException("No existe registro del alumno para esta unidad"));
+            registroId = registro.getId();
         }
         RegistroAlumnoEntity registro = registroAlumnoRepository.findById(registroId)
                 .orElseThrow(() -> new IllegalArgumentException("Registro alumno no encontrado"));

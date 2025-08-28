@@ -1641,3 +1641,16 @@ UPDATE Documento
 SET archivo = 'https://www.youtube.com/watch?v=0N-3R0jD6Cw'
 WHERE id = 167;
 
+
+-- Correcciones a los documentos
+update Documento
+set archivo =  '/documentos/ManualDelCurso.pdf'
+where tipo_documento_id = 2;
+
+update Documento
+set archivo =  '/documentos/PROYECTO_APLICATIVO.zip'
+where tipo_documento_id = 3;
+
+update Documento
+set archivo =  '/documentos/CIBERNEXT.pptx'
+where tipo_documento_id = 5;

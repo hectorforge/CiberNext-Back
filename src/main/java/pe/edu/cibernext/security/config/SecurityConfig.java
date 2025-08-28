@@ -39,7 +39,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/auth/**",
-                                "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/swagger-resources/**"
+                                "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/swagger-resources/**",
+                                "/documentos/**"
                         ).permitAll()
                         .requestMatchers("/api/**").permitAll()
                         .requestMatchers("/api/administradores/**").hasRole("ADMIN")
@@ -48,10 +49,17 @@ public class SecurityConfig {
 
                         .anyRequest().authenticated()
                 )
+                // Headers: permitir iframe desde localhost:4200
+                .headers(h -> {
+                    // Opción A (solo mismo origen): h.frameOptions(f -> f.sameOrigin());
+                    // Opción B (permitir Angular 4200):
+                    h.frameOptions(f -> f.disable());
+                    h.contentSecurityPolicy(csp ->
+                            csp.policyDirectives("frame-ancestors 'self' http://localhost:4200")
+                    );
+                })
                 .authenticationProvider(authenticationProvider())
-
-        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-        ;
+        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
