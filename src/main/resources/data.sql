@@ -1654,3 +1654,16 @@ where tipo_documento_id = 3;
 update Documento
 set archivo =  '/documentos/CIBERNEXT.pptx'
 where tipo_documento_id = 5;
+
+
+update Usuario
+set foto_perfil = 'http://localhost:8080/imagenes/admin.png'
+where email like '%sistema.com';
+
+update Usuario
+set foto_perfil = 'http://localhost:8080/imagenes/profesor.png'
+where email like '%profesor.com';
+
+update Usuario
+set foto_perfil = 'http://localhost:8080/imagenes/alumno.png'
+where email like '%alumno.com';
